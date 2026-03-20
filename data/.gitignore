@@ -1,0 +1,6 @@
+mushaf_images/
+audio/
+intermediate/
+db/
+scripts/__pycache__/
+scripts/.venv/

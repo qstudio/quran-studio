@@ -1,0 +1,7 @@
+[
+  {"id": "mishary", "name_en": "Mishari Rashid al-Afasy", "name_ar": "مشاري راشد العفاسي", "style": "Murattal", "qdc_id": 7},
+  {"id": "sudais", "name_en": "Abdur-Rahman as-Sudais", "name_ar": "عبد الرحمن السديس", "style": "Murattal", "qdc_id": 3},
+  {"id": "shuraim", "name_en": "Sa'ud ash-Shuraim", "name_ar": "سعود الشريم", "style": "Murattal", "qdc_id": 10},
+  {"id": "shatri", "name_en": "Abu Bakr al-Shatri", "name_ar": "أبو بكر الشاطري", "style": "Murattal", "qdc_id": 4},
+  {"id": "husary", "name_en": "Mahmoud Khalil Al-Husary", "name_ar": "محمود خليل الحصري", "style": "Murattal", "qdc_id": 6}
+]
