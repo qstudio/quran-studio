@@ -88,7 +88,7 @@ fn test_load_alignment_fatiha() {
 #[test]
 fn test_build_mushaf_project() {
     let conn = open_db();
-    let project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7)
+    let project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7, None)
         .expect("Failed to build mushaf project");
 
     assert_eq!(project.surah, 1);
@@ -148,7 +148,7 @@ fn test_build_mushaf_project() {
 #[test]
 fn test_project_save_load_delete() {
     let conn = open_db();
-    let mut project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7)
+    let mut project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7, None)
         .expect("Failed to build project");
 
     let tmp_dir = std::env::temp_dir().join("quran_studio_test");

@@ -20,7 +20,7 @@ export function ReciterBrowser({ selectedId, onSelect }: ReciterBrowserProps) {
     listReciters()
       .then(setReciters)
       .catch(() => setReciters([]));
-  }, [listReciters]);
+  }, []); // listReciters is a stable module-level function
 
   const filtered = React.useMemo(() => {
     if (!search.trim()) return reciters;

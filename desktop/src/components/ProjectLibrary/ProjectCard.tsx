@@ -74,11 +74,11 @@ export function ProjectCard({
         </button>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={handleOpen}>Open</ContextMenuItem>
-        <ContextMenuItem onClick={onDuplicate}>Duplicate</ContextMenuItem>
+        <ContextMenuItem onSelect={handleOpen}>Open</ContextMenuItem>
+        <ContextMenuItem onSelect={onDuplicate}>Duplicate</ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuItem
-          onClick={onDelete}
+          onSelect={onDelete}
           className="text-[#ef4444] focus:text-[#ef4444]"
         >
           Delete

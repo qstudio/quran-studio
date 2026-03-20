@@ -24,7 +24,7 @@ export function ProjectLibrary() {
     } finally {
       setLoading(false);
     }
-  }, [listProjects]);
+  }, []); // listProjects is a stable module-level function
 
   React.useEffect(() => {
     fetchProjects();

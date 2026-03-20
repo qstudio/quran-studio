@@ -22,6 +22,9 @@ pub enum CoreError {
     #[error("FFmpeg error: {0}")]
     Ffmpeg(String),
 
+    #[error("HTTP error: {0}")]
+    Http(String),
+
     #[error("Not found: {0}")]
     NotFound(String),
 

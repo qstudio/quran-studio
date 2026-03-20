@@ -15,7 +15,7 @@ pub fn list_projects(state: State<'_, AppState>) -> Result<Vec<ProjectSummary>, 
 }
 
 #[tauri::command]
-pub fn create_project(
+pub async fn create_project(
     state: State<'_, AppState>,
     mode: String,
     reciter_id: String,
@@ -23,21 +23,45 @@ pub fn create_project(
     ayah_start: u16,
     ayah_end: u16,
 ) -> Result<Project, String> {
-    let db = state.db.lock().map_err(|e| format!("Lock error: {}", e))?;
+    // Clone what we need so we can move into the blocking task
+    let data_dir = state.data_dir.clone();
+    let projects_dir = state.projects_dir.clone();
 
-    let mut project = match mode.as_str() {
-        "mushaf" => {
-            quran_studio_core::project::build_mushaf_project(&db, &reciter_id, surah, ayah_start, ayah_end)
+    // Lock DB briefly to get what we need, but the heavy work (download/trim)
+    // happens inside build_mushaf_project which we run on a blocking thread.
+    let db_path = data_dir.join("db/quran.sqlite");
+
+    let result = tokio::task::spawn_blocking(move || {
+        // Open a dedicated connection for this blocking task so we don't hold
+        // the shared Mutex across an await point.
+        let conn = rusqlite::Connection::open(&db_path)
+            .map_err(|e| format!("Failed to open database: {}", e))?;
+
+        let mut project = match mode.as_str() {
+            "mushaf" => {
+                quran_studio_core::project::build_mushaf_project(
+                    &conn,
+                    &reciter_id,
+                    surah,
+                    ayah_start,
+                    ayah_end,
+                    Some(&data_dir),
+                )
                 .map_err(|e| e.to_string())?
-        }
-        _ => return Err(format!("Unknown project mode: {}", mode)),
-    };
+            }
+            _ => return Err(format!("Unknown project mode: {}", mode)),
+        };
 
-    let path = quran_studio_core::project::project_path(&state.projects_dir, &project.id);
-    quran_studio_core::project::save_project(&path, &mut project)
-        .map_err(|e| e.to_string())?;
+        let path = quran_studio_core::project::project_path(&projects_dir, &project.id);
+        quran_studio_core::project::save_project(&path, &mut project)
+            .map_err(|e| e.to_string())?;
 
-    Ok(project)
+        Ok(project)
+    })
+    .await
+    .map_err(|e| format!("Task join error: {}", e))??;
+
+    Ok(result)
 }
 
 #[tauri::command]
@@ -85,6 +109,48 @@ pub fn get_surah_pages(state: State<'_, AppState>, surah: u16) -> Result<Vec<u16
 }
 
 #[tauri::command]
+pub fn get_audio_file(state: State<'_, AppState>, reciter_id: String, surah: u16) -> Result<Vec<u8>, String> {
+    let audio_path = state.data_dir.join(format!("audio/{}/{:03}.mp3", reciter_id, surah));
+
+    // Download on demand if not present
+    if !audio_path.exists() {
+        if let Some(qdc_id) = quran_studio_core::audio::reciter_qdc_id(&reciter_id) {
+            quran_studio_core::audio::download_audio(qdc_id, surah, &audio_path)
+                .map_err(|e| format!("Failed to download audio: {}", e))?;
+        } else {
+            return Err(format!(
+                "Audio file not found and no QDC mapping for reciter '{}': {}",
+                reciter_id,
+                audio_path.display()
+            ));
+        }
+    }
+
+    std::fs::read(&audio_path).map_err(|e| format!("Failed to read audio file: {}", e))
+}
+
+#[tauri::command]
+pub fn read_file_bytes(path: String) -> Result<Vec<u8>, String> {
+    let p = std::path::Path::new(&path);
+    if !p.exists() {
+        return Err(format!("File not found: {}", path));
+    }
+    std::fs::read(p).map_err(|e| format!("Failed to read file: {}", e))
+}
+
+#[tauri::command]
+pub fn get_mushaf_page(state: State<'_, AppState>, page: u16) -> Result<Vec<u8>, String> {
+    let image_path = state.mushaf_dir.join(format!("page_{:03}.png", page));
+    if !image_path.exists() {
+        return Err(format!(
+            "Mushaf page image not found: {}",
+            image_path.display()
+        ));
+    }
+    std::fs::read(&image_path).map_err(|e| format!("Failed to read image: {}", e))
+}
+
+#[tauri::command]
 pub fn get_preview_frame(
     state: State<'_, AppState>,
     project_id: String,
@@ -107,8 +173,8 @@ pub fn get_audio_waveform(
     surah: u16,
 ) -> Result<Vec<f32>, String> {
     // Construct audio file path from reciter_id and surah
-    let audio_dir = state.mushaf_dir.parent().unwrap_or(&state.mushaf_dir).join("audio");
-    let audio_path = audio_dir.join(format!("{}_{:03}.mp3", reciter_id, surah));
+    let audio_dir = state.data_dir.join("audio");
+    let audio_path = audio_dir.join(format!("{}/{:03}.mp3", reciter_id, surah));
 
     if !audio_path.exists() {
         return Err(format!(
@@ -160,6 +226,48 @@ pub async fn export_video(
     .map_err(|e| e.to_string())?;
 
     Ok(result.display().to_string())
+}
+
+#[tauri::command]
+pub fn get_audio_file_path(
+    state: State<'_, AppState>,
+    reciter_id: String,
+    surah: u16,
+) -> Result<String, String> {
+    let audio_path = state
+        .data_dir
+        .join(format!("audio/{}/{:03}.mp3", reciter_id, surah));
+
+    // Download on demand if not present
+    if !audio_path.exists() {
+        if let Some(qdc_id) = quran_studio_core::audio::reciter_qdc_id(&reciter_id) {
+            quran_studio_core::audio::download_audio(qdc_id, surah, &audio_path)
+                .map_err(|e| format!("Failed to download audio: {}", e))?;
+        } else {
+            return Err(format!(
+                "Audio file not found and no QDC mapping for reciter '{}': {}",
+                reciter_id,
+                audio_path.display()
+            ));
+        }
+    }
+
+    Ok(audio_path.to_string_lossy().into_owned())
+}
+
+#[tauri::command]
+pub fn get_mushaf_page_path(
+    state: State<'_, AppState>,
+    page: u16,
+) -> Result<String, String> {
+    let image_path = state.mushaf_dir.join(format!("page_{:03}.png", page));
+    if !image_path.exists() {
+        return Err(format!(
+            "Mushaf page image not found: {}",
+            image_path.display()
+        ));
+    }
+    Ok(image_path.to_string_lossy().into_owned())
 }
 
 #[tauri::command]

@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use crate::alignment::load_alignment;
+use crate::audio;
 use crate::quran_data;
 use crate::CoreError;
 
@@ -187,9 +188,10 @@ pub fn build_mushaf_project(
     surah: u16,
     ayah_start: u16,
     ayah_end: u16,
+    data_dir: Option<&Path>,
 ) -> Result<Project, CoreError> {
     // Load alignment data (timing + word coordinates)
-    let timestamps = load_alignment(conn, reciter_id, surah, ayah_start, ayah_end)?;
+    let mut timestamps = load_alignment(conn, reciter_id, surah, ayah_start, ayah_end)?;
 
     if timestamps.is_empty() {
         return Err(CoreError::NotFound(format!(
@@ -198,7 +200,30 @@ pub fn build_mushaf_project(
         )));
     }
 
-    // Determine total duration from alignment data
+    // Determine if this is a partial ayah range (not the full surah)
+    let surah_info_list = quran_data::list_surahs();
+    let total_ayahs = surah_info_list
+        .get((surah as usize).wrapping_sub(1))
+        .map(|s| s.total_ayahs)
+        .unwrap_or(0);
+    let is_partial = ayah_start > 1 || ayah_end < total_ayahs;
+
+    // Calculate timestamp offset for partial ranges
+    let offset_ms = if is_partial {
+        timestamps[0].start_ms
+    } else {
+        0
+    };
+
+    // Adjust all timestamps by subtracting the offset so the timeline starts at 0
+    if offset_ms > 0 {
+        for t in &mut timestamps {
+            t.start_ms = t.start_ms.saturating_sub(offset_ms);
+            t.end_ms = t.end_ms.saturating_sub(offset_ms);
+        }
+    }
+
+    // Determine total duration from adjusted alignment data
     let total_duration_ms = timestamps
         .iter()
         .map(|t| t.end_ms)
@@ -214,6 +239,41 @@ pub fn build_mushaf_project(
         set.into_iter().collect()
     };
 
+    // Resolve audio file path: download if not present, trim if partial range
+    let audio_path: Option<String> = if let Some(dir) = data_dir {
+        let full_audio_path = dir.join(format!("audio/{}/{:03}.mp3", reciter_id, surah));
+
+        // Download audio if it does not exist
+        if !full_audio_path.exists() {
+            if let Some(qdc_id) = audio::reciter_qdc_id(reciter_id) {
+                audio::download_audio(qdc_id, surah, &full_audio_path)?;
+            }
+        }
+
+        if full_audio_path.exists() {
+            if is_partial && offset_ms > 0 {
+                // Trim audio to the ayah range
+                let project_id = Uuid::new_v4().to_string();
+                let projects_dir = dir.join("projects");
+                fs::create_dir_all(&projects_dir)?;
+                let trimmed_path =
+                    projects_dir.join(format!("audio_{}.mp3", project_id));
+
+                let trim_start = offset_ms;
+                let trim_end = offset_ms + total_duration_ms;
+                audio::trim_audio(&full_audio_path, trim_start, trim_end, &trimmed_path)?;
+
+                Some(trimmed_path.to_string_lossy().into_owned())
+            } else {
+                Some(full_audio_path.to_string_lossy().into_owned())
+            }
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
     // Build audio track
     let audio_track = Track {
         id: Uuid::new_v4().to_string(),
@@ -226,7 +286,7 @@ pub fn build_mushaf_project(
             data: BlockData::Audio(AudioBlockData {
                 reciter_id: reciter_id.to_string(),
                 surah,
-                audio_path: None,
+                audio_path,
             }),
         }],
         visible: true,

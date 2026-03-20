@@ -12,6 +12,8 @@ pub struct AppState {
     pub projects_dir: PathBuf,
     /// Directory where mushaf page images are stored.
     pub mushaf_dir: PathBuf,
+    /// Root data directory (contains audio/, mushaf_images/, db/, etc.)
+    pub data_dir: PathBuf,
     /// Export progress (0-100).
     pub export_progress: Arc<AtomicU32>,
     /// Export cancellation flag.
@@ -31,6 +33,7 @@ impl AppState {
             db: Mutex::new(db),
             projects_dir,
             mushaf_dir,
+            data_dir,
             export_progress: Arc::new(AtomicU32::new(0)),
             export_cancel: Arc::new(AtomicBool::new(false)),
         }

@@ -241,11 +241,32 @@ fn export_single_page(
     }
 
     // Audio input if available
-    if audio_info.is_some() {
-        // Audio would be added here when audio file path is available
+    let has_audio = if let Some(ref info) = audio_info {
+        if let Some(ref apath) = info.audio_path {
+            let p = std::path::Path::new(apath);
+            if p.exists() {
+                cmd.args(["-i", apath]);
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    } else {
+        false
+    };
+
+    // Map the audio stream if present
+    if has_audio {
+        let audio_input_idx = 1 + overlay_paths.len();
+        cmd.args(["-map", &format!("{}:a", audio_input_idx)]);
     }
 
     // Output settings
+    if has_audio {
+        cmd.arg("-shortest");
+    }
     cmd.args(["-t", &format!("{:.3}", duration_s)]);
     apply_codec_settings(&mut cmd, settings);
     cmd.args(["-progress", "pipe:1"]);
@@ -338,12 +359,29 @@ fn export_multi_page(
         "-f", "concat",
         "-safe", "0",
         "-i", concat_list.to_str().unwrap(),
-        "-c", "copy",
     ]);
 
     // Add audio if available
-    if audio_info.is_some() {
-        // Audio would be muxed here
+    let has_audio = if let Some(ref info) = audio_info {
+        if let Some(ref apath) = info.audio_path {
+            let p = std::path::Path::new(apath);
+            if p.exists() {
+                cmd.args(["-i", apath]);
+                cmd.args(["-c:v", "copy", "-c:a", "aac", "-b:a", "128k"]);
+                cmd.arg("-shortest");
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    } else {
+        false
+    };
+
+    if !has_audio {
+        cmd.args(["-c", "copy"]);
     }
 
     cmd.arg(output_path);

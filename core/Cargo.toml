@@ -14,3 +14,4 @@ rusqlite = { workspace = true }
 image = { workspace = true }
 symphonia = { workspace = true }
 imageproc = { workspace = true }
+ureq = { workspace = true }

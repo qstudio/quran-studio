@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Project } from "@/types/project";
+import { useTimelineStore } from "@/stores/timelineStore";
 
 interface AppState {
   view: "library" | "editor";
@@ -21,9 +22,13 @@ export const useAppStore = create<AppState>((set) => ({
 
   setAspectRatio: (ratio) => set({ aspectRatio: ratio }),
 
-  openProject: (_project) =>
-    set({ view: "editor" }),
+  openProject: (project) => {
+    useTimelineStore.getState().setProject(project);
+    set({ view: "editor" });
+  },
 
-  closeProject: () =>
-    set({ view: "library", inspectorVisible: true }),
+  closeProject: () => {
+    useTimelineStore.getState().setProject(null as unknown as Project);
+    set({ view: "library", inspectorVisible: true });
+  },
 }));

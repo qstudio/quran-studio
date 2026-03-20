@@ -7,6 +7,8 @@ import { TransportControls } from "@/components/Preview/TransportControls";
 import { InspectorPanel } from "@/components/Inspector/InspectorPanel";
 import TimelineEditor from "@/components/Timeline/TimelineEditor";
 import { CommandPalette } from "@/components/CommandPalette/CommandPalette";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+import { usePlayback } from "@/hooks/usePlayback";
 
 const MIN_TIMELINE_HEIGHT = 100;
 const MAX_TIMELINE_HEIGHT = 500;
@@ -18,6 +20,10 @@ export function AppShell() {
   const [timelineHeight, setTimelineHeight] = React.useState(DEFAULT_TIMELINE_HEIGHT);
   const [isResizing, setIsResizing] = React.useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = React.useState(false);
+
+  // Activate keyboard shortcuts and playback engine
+  useKeyboardShortcuts();
+  usePlayback();
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

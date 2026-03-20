@@ -8,7 +8,7 @@ export default function ZoomControl() {
 
   if (!project) return null;
 
-  const { zoom } = project.timeline;
+  const zoom = project.timeline.zoom ?? 50;
 
   // Use logarithmic scale for the slider
   const logMin = Math.log(MIN_ZOOM);

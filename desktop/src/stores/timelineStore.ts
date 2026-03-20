@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Project, Block, Track } from "../types/project";
+import { setCurrentPlayheadMs } from "./playheadSync";
 
 const MAX_HISTORY = 50;
 
@@ -76,13 +77,22 @@ export const useTimelineStore = create<TimelineState>()((set, get) => ({
   setProject: (project: Project) => {
     undoStack = [];
     redoStack = [];
-    set({ project: cloneProject(project), canUndo: false, canRedo: false });
+    // Ensure UI-only timeline fields have defaults (Rust backend may not set them)
+    const cloned = cloneProject(project);
+    if (cloned.timeline) {
+      cloned.timeline.playhead_ms = cloned.timeline.playhead_ms ?? 0;
+      cloned.timeline.zoom = cloned.timeline.zoom ?? 50;
+      cloned.timeline.scroll_x = cloned.timeline.scroll_x ?? 0;
+    }
+    set({ project: cloned, canUndo: false, canRedo: false });
   },
 
   setPlayhead: (ms: number) => {
     const { project } = get();
     if (!project) return;
     const clamped = Math.max(0, Math.min(ms, project.timeline.duration_ms));
+    // Update shared mutable ref for frame-accurate preview sync
+    setCurrentPlayheadMs(clamped);
     set({
       project: {
         ...project,
