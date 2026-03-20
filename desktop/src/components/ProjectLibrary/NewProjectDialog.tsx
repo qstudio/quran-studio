@@ -105,7 +105,8 @@ export function NewProjectDialog({
 
       // Step 2: Pre-load all mushaf page images
       setProgressStatus("Loading mushaf pages...");
-      await preloadProjectPages(project, (loaded, total) => {
+      const style = useAppStore.getState().mushafStyle;
+      await preloadProjectPages(project, style, (loaded, total) => {
         setProgressPercent(30 + Math.round((loaded / total) * 60));
         setProgressStatus(`Loading mushaf pages... ${loaded}/${total}`);
       });

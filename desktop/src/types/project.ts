@@ -27,6 +27,8 @@ export type HighlightType = "golden_glow" | "blue_box" | "underline" | "rectangl
 
 export type HighlightMode = "word" | "ayah" | "word_and_ayah";
 
+export type MushafStyle = "madani" | "tajweed";
+
 export interface HighlightStyle {
   highlight_type: HighlightType;
   color: string;
@@ -34,6 +36,14 @@ export interface HighlightStyle {
   border_radius: number;
   padding: number;
   mode?: HighlightMode;
+}
+
+/** UI-only display settings (not part of the Rust project data) */
+export interface DisplaySettings {
+  mushaf_style: MushafStyle;
+  background_color: string;
+  page_margin: number;
+  show_info: boolean;
 }
 
 export interface AudioBlockData {

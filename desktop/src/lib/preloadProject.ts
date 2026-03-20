@@ -6,23 +6,34 @@
 import { isTauri } from "@/hooks/useTauri";
 import type { Project } from "@/types/project";
 
-// Shared image cache — keyed by page number
-export const preloadedPageImages = new Map<number, HTMLImageElement>();
+// Shared image cache — keyed by "style:page" to support multiple styles
+export const preloadedPageImages = new Map<string, HTMLImageElement>();
 
-// Module-level reference to getMushafPage (avoids circular imports)
-let _getMushafPage: ((page: number) => Promise<number[]>) | null = null;
+let _getMushafPage: ((page: number, style?: string) => Promise<number[]>) | null = null;
 
-export function setMushafPageFetcher(fn: (page: number) => Promise<number[]>) {
+export function setMushafPageFetcher(fn: (page: number, style?: string) => Promise<number[]>) {
   _getMushafPage = fn;
+}
+
+/** Get cache key for a page + style combo */
+export function pageCacheKey(page: number, style: string): string {
+  return `${style}:${page}`;
+}
+
+/** Get a preloaded image for a page (checks current style, falls back to any cached version) */
+export function getPageImage(page: number, style: string): HTMLImageElement | undefined {
+  return preloadedPageImages.get(pageCacheKey(page, style))
+    ?? preloadedPageImages.get(pageCacheKey(page, "madani"))
+    ?? preloadedPageImages.get(pageCacheKey(page, "tajweed"));
 }
 
 export async function preloadProjectPages(
   project: Project,
+  style: string = "madani",
   onProgress?: (loaded: number, total: number) => void
 ): Promise<void> {
   if (!isTauri() || !_getMushafPage) return;
 
-  // Find all unique page numbers
   const pages = new Set<number>();
   for (const track of project.timeline.tracks) {
     if (track.track_type !== "mushaf_page") continue;
@@ -45,13 +56,14 @@ export async function preloadProjectPages(
     await Promise.all(
       batch.map(async (page) => {
         try {
-          if (preloadedPageImages.has(page)) {
+          const key = pageCacheKey(page, style);
+          if (preloadedPageImages.has(key)) {
             loaded++;
             onProgress?.(loaded, total);
             return;
           }
 
-          const bytes = await _getMushafPage!(page);
+          const bytes = await _getMushafPage!(page, style);
           const uint8 = new Uint8Array(bytes);
           const blob = new Blob([uint8], { type: "image/png" });
           const url = URL.createObjectURL(blob);
@@ -59,7 +71,7 @@ export async function preloadProjectPages(
           await new Promise<void>((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-              preloadedPageImages.set(page, img);
+              preloadedPageImages.set(key, img);
               loaded++;
               onProgress?.(loaded, total);
               resolve();

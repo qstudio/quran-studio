@@ -1,7 +1,7 @@
 import React from "react";
 import { useTimelineStore } from "@/stores/timelineStore";
 import { useAppStore } from "@/stores/appStore";
-import { preloadedPageImages } from "@/lib/preloadProject";
+import { getPageImage } from "@/lib/preloadProject";
 import { currentPlayheadMs } from "@/stores/playheadSync";
 import type { Block, HighlightBlockData, HighlightMode } from "@/types/project";
 
@@ -16,13 +16,8 @@ interface WordBBox {
   height: number;
 }
 
-/**
- * Binary search for the active word at a given timestamp.
- * Returns the index into blocks, or -1 if none.
- */
 function findActiveWordIndex(blocks: Block[], timestampMs: number): number {
   if (blocks.length === 0) return -1;
-
   let lo = 0;
   let hi = blocks.length;
   while (lo < hi) {
@@ -32,33 +27,23 @@ function findActiveWordIndex(blocks: Block[], timestampMs: number): number {
   }
   const idx = lo - 1;
   if (idx < 0) return -1;
-
-  const ref = blocks[idx];
-  if (ref.data.type !== "highlight") return -1;
-
-  // Check gap tolerance
-  if (timestampMs > ref.end_ms) {
+  if (blocks[idx].data.type !== "highlight") return -1;
+  if (timestampMs > blocks[idx].end_ms) {
     const nextIdx = idx + 1;
     if (nextIdx < blocks.length && blocks[nextIdx].start_ms - timestampMs < GAP_TOLERANCE_MS) {
-      return idx; // keep current during gap
+      return idx;
     }
     return -1;
   }
-
   return idx;
 }
 
-/**
- * Get all highlight blocks for a given ayah number.
- */
 function getAyahBlocks(blocks: Block[], surah: number, ayah: number): HighlightBlockData[] {
   const result: HighlightBlockData[] = [];
   for (const block of blocks) {
     if (block.data.type !== "highlight") continue;
     const data = block.data as HighlightBlockData;
-    if (data.surah === surah && data.ayah === ayah) {
-      result.push(data);
-    }
+    if (data.surah === surah && data.ayah === ayah) result.push(data);
   }
   return result;
 }
@@ -77,14 +62,12 @@ function fractionalToPixel(
 
 function mergeBboxes(bboxes: WordBBox[]): WordBBox[] {
   if (bboxes.length <= 1) return bboxes;
-
   const lines: Map<number, WordBBox[]> = new Map();
   for (const b of bboxes) {
     const lineKey = Math.floor((b.y + b.height / 2) / 20);
     if (!lines.has(lineKey)) lines.set(lineKey, []);
     lines.get(lineKey)!.push(b);
   }
-
   const merged: WordBBox[] = [];
   for (const lineBboxes of lines.values()) {
     merged.push({
@@ -97,6 +80,10 @@ function mergeBboxes(bboxes: WordBBox[]): WordBBox[] {
   return merged;
 }
 
+/**
+ * Draw highlight boxes with improved visual quality.
+ * Uses shadow blur for soft glow effect instead of hard outlines.
+ */
 function drawHighlightBoxes(
   ctx: CanvasRenderingContext2D,
   bboxes: WordBBox[],
@@ -110,10 +97,24 @@ function drawHighlightBoxes(
     if (shape === "underline") {
       const x1 = bbox.x - padding;
       const x2 = bbox.x + bbox.width + padding;
-      const y = bbox.y + bbox.height + 4;
-      ctx.globalAlpha = Math.min(opacity + 0.3, 1.0);
+      const y = bbox.y + bbox.height + 3;
+
+      // Soft glow under the line
+      ctx.globalAlpha = opacity * 0.4;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
       ctx.strokeStyle = color;
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      ctx.lineTo(x2, y);
+      ctx.stroke();
+
+      // Crisp line on top
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = opacity;
+      ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(x1, y);
       ctx.lineTo(x2, y);
@@ -125,19 +126,31 @@ function drawHighlightBoxes(
       const h = bbox.height + padding * 2;
       const radius = 6;
 
-      // Fill
+      // Outer glow (soft shadow)
+      ctx.globalAlpha = opacity * 0.3;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, radius);
+      ctx.fill();
+
+      // Main fill (no shadow)
+      ctx.shadowBlur = 0;
       ctx.globalAlpha = opacity;
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.roundRect(x, y, w, h, radius);
       ctx.fill();
 
-      // Outline
-      ctx.globalAlpha = Math.min(opacity + 0.3, 1.0);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
+      // Subtle inner border (slightly brighter)
+      ctx.globalAlpha = Math.min(opacity * 0.6, 0.4);
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.roundRect(x, y, w, h, radius);
+      ctx.roundRect(x + 0.5, y + 0.5, w - 1, h - 1, radius);
       ctx.stroke();
     }
   }
@@ -177,6 +190,13 @@ export function PreviewPanel() {
         return;
       }
 
+      // Read display settings from app store
+      const appState = useAppStore.getState();
+      const bgColor = appState.backgroundColor;
+      const margin = appState.pageMargin;
+      const mushafStyle = appState.mushafStyle;
+      const showInfoText = appState.showInfo;
+
       // Resize canvas
       const rect = container.getBoundingClientRect();
       if (rect.width > 0 && rect.height > 0) {
@@ -202,11 +222,11 @@ export function PreviewPanel() {
 
       const w = canvas.width;
       const h = canvas.height;
-      const isPlaying = useTimelineStore.getState().isPlaying;
+      const isPlaying = state.isPlaying;
       const timestampMs = isPlaying ? currentPlayheadMs : currentProject.timeline.playhead_ms;
 
-      // Clear
-      ctx.fillStyle = "#0A0A0A";
+      // Clear with user-selected background
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
 
       // Find active page
@@ -228,25 +248,29 @@ export function PreviewPanel() {
         }
       }
 
-      // Draw mushaf page
       if (activePage !== null) {
-        const img = preloadedPageImages.get(activePage);
+        const img = getPageImage(activePage, mushafStyle);
         if (img) {
-          // Compute draw dimensions
+          // Compute draw area with margin
           const imgAspect = img.width / img.height;
-          const canvasAspect = w / h;
+          const availW = w - margin * 2;
+          const availH = h - margin * 2;
+          const availAspect = availW / availH;
+
           let drawW: number, drawH: number, drawX: number, drawY: number;
-          if (canvasAspect > imgAspect) {
-            drawH = h; drawW = h * imgAspect;
-            drawX = (w - drawW) / 2; drawY = 0;
+          if (availAspect > imgAspect) {
+            drawH = availH; drawW = availH * imgAspect;
+            drawX = (w - drawW) / 2; drawY = margin;
           } else {
-            drawW = w; drawH = w / imgAspect;
-            drawX = 0; drawY = (h - drawH) / 2;
+            drawW = availW; drawH = availW / imgAspect;
+            drawX = margin; drawY = (h - drawH) / 2;
           }
 
-          // Cream background + page image
+          // Cream background behind the page image (for transparent PNGs)
           ctx.fillStyle = "#F5EFE3";
           ctx.fillRect(drawX, drawY, drawW, drawH);
+
+          // Draw mushaf page
           ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
           // Draw highlights
@@ -262,46 +286,42 @@ export function PreviewPanel() {
               const padding = style.padding ?? 6;
 
               if (mode === "word") {
-                // Single word highlight
                 const bbox = fractionalToPixel(activeData, drawX, drawY, drawW, drawH);
                 drawHighlightBoxes(ctx, [bbox], style.color, style.opacity, padding, shape);
-
               } else if (mode === "ayah") {
-                // Full ayah highlight — all words in the current ayah
                 const ayahBlocks = getAyahBlocks(highlightTrack.blocks, activeData.surah, activeData.ayah);
                 const ayahBboxes = ayahBlocks.map((d) => fractionalToPixel(d, drawX, drawY, drawW, drawH));
                 const merged = mergeBboxes(ayahBboxes);
                 drawHighlightBoxes(ctx, merged, style.color, style.opacity, padding, shape);
-
               } else if (mode === "word_and_ayah") {
-                // Dim ayah highlight + bright active word
                 const ayahBlocks = getAyahBlocks(highlightTrack.blocks, activeData.surah, activeData.ayah);
                 const ayahBboxes = ayahBlocks.map((d) => fractionalToPixel(d, drawX, drawY, drawW, drawH));
                 const merged = mergeBboxes(ayahBboxes);
-
-                // Draw ayah at reduced opacity
-                drawHighlightBoxes(ctx, merged, style.color, style.opacity * 0.35, padding, shape);
-
-                // Draw active word at full opacity
+                // Dim ayah
+                drawHighlightBoxes(ctx, merged, style.color, style.opacity * 0.3, padding, shape);
+                // Bright word
                 const wordBbox = fractionalToPixel(activeData, drawX, drawY, drawW, drawH);
                 drawHighlightBoxes(ctx, [wordBbox], style.color, style.opacity, padding, shape);
               }
 
               // Info text
-              ctx.font = `${Math.round(w * 0.022)}px "Inter", sans-serif`;
-              ctx.fillStyle = style.color;
-              ctx.globalAlpha = 0.8;
-              ctx.textAlign = "center";
-              ctx.textBaseline = "bottom";
-              ctx.fillText(
-                `${activeData.surah}:${activeData.ayah} w${activeData.word_position}`,
-                w / 2, h - 8
-              );
-              ctx.globalAlpha = 1;
+              if (showInfoText) {
+                ctx.save();
+                ctx.font = `${Math.round(w * 0.022)}px "Inter", sans-serif`;
+                ctx.fillStyle = style.color;
+                ctx.globalAlpha = 0.7;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "bottom";
+                ctx.fillText(
+                  `${activeData.surah}:${activeData.ayah} w${activeData.word_position}`,
+                  w / 2, h - 8
+                );
+                ctx.restore();
+              }
             }
           }
         } else {
-          // Placeholder
+          // Placeholder when image not loaded
           ctx.fillStyle = "#1A1A1A";
           ctx.fillRect(0, 0, w, h);
           ctx.font = `${Math.round(w * 0.04)}px "Inter", sans-serif`;

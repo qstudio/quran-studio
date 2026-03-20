@@ -271,12 +271,12 @@ async function getAudioWaveform(reciterId: string, surah: number): Promise<numbe
   return tauriInvoke<number[]>("get_audio_waveform", { reciterId, surah });
 }
 
-async function getMushafPage(page: number): Promise<number[]> {
-  return tauriInvoke<number[]>("get_mushaf_page", { page });
+async function getMushafPage(page: number, style?: string): Promise<number[]> {
+  return tauriInvoke<number[]>("get_mushaf_page", { page, style });
 }
 
-async function getMushafPagePath(page: number): Promise<string> {
-  return tauriInvoke<string>("get_mushaf_page_path", { page });
+async function getMushafPagePath(page: number, style?: string): Promise<string> {
+  return tauriInvoke<string>("get_mushaf_page_path", { page, style });
 }
 
 async function getAudioFile(reciterId: string, surah: number): Promise<number[]> {

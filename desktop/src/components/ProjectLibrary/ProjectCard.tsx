@@ -49,7 +49,8 @@ export function ProjectCard({
     try {
       const fullProject = await loadProject(project.id);
       // Pre-load mushaf images before opening editor
-      await preloadProjectPages(fullProject);
+      const style = useAppStore.getState().mushafStyle;
+      await preloadProjectPages(fullProject, style);
       openProject(fullProject);
     } catch {
       // Handle error

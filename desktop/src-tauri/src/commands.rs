@@ -139,15 +139,27 @@ pub fn read_file_bytes(path: String) -> Result<Vec<u8>, String> {
 }
 
 #[tauri::command]
-pub fn get_mushaf_page(state: State<'_, AppState>, page: u16) -> Result<Vec<u8>, String> {
-    let image_path = state.mushaf_dir.join(format!("page_{:03}.png", page));
-    if !image_path.exists() {
-        return Err(format!(
-            "Mushaf page image not found: {}",
-            image_path.display()
-        ));
+pub fn get_mushaf_page(state: State<'_, AppState>, page: u16, style: Option<String>) -> Result<Vec<u8>, String> {
+    let style = style.unwrap_or_else(|| "madani".to_string());
+
+    // Try style-specific directory first, then fall back to default mushaf_images
+    let dirs_to_try = [
+        state.data_dir.join(format!("mushaf_images_{}", style)),
+        state.mushaf_dir.clone(), // default: mushaf_images
+    ];
+
+    for dir in &dirs_to_try {
+        let image_path = dir.join(format!("page_{:03}.png", page));
+        if image_path.exists() {
+            return std::fs::read(&image_path)
+                .map_err(|e| format!("Failed to read image: {}", e));
+        }
     }
-    std::fs::read(&image_path).map_err(|e| format!("Failed to read image: {}", e))
+
+    Err(format!(
+        "Mushaf page image not found for page {} style '{}'",
+        page, style
+    ))
 }
 
 #[tauri::command]
@@ -259,15 +271,26 @@ pub fn get_audio_file_path(
 pub fn get_mushaf_page_path(
     state: State<'_, AppState>,
     page: u16,
+    style: Option<String>,
 ) -> Result<String, String> {
-    let image_path = state.mushaf_dir.join(format!("page_{:03}.png", page));
-    if !image_path.exists() {
-        return Err(format!(
-            "Mushaf page image not found: {}",
-            image_path.display()
-        ));
+    let style = style.unwrap_or_else(|| "madani".to_string());
+
+    let dirs_to_try = [
+        state.data_dir.join(format!("mushaf_images_{}", style)),
+        state.mushaf_dir.clone(),
+    ];
+
+    for dir in &dirs_to_try {
+        let image_path = dir.join(format!("page_{:03}.png", page));
+        if image_path.exists() {
+            return Ok(image_path.to_string_lossy().into_owned());
+        }
     }
-    Ok(image_path.to_string_lossy().into_owned())
+
+    Err(format!(
+        "Mushaf page image not found for page {} style '{}'",
+        page, style
+    ))
 }
 
 #[tauri::command]
