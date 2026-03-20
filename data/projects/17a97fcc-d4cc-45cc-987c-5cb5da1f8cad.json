@@ -1,0 +1,5196 @@
+{
+  "id": "17a97fcc-d4cc-45cc-987c-5cb5da1f8cad",
+  "name": "Al-Ma'idah - Ayahs 1-5",
+  "mode": "mushaf",
+  "surah": 5,
+  "ayah_start": 1,
+  "ayah_end": 5,
+  "reciter_id": "dossari",
+  "timeline": {
+    "duration_ms": 231420,
+    "tracks": [
+      {
+        "id": "6a234764-583b-40a8-ad4e-a5000ae69fce",
+        "name": "Audio",
+        "track_type": "audio",
+        "blocks": [
+          {
+            "id": "28cf29ff-ce13-4b31-8749-43b529c54b58",
+            "start_ms": 0,
+            "end_ms": 231420,
+            "data": {
+              "type": "audio",
+              "reciter_id": "dossari",
+              "surah": 5,
+              "audio_path": "/Users/ahmednasr/Documents/Programming/Github-Desktop/quran-studio/data/projects/audio_6234e56d-de29-4fdd-a27f-7474ab45d06d.mp3"
+            }
+          }
+        ],
+        "visible": true,
+        "locked": false
+      },
+      {
+        "id": "3b514588-3170-4e28-974c-e84403c80754",
+        "name": "Mushaf Pages",
+        "track_type": "mushaf_page",
+        "blocks": [
+          {
+            "id": "40481a57-ea2b-4a00-9b66-331007549c27",
+            "start_ms": 0,
+            "end_ms": 83200,
+            "data": {
+              "type": "mushaf_page",
+              "page": 106,
+              "image_path": "mushaf/page_106.png"
+            }
+          },
+          {
+            "id": "25520e12-9b9b-4ac0-82bc-ed327e5b9722",
+            "start_ms": 84450,
+            "end_ms": 231420,
+            "data": {
+              "type": "mushaf_page",
+              "page": 107,
+              "image_path": "mushaf/page_107.png"
+            }
+          }
+        ],
+        "visible": true,
+        "locked": false
+      },
+      {
+        "id": "e7fee1af-24f5-45f1-9053-2f2e54c360ab",
+        "name": "Highlights",
+        "track_type": "highlight",
+        "blocks": [
+          {
+            "id": "f6ada967-f462-4667-98a7-fec044f35e9e",
+            "start_ms": 0,
+            "end_ms": 3320,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 1,
+              "page": 106,
+              "x": 86194,
+              "y": 47513,
+              "width": 10075,
+              "height": 6243,
+              "text_uthmani": "وَبَشِّرِ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9e5ecdcd-d7a6-4e5c-b770-1481298e300c",
+            "start_ms": 3320,
+            "end_ms": 4090,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 2,
+              "page": 106,
+              "x": 72463,
+              "y": 47513,
+              "width": 12463,
+              "height": 6243,
+              "text_uthmani": "ٱلَّذِينَ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "35b729b7-43bf-416a-8c53-c8140f90f5e7",
+            "start_ms": 4130,
+            "end_ms": 4960,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 3,
+              "page": 106,
+              "x": 60373,
+              "y": 47513,
+              "width": 10672,
+              "height": 6243,
+              "text_uthmani": "ءَامَنُوا۟",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "da79e562-07bb-499c-a277-766175ba1fb0",
+            "start_ms": 4960,
+            "end_ms": 6350,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 4,
+              "page": 106,
+              "x": 51716,
+              "y": 47513,
+              "width": 7388,
+              "height": 6243,
+              "text_uthmani": "وَعَمِلُوا۟",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3958f1ea-47ad-4f9f-823b-28f810c43082",
+            "start_ms": 6350,
+            "end_ms": 7080,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 5,
+              "page": 106,
+              "x": 37985,
+              "y": 47513,
+              "width": 12985,
+              "height": 6243,
+              "text_uthmani": "ٱلصَّـٰلِحَـٰتِ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9d92f6a6-3fb4-44a2-9528-2f84bbb54eb8",
+            "start_ms": 7080,
+            "end_ms": 10140,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 6,
+              "page": 106,
+              "x": 22612,
+              "y": 47513,
+              "width": 9478,
+              "height": 6243,
+              "text_uthmani": "أَنَّ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "58cce3f2-d0b5-4691-9257-d9f976d54a07",
+            "start_ms": 10140,
+            "end_ms": 11030,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 7,
+              "page": 106,
+              "x": 15373,
+              "y": 47513,
+              "width": 6045,
+              "height": 6243,
+              "text_uthmani": "لَهُمْ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "2a92e8cf-4bb5-479c-81e7-1d8546c3f19c",
+            "start_ms": 11030,
+            "end_ms": 12220,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 8,
+              "page": 106,
+              "x": 3507,
+              "y": 47513,
+              "width": 10821,
+              "height": 6243,
+              "text_uthmani": "جَنَّـٰتٍۢ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5044834a-d8d0-406a-89b0-cd9277b20b61",
+            "start_ms": 12220,
+            "end_ms": 13190,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 9,
+              "page": 106,
+              "x": 84925,
+              "y": 53757,
+              "width": 11343,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "81776f5e-40e4-4ab2-a02f-5cbe70970047",
+            "start_ms": 13190,
+            "end_ms": 14180,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 10,
+              "page": 106,
+              "x": 79701,
+              "y": 53757,
+              "width": 4925,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d9291668-361c-4365-95ff-583723357118",
+            "start_ms": 14180,
+            "end_ms": 14870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 11,
+              "page": 106,
+              "x": 75970,
+              "y": 53757,
+              "width": 2612,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b3d1987b-5f34-4c1f-9aa7-02d0238568f0",
+            "start_ms": 14870,
+            "end_ms": 15250,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 12,
+              "page": 106,
+              "x": 69478,
+              "y": 53757,
+              "width": 5746,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b222f786-1e00-4234-a6df-7c3607389f2d",
+            "start_ms": 15250,
+            "end_ms": 15910,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 13,
+              "page": 106,
+              "x": 58955,
+              "y": 53757,
+              "width": 9179,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "7c8cad42-c99f-422d-a6d4-28db6b8b7a9f",
+            "start_ms": 15910,
+            "end_ms": 16840,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 14,
+              "page": 106,
+              "x": 52164,
+              "y": 53757,
+              "width": 5448,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "fd1f1a5b-0237-41db-ae20-32c561f4a0c5",
+            "start_ms": 16840,
+            "end_ms": 17360,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 15,
+              "page": 106,
+              "x": 44776,
+              "y": 53757,
+              "width": 6045,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b150f178-a7a2-4078-82c7-5b24d05e0002",
+            "start_ms": 17360,
+            "end_ms": 17920,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 16,
+              "page": 106,
+              "x": 34104,
+              "y": 53757,
+              "width": 9552,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c88fe4a2-447b-476f-b2d4-e66d7e61c917",
+            "start_ms": 17920,
+            "end_ms": 18870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 17,
+              "page": 106,
+              "x": 25149,
+              "y": 53757,
+              "width": 7388,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f01426a4-786d-4f53-b280-1fd1f6692ca4",
+            "start_ms": 18870,
+            "end_ms": 20710,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 18,
+              "page": 106,
+              "x": 16493,
+              "y": 53757,
+              "width": 7239,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "04cf6800-ab66-46a9-b9f6-95d5410b8b86",
+            "start_ms": 20710,
+            "end_ms": 21620,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 19,
+              "page": 106,
+              "x": 8881,
+              "y": 53757,
+              "width": 3284,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "6c1681cf-5923-40f1-b36d-4c82ec905654",
+            "start_ms": 21620,
+            "end_ms": 22770,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 20,
+              "page": 106,
+              "x": 3657,
+              "y": 53757,
+              "width": 4030,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a923a1b2-f706-4476-81c3-ff06b241897a",
+            "start_ms": 22850,
+            "end_ms": 23450,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 21,
+              "page": 106,
+              "x": 86940,
+              "y": 60212,
+              "width": 9478,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "270f14fe-4a40-4cef-b667-513c22d839a6",
+            "start_ms": 23450,
+            "end_ms": 24200,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 22,
+              "page": 106,
+              "x": 83134,
+              "y": 60212,
+              "width": 3060,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4b601a11-9dbb-4811-9a09-d7a71ea9d360",
+            "start_ms": 24200,
+            "end_ms": 24540,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 1,
+              "word_position": 23,
+              "page": 106,
+              "x": 74925,
+              "y": 60212,
+              "width": 7090,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "66c2e3c9-2b3f-4863-aeef-0e0329d07f67",
+            "start_ms": 26110,
+            "end_ms": 27730,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 1,
+              "page": 106,
+              "x": 59104,
+              "y": 60212,
+              "width": 8507,
+              "height": 6825,
+              "text_uthmani": "تَجْرِى",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ded51ea5-eac5-432f-9fca-f44ef8b66602",
+            "start_ms": 27770,
+            "end_ms": 28530,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 2,
+              "page": 106,
+              "x": 49254,
+              "y": 60212,
+              "width": 8657,
+              "height": 6825,
+              "text_uthmani": "مِن",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "0f7c9009-d632-425a-8b22-6c2c93fe94f5",
+            "start_ms": 28590,
+            "end_ms": 29410,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 3,
+              "page": 106,
+              "x": 37612,
+              "y": 60212,
+              "width": 10224,
+              "height": 6825,
+              "text_uthmani": "تَحْتِهَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b4ac7f7a-595c-45bb-865f-b14104dc2843",
+            "start_ms": 29410,
+            "end_ms": 30280,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 4,
+              "page": 106,
+              "x": 32836,
+              "y": 60212,
+              "width": 3731,
+              "height": 6825,
+              "text_uthmani": "ٱلْأَنْهَـٰرُ ۖ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4f068303-8bc8-4198-bca3-e9b64cfe6ef4",
+            "start_ms": 30280,
+            "end_ms": 30610,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 5,
+              "page": 106,
+              "x": 23284,
+              "y": 60212,
+              "width": 8507,
+              "height": 6825,
+              "text_uthmani": "كُلَّمَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ea0c7639-e645-4078-9f65-400c9eccce04",
+            "start_ms": 30610,
+            "end_ms": 31430,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 6,
+              "page": 106,
+              "x": 10000,
+              "y": 60212,
+              "width": 11866,
+              "height": 6825,
+              "text_uthmani": "رُزِقُوا۟",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "acb5bf2d-e977-4b94-ad3a-5b5f77da5d67",
+            "start_ms": 31520,
+            "end_ms": 33180,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 7,
+              "page": 106,
+              "x": 3657,
+              "y": 60212,
+              "width": 5522,
+              "height": 6825,
+              "text_uthmani": "مِنْهَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f5757918-1214-4fad-acc7-71527d5db892",
+            "start_ms": 33240,
+            "end_ms": 33880,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 8,
+              "page": 106,
+              "x": 90672,
+              "y": 67037,
+              "width": 5597,
+              "height": 6455,
+              "text_uthmani": "مِن",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f738a05b-80f5-4090-b561-95755021cec1",
+            "start_ms": 33880,
+            "end_ms": 34220,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 9,
+              "page": 106,
+              "x": 79552,
+              "y": 67037,
+              "width": 10224,
+              "height": 6455,
+              "text_uthmani": "ثَمَرَةٍۢ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "88c72e9e-264d-43d1-8f6b-12c3ca54f290",
+            "start_ms": 34220,
+            "end_ms": 34940,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 10,
+              "page": 106,
+              "x": 68881,
+              "y": 67037,
+              "width": 9552,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "0f5b49ce-c92e-4082-abdb-ddb2776611f7",
+            "start_ms": 34940,
+            "end_ms": 35810,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 11,
+              "page": 106,
+              "x": 62090,
+              "y": 67037,
+              "width": 5672,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "07259d21-5bb5-4e9e-bc78-171c1dfa7541",
+            "start_ms": 35810,
+            "end_ms": 36080,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 12,
+              "page": 106,
+              "x": 50970,
+              "y": 67037,
+              "width": 10149,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "74a422ac-1e6c-421b-89bf-5a5285f4f466",
+            "start_ms": 36100,
+            "end_ms": 36900,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 13,
+              "page": 106,
+              "x": 44104,
+              "y": 67037,
+              "width": 5448,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "78d84039-f87a-4829-a1c8-fcc8f7b71db8",
+            "start_ms": 36900,
+            "end_ms": 39840,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 14,
+              "page": 106,
+              "x": 30522,
+              "y": 67037,
+              "width": 12687,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "59024151-fd15-4a7f-a9e6-7abd24f81117",
+            "start_ms": 39840,
+            "end_ms": 42120,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 15,
+              "page": 106,
+              "x": 23284,
+              "y": 67037,
+              "width": 6493,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "18da94f4-7617-4ed3-bd8a-a86677443e8a",
+            "start_ms": 42120,
+            "end_ms": 43510,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 16,
+              "page": 106,
+              "x": 13955,
+              "y": 67037,
+              "width": 8657,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "1ec971bb-e258-4481-b9c9-4e2a374c3385",
+            "start_ms": 43510,
+            "end_ms": 46750,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 17,
+              "page": 106,
+              "x": 3657,
+              "y": 67037,
+              "width": 9403,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ab56ada7-4e3a-420b-bad7-2216bbb79e27",
+            "start_ms": 46750,
+            "end_ms": 47460,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 18,
+              "page": 106,
+              "x": 88060,
+              "y": 73492,
+              "width": 8209,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b1dd448d-f50b-41df-8b47-a4e5cf1e873a",
+            "start_ms": 47460,
+            "end_ms": 48310,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 19,
+              "page": 106,
+              "x": 77687,
+              "y": 73492,
+              "width": 9254,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "052a8d76-f7cc-4a1e-ad29-d5e9afbde91f",
+            "start_ms": 48310,
+            "end_ms": 49390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 20,
+              "page": 106,
+              "x": 68284,
+              "y": 73492,
+              "width": 7985,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "523a7f58-975b-4f95-8ada-7a8022500a4d",
+            "start_ms": 49390,
+            "end_ms": 50500,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 21,
+              "page": 106,
+              "x": 62985,
+              "y": 73492,
+              "width": 4179,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "03ed802a-2a7d-4be3-a542-bd2ff941d157",
+            "start_ms": 50500,
+            "end_ms": 50730,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 22,
+              "page": 106,
+              "x": 55448,
+              "y": 73492,
+              "width": 6343,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c10410d5-4b6e-42bd-8113-4fd8048659ac",
+            "start_ms": 50790,
+            "end_ms": 51710,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 23,
+              "page": 106,
+              "x": 43657,
+              "y": 73492,
+              "width": 10672,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9981d978-da3e-4503-8a2b-25b2149b21ac",
+            "start_ms": 51710,
+            "end_ms": 53300,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 24,
+              "page": 106,
+              "x": 32090,
+              "y": 73492,
+              "width": 5672,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d1de4cf6-350b-4d3e-87e6-c9662261b2a1",
+            "start_ms": 53420,
+            "end_ms": 54180,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 25,
+              "page": 106,
+              "x": 23433,
+              "y": 73492,
+              "width": 7239,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a70116de-dc4e-45fb-b2f4-0edf108a8316",
+            "start_ms": 54180,
+            "end_ms": 55100,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 26,
+              "page": 106,
+              "x": 9851,
+              "y": 73492,
+              "width": 12463,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "299385b7-6c0f-4b9d-a3c0-9a2adb1bebbe",
+            "start_ms": 55100,
+            "end_ms": 56290,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 27,
+              "page": 106,
+              "x": 90224,
+              "y": 80053,
+              "width": 6045,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ec7ab983-9ff3-4489-95ce-20463921d191",
+            "start_ms": 56290,
+            "end_ms": 57050,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 28,
+              "page": 106,
+              "x": 74403,
+              "y": 80053,
+              "width": 14851,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5414012a-5012-4d23-93f0-5749db4a534d",
+            "start_ms": 57050,
+            "end_ms": 58680,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 29,
+              "page": 106,
+              "x": 61940,
+              "y": 80053,
+              "width": 10672,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "80eac3d3-0d6c-4e63-9b72-26c7fedf7cb6",
+            "start_ms": 58680,
+            "end_ms": 59620,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 30,
+              "page": 106,
+              "x": 52985,
+              "y": 80053,
+              "width": 6791,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f5331a80-1e4a-48e7-a108-61fa3d413f5b",
+            "start_ms": 59620,
+            "end_ms": 60320,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 31,
+              "page": 106,
+              "x": 47687,
+              "y": 80053,
+              "width": 3731,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ccde9ccf-0600-4424-bb22-ffc92e3f7bea",
+            "start_ms": 60320,
+            "end_ms": 60960,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 32,
+              "page": 106,
+              "x": 27164,
+              "y": 80053,
+              "width": 19104,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4c3e229c-fbfc-4ab2-9bce-7e2c7d1b6c3b",
+            "start_ms": 61020,
+            "end_ms": 62160,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 33,
+              "page": 106,
+              "x": 20299,
+              "y": 80053,
+              "width": 5299,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "e928e9c9-40b4-4c88-92a4-87debef497df",
+            "start_ms": 62160,
+            "end_ms": 62540,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 34,
+              "page": 106,
+              "x": 3806,
+              "y": 80053,
+              "width": 15448,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "bc1c5b31-4697-40b5-be12-22683e806efe",
+            "start_ms": 62540,
+            "end_ms": 63390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 35,
+              "page": 106,
+              "x": 86493,
+              "y": 86667,
+              "width": 9925,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b5bf8551-9cf0-46f0-b7e3-cdec05913b0d",
+            "start_ms": 63390,
+            "end_ms": 64060,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 36,
+              "page": 106,
+              "x": 81866,
+              "y": 86667,
+              "width": 3582,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "575da299-db8a-4458-bdfd-70d099a778f5",
+            "start_ms": 64060,
+            "end_ms": 65660,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 37,
+              "page": 106,
+              "x": 69776,
+              "y": 86667,
+              "width": 10522,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "10e32fbd-4657-4272-8810-fd789c4473d3",
+            "start_ms": 65660,
+            "end_ms": 66460,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 38,
+              "page": 106,
+              "x": 51119,
+              "y": 86667,
+              "width": 12313,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "1ce7ad03-f5a7-40cc-b978-90f120523bf0",
+            "start_ms": 66460,
+            "end_ms": 68290,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 39,
+              "page": 106,
+              "x": 44925,
+              "y": 86667,
+              "width": 4776,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ebb14bc3-ced1-4307-b0c5-2ff2eb216995",
+            "start_ms": 68410,
+            "end_ms": 68770,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 40,
+              "page": 106,
+              "x": 38134,
+              "y": 86667,
+              "width": 5373,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b7b377dc-a2d4-4731-95d7-68b99b807467",
+            "start_ms": 68770,
+            "end_ms": 69480,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 41,
+              "page": 106,
+              "x": 25000,
+              "y": 86667,
+              "width": 12164,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4816dd92-b2cf-4cbf-ae81-418b935ca8d9",
+            "start_ms": 69480,
+            "end_ms": 70600,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 42,
+              "page": 106,
+              "x": 13806,
+              "y": 86667,
+              "width": 5149,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "41ac5527-d214-4f1b-90c4-05d009bebf3e",
+            "start_ms": 70600,
+            "end_ms": 71150,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 43,
+              "page": 106,
+              "x": 3657,
+              "y": 86667,
+              "width": 8955,
+              "height": 6878,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "1d0bae12-396d-4de8-bdf3-f566f8f97c2e",
+            "start_ms": 71150,
+            "end_ms": 72220,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 44,
+              "page": 106,
+              "x": 91418,
+              "y": 93545,
+              "width": 4851,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "0da4fd78-ea84-44f5-a8dd-f6ef063eaac1",
+            "start_ms": 72220,
+            "end_ms": 72600,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 45,
+              "page": 106,
+              "x": 81866,
+              "y": 93545,
+              "width": 8507,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "35dec31f-91f0-4fb9-a3f1-a735c8c8fd62",
+            "start_ms": 72600,
+            "end_ms": 73270,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 46,
+              "page": 106,
+              "x": 67761,
+              "y": 93545,
+              "width": 12985,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "85a7fc78-3477-4309-b60c-b3f99a133827",
+            "start_ms": 73270,
+            "end_ms": 75920,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 47,
+              "page": 106,
+              "x": 52612,
+              "y": 93545,
+              "width": 9478,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "91c328dc-23fa-4c0a-adbc-ad22aeeaae4d",
+            "start_ms": 75980,
+            "end_ms": 77040,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 48,
+              "page": 106,
+              "x": 45970,
+              "y": 93545,
+              "width": 5597,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "82fa767e-6af4-4679-8d7a-fca20caf66c1",
+            "start_ms": 77060,
+            "end_ms": 79850,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 49,
+              "page": 106,
+              "x": 37612,
+              "y": 93545,
+              "width": 4179,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "e1a9e195-9230-415b-a74f-a0c6fa2b8768",
+            "start_ms": 79850,
+            "end_ms": 81690,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 50,
+              "page": 106,
+              "x": 31940,
+              "y": 93545,
+              "width": 4627,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "40861e6f-2c40-44f2-a310-7e7a6f32b6be",
+            "start_ms": 81750,
+            "end_ms": 82400,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 51,
+              "page": 106,
+              "x": 22313,
+              "y": 93545,
+              "width": 8209,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9359ce0e-8e08-4682-900f-bbb23bf36a84",
+            "start_ms": 82400,
+            "end_ms": 83200,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 2,
+              "word_position": 52,
+              "page": 106,
+              "x": 10746,
+              "y": 93545,
+              "width": 10373,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "fd270b1a-c1e6-4476-b78f-fe765b5e5dc1",
+            "start_ms": 84450,
+            "end_ms": 85860,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 1,
+              "page": 107,
+              "x": 84776,
+              "y": 159,
+              "width": 11119,
+              "height": 6455,
+              "text_uthmani": "رِّزْقًۭا ۙ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a7633798-b3b4-466b-9698-a12828fa0d0b",
+            "start_ms": 85860,
+            "end_ms": 86780,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 2,
+              "page": 107,
+              "x": 73060,
+              "y": 159,
+              "width": 10224,
+              "height": 6455,
+              "text_uthmani": "قَالُوا۟",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "43fb4e79-5f0d-4d3a-a839-2238ea48856d",
+            "start_ms": 86780,
+            "end_ms": 87440,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 3,
+              "page": 107,
+              "x": 62090,
+              "y": 159,
+              "width": 10149,
+              "height": 6455,
+              "text_uthmani": "هَـٰذَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "30e5a1f9-4835-4beb-a1a8-87f47fc2acd5",
+            "start_ms": 87440,
+            "end_ms": 88320,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 4,
+              "page": 107,
+              "x": 52164,
+              "y": 159,
+              "width": 8507,
+              "height": 6455,
+              "text_uthmani": "ٱلَّذِى",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "88394819-a372-4fe1-b045-771112259b5c",
+            "start_ms": 88320,
+            "end_ms": 89000,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 5,
+              "page": 107,
+              "x": 43358,
+              "y": 159,
+              "width": 7761,
+              "height": 6455,
+              "text_uthmani": "رُزِقْنَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3c528372-29a9-4c5b-b3f2-d732be2cb2ed",
+            "start_ms": 89000,
+            "end_ms": 90420,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 6,
+              "page": 107,
+              "x": 30522,
+              "y": 159,
+              "width": 11791,
+              "height": 6455,
+              "text_uthmani": "مِن",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d985caf0-853a-4784-ac78-cb0507e38b40",
+            "start_ms": 90420,
+            "end_ms": 91030,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 7,
+              "page": 107,
+              "x": 24328,
+              "y": 159,
+              "width": 5448,
+              "height": 6455,
+              "text_uthmani": "قَبْلُ ۖ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c4652119-33da-4f22-831d-5e1d0ecf8c69",
+            "start_ms": 91780,
+            "end_ms": 92530,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 8,
+              "page": 107,
+              "x": 17388,
+              "y": 159,
+              "width": 6194,
+              "height": 6455,
+              "text_uthmani": "وَأُتُوا۟",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "40c51bb6-eb5f-48b8-a8d7-43fde0ef7f4a",
+            "start_ms": 92530,
+            "end_ms": 93260,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 9,
+              "page": 107,
+              "x": 9627,
+              "y": 159,
+              "width": 6493,
+              "height": 6455,
+              "text_uthmani": "بِهِۦ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "1da722b9-270c-461f-9009-ce5e3cf0be99",
+            "start_ms": 93320,
+            "end_ms": 93970,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 10,
+              "page": 107,
+              "x": 3358,
+              "y": 159,
+              "width": 5373,
+              "height": 6455,
+              "text_uthmani": "مُتَشَـٰبِهًۭا ۖ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c3cfbb71-0520-4cf2-8ed5-7590591958f1",
+            "start_ms": 93970,
+            "end_ms": 94710,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 11,
+              "page": 107,
+              "x": 90224,
+              "y": 6614,
+              "width": 5672,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "62149960-dd2b-49d4-9e90-bc71a959c753",
+            "start_ms": 94710,
+            "end_ms": 96180,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 12,
+              "page": 107,
+              "x": 71194,
+              "y": 6614,
+              "width": 18731,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "365e0f93-5330-4446-90fe-2a755db5b898",
+            "start_ms": 96180,
+            "end_ms": 97650,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 13,
+              "page": 107,
+              "x": 53284,
+              "y": 6614,
+              "width": 16642,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c485532d-f6ab-403d-bb41-4e85d2e653a5",
+            "start_ms": 97650,
+            "end_ms": 99250,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 14,
+              "page": 107,
+              "x": 36567,
+              "y": 6614,
+              "width": 16045,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "2fc64029-d450-4623-8ab3-cd170dcbe10e",
+            "start_ms": 99250,
+            "end_ms": 100830,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 15,
+              "page": 107,
+              "x": 18806,
+              "y": 6614,
+              "width": 16642,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "63ccc769-9958-4a5f-bbaf-c689eacbc2f3",
+            "start_ms": 100830,
+            "end_ms": 102060,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 16,
+              "page": 107,
+              "x": 10448,
+              "y": 6614,
+              "width": 7090,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d45148ec-eeb1-4766-afb8-e96c0661e09a",
+            "start_ms": 102060,
+            "end_ms": 102610,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 17,
+              "page": 107,
+              "x": 3507,
+              "y": 6614,
+              "width": 6642,
+              "height": 6138,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "6ce46f95-97e3-4848-91c9-2c5a24f71878",
+            "start_ms": 102610,
+            "end_ms": 103310,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 18,
+              "page": 107,
+              "x": 85746,
+              "y": 12751,
+              "width": 9851,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "08486d23-3814-4f3a-b6a0-42284bf2ba6d",
+            "start_ms": 103310,
+            "end_ms": 104000,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 19,
+              "page": 107,
+              "x": 79851,
+              "y": 12751,
+              "width": 5224,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a4df57e3-054d-4315-8505-1583dddede3f",
+            "start_ms": 104000,
+            "end_ms": 104390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 20,
+              "page": 107,
+              "x": 75821,
+              "y": 12751,
+              "width": 2761,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "28d8f5ef-9732-4476-b89c-48f322015110",
+            "start_ms": 104390,
+            "end_ms": 105810,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 21,
+              "page": 107,
+              "x": 65299,
+              "y": 12751,
+              "width": 8955,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5268e4c9-d326-437f-8282-840bb01530eb",
+            "start_ms": 105810,
+            "end_ms": 106350,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 22,
+              "page": 107,
+              "x": 58657,
+              "y": 12751,
+              "width": 5299,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a8f4c239-d13a-4062-8222-46f53c4c0857",
+            "start_ms": 106350,
+            "end_ms": 106920,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 23,
+              "page": 107,
+              "x": 50299,
+              "y": 12751,
+              "width": 6791,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ab7f2a3d-b22c-469b-96c7-f7afb5091549",
+            "start_ms": 106920,
+            "end_ms": 107330,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 24,
+              "page": 107,
+              "x": 43806,
+              "y": 12751,
+              "width": 5149,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "583abf49-2d56-47f8-be69-29c22911b9d7",
+            "start_ms": 108010,
+            "end_ms": 108700,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 25,
+              "page": 107,
+              "x": 29925,
+              "y": 12751,
+              "width": 12687,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "760df107-290c-42a6-8db4-0d3a4992bf54",
+            "start_ms": 108700,
+            "end_ms": 110550,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 26,
+              "page": 107,
+              "x": 22463,
+              "y": 12751,
+              "width": 5896,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ecb5aa82-4afa-472a-b7a2-b701c1d9efdb",
+            "start_ms": 110610,
+            "end_ms": 111950,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 27,
+              "page": 107,
+              "x": 3358,
+              "y": 12751,
+              "width": 17761,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "19da1a4e-ab87-40cb-9bb7-3574d3136180",
+            "start_ms": 111950,
+            "end_ms": 114420,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 28,
+              "page": 107,
+              "x": 83134,
+              "y": 19577,
+              "width": 12761,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d6f89364-b503-4e4c-9a71-7f295c6036a2",
+            "start_ms": 114620,
+            "end_ms": 115700,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 29,
+              "page": 107,
+              "x": 68881,
+              "y": 19577,
+              "width": 8657,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "27060814-3f9f-4d3b-a095-b69a95a7c9f1",
+            "start_ms": 115700,
+            "end_ms": 115900,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 30,
+              "page": 107,
+              "x": 60373,
+              "y": 19577,
+              "width": 6940,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "33e4e0e0-6da5-40a2-9cde-c2a432f6102b",
+            "start_ms": 115900,
+            "end_ms": 117510,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 31,
+              "page": 107,
+              "x": 47239,
+              "y": 19577,
+              "width": 7090,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c8ef8967-7dba-40f5-b4fb-c4b51fcc2538",
+            "start_ms": 117510,
+            "end_ms": 118140,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 32,
+              "page": 107,
+              "x": 39328,
+              "y": 19577,
+              "width": 6791,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "900e5979-6bd1-4c33-b4c5-034dfa6a3c4a",
+            "start_ms": 118180,
+            "end_ms": 118990,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 33,
+              "page": 107,
+              "x": 30672,
+              "y": 19577,
+              "width": 7761,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3c4850ba-a97f-4c7e-acee-528eb0ea2533",
+            "start_ms": 118990,
+            "end_ms": 119900,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 34,
+              "page": 107,
+              "x": 20149,
+              "y": 19577,
+              "width": 9776,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8709420a-1ba2-42c6-870f-2959e9a8da94",
+            "start_ms": 119900,
+            "end_ms": 120940,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 35,
+              "page": 107,
+              "x": 14478,
+              "y": 19577,
+              "width": 4478,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f93a78e9-c41b-4086-9855-16a593da31cb",
+            "start_ms": 120940,
+            "end_ms": 121870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 36,
+              "page": 107,
+              "x": 3358,
+              "y": 19577,
+              "width": 9701,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "cb816852-168f-4f13-8fa9-ea55c0626386",
+            "start_ms": 121870,
+            "end_ms": 122430,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 37,
+              "page": 107,
+              "x": 91418,
+              "y": 26349,
+              "width": 4328,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a9cd42d4-2fc5-4af8-a22c-11f272072e24",
+            "start_ms": 122430,
+            "end_ms": 123530,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 38,
+              "page": 107,
+              "x": 76940,
+              "y": 26349,
+              "width": 13284,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "60147cce-573e-4b40-be03-bfd601d6007f",
+            "start_ms": 123530,
+            "end_ms": 125780,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 39,
+              "page": 107,
+              "x": 61642,
+              "y": 26349,
+              "width": 14179,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9536e4fa-e070-4a96-abed-c4307becfe8f",
+            "start_ms": 125780,
+            "end_ms": 126500,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 40,
+              "page": 107,
+              "x": 47687,
+              "y": 26349,
+              "width": 7910,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3ac7de50-4c9b-42f1-967f-1e3d6a2830e6",
+            "start_ms": 126500,
+            "end_ms": 127410,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 41,
+              "page": 107,
+              "x": 34851,
+              "y": 26349,
+              "width": 11791,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f348fd2f-79cd-40c2-b516-86a7593ee645",
+            "start_ms": 127410,
+            "end_ms": 127980,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 42,
+              "page": 107,
+              "x": 27164,
+              "y": 26349,
+              "width": 6493,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d968112e-0462-4618-a90b-eec2f143536f",
+            "start_ms": 127980,
+            "end_ms": 129040,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 43,
+              "page": 107,
+              "x": 16119,
+              "y": 26349,
+              "width": 9776,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "749c6281-3e57-43c0-b181-2b1e01b5267e",
+            "start_ms": 129040,
+            "end_ms": 130120,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 44,
+              "page": 107,
+              "x": 3507,
+              "y": 26349,
+              "width": 11269,
+              "height": 6349,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "88afe2cb-a6fc-44f6-bdd4-f1a387a2c54a",
+            "start_ms": 130120,
+            "end_ms": 131060,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 45,
+              "page": 107,
+              "x": 86642,
+              "y": 32698,
+              "width": 9254,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "94bb9399-d7c6-43dc-811a-f340ccae1288",
+            "start_ms": 131060,
+            "end_ms": 131950,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 46,
+              "page": 107,
+              "x": 76642,
+              "y": 32698,
+              "width": 9254,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "64317daf-798a-4c77-aceb-7bc5b0debb2a",
+            "start_ms": 131950,
+            "end_ms": 132920,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 47,
+              "page": 107,
+              "x": 61791,
+              "y": 32698,
+              "width": 13582,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "682fa5f5-b795-47fe-820b-bde6fd51063e",
+            "start_ms": 132920,
+            "end_ms": 133530,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 48,
+              "page": 107,
+              "x": 53284,
+              "y": 32698,
+              "width": 7388,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5908e2c0-7f6d-4b0b-82cc-ea95ff83d205",
+            "start_ms": 133530,
+            "end_ms": 134580,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 49,
+              "page": 107,
+              "x": 40746,
+              "y": 32698,
+              "width": 11716,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b484d5ee-56c3-4518-b502-adf10adfb3c3",
+            "start_ms": 134580,
+            "end_ms": 135680,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 50,
+              "page": 107,
+              "x": 33134,
+              "y": 32698,
+              "width": 6194,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "78a81596-474d-4f52-b28f-e16dbf06bf44",
+            "start_ms": 135920,
+            "end_ms": 136500,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 51,
+              "page": 107,
+              "x": 20821,
+              "y": 32698,
+              "width": 6940,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "914f3c22-c670-430c-ae87-5f6f86d550a1",
+            "start_ms": 136500,
+            "end_ms": 137220,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 52,
+              "page": 107,
+              "x": 8134,
+              "y": 32698,
+              "width": 11716,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b0f99ccc-3c59-4bbf-9a92-c414901f0718",
+            "start_ms": 137220,
+            "end_ms": 137580,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 53,
+              "page": 107,
+              "x": 3507,
+              "y": 32698,
+              "width": 3209,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "077d135b-5abf-4726-a6fa-d2ad37a1deeb",
+            "start_ms": 137580,
+            "end_ms": 138700,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 54,
+              "page": 107,
+              "x": 83731,
+              "y": 39524,
+              "width": 12164,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b6335915-f3f8-4a6f-93e3-27b911f08b72",
+            "start_ms": 138700,
+            "end_ms": 139220,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 55,
+              "page": 107,
+              "x": 75970,
+              "y": 39524,
+              "width": 6493,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "cbc286d3-d8e1-4e01-868d-5f30ea72614d",
+            "start_ms": 139220,
+            "end_ms": 140420,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 56,
+              "page": 107,
+              "x": 59925,
+              "y": 39524,
+              "width": 15299,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "07ad9561-0581-411b-82cb-01d838d3f2f3",
+            "start_ms": 140420,
+            "end_ms": 143110,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 57,
+              "page": 107,
+              "x": 49552,
+              "y": 39524,
+              "width": 9552,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "2b01fedc-c8df-4aea-98a9-7f78e0021200",
+            "start_ms": 143110,
+            "end_ms": 144630,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 58,
+              "page": 107,
+              "x": 42463,
+              "y": 39524,
+              "width": 6194,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d4cf35f7-33d6-48c6-8756-ddef21188b84",
+            "start_ms": 144690,
+            "end_ms": 145310,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 59,
+              "page": 107,
+              "x": 35299,
+              "y": 39524,
+              "width": 6045,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "0573112c-342f-47b7-89ec-4f253504391d",
+            "start_ms": 145310,
+            "end_ms": 146090,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 60,
+              "page": 107,
+              "x": 24030,
+              "y": 39524,
+              "width": 10075,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "0321ff1b-ede1-4283-8456-85bdcc61d214",
+            "start_ms": 146090,
+            "end_ms": 147230,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 3,
+              "word_position": 61,
+              "page": 107,
+              "x": 10448,
+              "y": 39524,
+              "width": 12164,
+              "height": 6561,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "fd0a6cb4-39f9-41ab-91bf-46d17d45af32",
+            "start_ms": 147510,
+            "end_ms": 149550,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 1,
+              "page": 107,
+              "x": 82612,
+              "y": 46085,
+              "width": 13284,
+              "height": 6667,
+              "text_uthmani": "وَلَهُمْ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "fd933aff-4e60-474b-837d-38d3445926f7",
+            "start_ms": 149550,
+            "end_ms": 150640,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 2,
+              "page": 107,
+              "x": 74403,
+              "y": 46085,
+              "width": 6716,
+              "height": 6667,
+              "text_uthmani": "فِيهَآ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9ef200a0-982c-4cc1-8f48-467876ba4240",
+            "start_ms": 150640,
+            "end_ms": 151410,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 3,
+              "page": 107,
+              "x": 67612,
+              "y": 46085,
+              "width": 6343,
+              "height": 6667,
+              "text_uthmani": "أَزْوَٰجٌۭ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "6ec8c473-5255-4098-b65f-514353833cb7",
+            "start_ms": 151410,
+            "end_ms": 152000,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 4,
+              "page": 107,
+              "x": 61269,
+              "y": 46085,
+              "width": 5000,
+              "height": 6667,
+              "text_uthmani": "مُّطَهَّرَةٌۭ ۖ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5fc588e3-e7d2-405c-aa60-e4f561341860",
+            "start_ms": 152000,
+            "end_ms": 152670,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 5,
+              "page": 107,
+              "x": 51716,
+              "y": 46085,
+              "width": 3881,
+              "height": 6667,
+              "text_uthmani": "وَهُمْ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "d00c7c20-8d5b-4184-9e9a-a5b71b260572",
+            "start_ms": 152670,
+            "end_ms": 153390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 6,
+              "page": 107,
+              "x": 44104,
+              "y": 46085,
+              "width": 6194,
+              "height": 6667,
+              "text_uthmani": "فِيهَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4c9dee07-8b12-4323-a700-d43525c5d7e3",
+            "start_ms": 153390,
+            "end_ms": 153960,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 7,
+              "page": 107,
+              "x": 36269,
+              "y": 46085,
+              "width": 7090,
+              "height": 6667,
+              "text_uthmani": "خَـٰلِدُونَ ٢٥",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "35d19858-bfa0-4cb5-840f-1f1c0d37b82e",
+            "start_ms": 153960,
+            "end_ms": 155250,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 8,
+              "page": 107,
+              "x": 22313,
+              "y": 46085,
+              "width": 13134,
+              "height": 6667,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f721526d-7cd1-4e3a-a792-45a628d89122",
+            "start_ms": 155250,
+            "end_ms": 155770,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 9,
+              "page": 107,
+              "x": 16119,
+              "y": 46085,
+              "width": 5149,
+              "height": 6667,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b96e0281-d0c5-4fbe-a2da-c1f97ccde999",
+            "start_ms": 155770,
+            "end_ms": 157130,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 10,
+              "page": 107,
+              "x": 3358,
+              "y": 46085,
+              "width": 11567,
+              "height": 6667,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "cceb2bff-eb1a-437a-bf61-880146fbe275",
+            "start_ms": 157130,
+            "end_ms": 157500,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 11,
+              "page": 107,
+              "x": 91418,
+              "y": 52751,
+              "width": 4478,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f532c7b9-570c-4a88-b0e9-b66c28415bfe",
+            "start_ms": 157500,
+            "end_ms": 158570,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 12,
+              "page": 107,
+              "x": 79104,
+              "y": 52751,
+              "width": 11269,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "740b16ed-4984-43a9-97e8-2e6dfcb9f583",
+            "start_ms": 158570,
+            "end_ms": 159870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 13,
+              "page": 107,
+              "x": 67313,
+              "y": 52751,
+              "width": 10522,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f77c62b1-09db-48d2-b0eb-a6e32e42f18b",
+            "start_ms": 159870,
+            "end_ms": 161800,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 14,
+              "page": 107,
+              "x": 54328,
+              "y": 52751,
+              "width": 11791,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b9580007-a992-46fd-8eb7-ae95c3d4233e",
+            "start_ms": 161800,
+            "end_ms": 162730,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 15,
+              "page": 107,
+              "x": 49701,
+              "y": 52751,
+              "width": 3433,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "dadb84f1-f9bc-4e72-87ce-d357781e5c1e",
+            "start_ms": 162730,
+            "end_ms": 163870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 16,
+              "page": 107,
+              "x": 38731,
+              "y": 52751,
+              "width": 9403,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "327bc8e1-34fd-4610-afc5-8585291c5c79",
+            "start_ms": 163890,
+            "end_ms": 166090,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 17,
+              "page": 107,
+              "x": 32239,
+              "y": 52751,
+              "width": 5522,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "6fa99598-77eb-482f-b3ae-5d900f5ed2ca",
+            "start_ms": 166090,
+            "end_ms": 166730,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 18,
+              "page": 107,
+              "x": 19552,
+              "y": 52751,
+              "width": 7910,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "e59c08d4-3efd-439e-b84f-79ba4be1c04e",
+            "start_ms": 166810,
+            "end_ms": 169270,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 19,
+              "page": 107,
+              "x": 14478,
+              "y": 52751,
+              "width": 4328,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "755997be-de21-4e34-a7b2-46b5cedf06ee",
+            "start_ms": 169270,
+            "end_ms": 170150,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 20,
+              "page": 107,
+              "x": 3358,
+              "y": 52751,
+              "width": 10448,
+              "height": 6614,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "90cdf0bd-9748-4614-a93d-6d51fa2de9df",
+            "start_ms": 170150,
+            "end_ms": 171050,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 21,
+              "page": 107,
+              "x": 87761,
+              "y": 59365,
+              "width": 8134,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9209ccbf-3a5f-4043-beb1-0da94ce3f985",
+            "start_ms": 171050,
+            "end_ms": 171760,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 22,
+              "page": 107,
+              "x": 76940,
+              "y": 59365,
+              "width": 9552,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8fd80ab7-ff78-450c-8eb4-186d6b914985",
+            "start_ms": 171760,
+            "end_ms": 172180,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 23,
+              "page": 107,
+              "x": 70746,
+              "y": 59365,
+              "width": 5075,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "c794aa5f-2c21-400d-a0e6-900a58df9626",
+            "start_ms": 172260,
+            "end_ms": 172870,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 24,
+              "page": 107,
+              "x": 65000,
+              "y": 59365,
+              "width": 4627,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "dd40e498-02c2-4385-88fd-3817bb765193",
+            "start_ms": 172870,
+            "end_ms": 175520,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 25,
+              "page": 107,
+              "x": 56791,
+              "y": 59365,
+              "width": 7015,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "82c6d63d-d8df-48a5-9ed1-e8c17ae26f2e",
+            "start_ms": 175520,
+            "end_ms": 176340,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 26,
+              "page": 107,
+              "x": 43955,
+              "y": 59365,
+              "width": 8060,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5f9319e6-db16-4e72-8893-c1911894306a",
+            "start_ms": 176360,
+            "end_ms": 176980,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 27,
+              "page": 107,
+              "x": 37761,
+              "y": 59365,
+              "width": 5448,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "964816cf-1a84-485c-94a2-18a6d736ead3",
+            "start_ms": 176980,
+            "end_ms": 178120,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 28,
+              "page": 107,
+              "x": 29478,
+              "y": 59365,
+              "width": 3806,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f72f3dbe-97d2-4978-9f84-a59f5c89f54a",
+            "start_ms": 178220,
+            "end_ms": 178830,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 29,
+              "page": 107,
+              "x": 23582,
+              "y": 59365,
+              "width": 4776,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "227dc875-ff68-43d4-9e38-515e1cc32457",
+            "start_ms": 178830,
+            "end_ms": 179630,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 30,
+              "page": 107,
+              "x": 15224,
+              "y": 59365,
+              "width": 7239,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3605667e-80dc-44d0-a1b6-06b81a920e21",
+            "start_ms": 179630,
+            "end_ms": 181230,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 4,
+              "word_position": 31,
+              "page": 107,
+              "x": 3358,
+              "y": 59365,
+              "width": 10821,
+              "height": 6455,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "4c1d3811-cc53-4510-ba8b-ad8d79ff287a",
+            "start_ms": 181530,
+            "end_ms": 182440,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 1,
+              "page": 107,
+              "x": 82164,
+              "y": 65820,
+              "width": 7090,
+              "height": 6772,
+              "text_uthmani": "۞ إِنَّ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8a693db7-481f-459a-bba0-49cd284207c5",
+            "start_ms": 182440,
+            "end_ms": 183160,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 2,
+              "page": 107,
+              "x": 74254,
+              "y": 65820,
+              "width": 6343,
+              "height": 6772,
+              "text_uthmani": "ٱللَّهَ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ecc2e285-facc-465e-8009-4984eb1e19ee",
+            "start_ms": 183160,
+            "end_ms": 183710,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 3,
+              "page": 107,
+              "x": 67015,
+              "y": 65820,
+              "width": 6194,
+              "height": 6772,
+              "text_uthmani": "لَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "e420a26b-2357-46ba-a7ca-765417b08957",
+            "start_ms": 183710,
+            "end_ms": 185160,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 4,
+              "page": 107,
+              "x": 53433,
+              "y": 65820,
+              "width": 12836,
+              "height": 6772,
+              "text_uthmani": "يَسْتَحْىِۦٓ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "681f5d33-9a60-4d8e-b0a8-0b90898d8986",
+            "start_ms": 185160,
+            "end_ms": 186110,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 5,
+              "page": 107,
+              "x": 37761,
+              "y": 65820,
+              "width": 9328,
+              "height": 6772,
+              "text_uthmani": "أَن",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5a81882a-03eb-4961-8a93-69ffb7bd48a3",
+            "start_ms": 186110,
+            "end_ms": 186900,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 6,
+              "page": 107,
+              "x": 29776,
+              "y": 65820,
+              "width": 7388,
+              "height": 6772,
+              "text_uthmani": "يَضْرِبَ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ec9351fc-a9fc-4eb4-b44b-e692a55f1805",
+            "start_ms": 186900,
+            "end_ms": 187480,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 7,
+              "page": 107,
+              "x": 21716,
+              "y": 65820,
+              "width": 6791,
+              "height": 6772,
+              "text_uthmani": "مَثَلًۭا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "2b89599e-f8d8-4a44-b93f-fc77b98e26ba",
+            "start_ms": 187480,
+            "end_ms": 188400,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 8,
+              "page": 107,
+              "x": 10149,
+              "y": 65820,
+              "width": 10672,
+              "height": 6772,
+              "text_uthmani": "مَّا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "627e1def-3ea3-4207-8d50-7e9b97a18ed1",
+            "start_ms": 188400,
+            "end_ms": 188990,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 9,
+              "page": 107,
+              "x": 3134,
+              "y": 65820,
+              "width": 5597,
+              "height": 6772,
+              "text_uthmani": "بَعُوضَةًۭ",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b831c9ef-2fd0-41da-9d17-eab1d05e8855",
+            "start_ms": 189090,
+            "end_ms": 189620,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 10,
+              "page": 107,
+              "x": 89925,
+              "y": 72593,
+              "width": 5821,
+              "height": 6402,
+              "text_uthmani": "فَمَا",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "131b7ce1-8e18-48d5-8e39-bc4b796dc02a",
+            "start_ms": 189620,
+            "end_ms": 190910,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 11,
+              "page": 107,
+              "x": 71493,
+              "y": 72593,
+              "width": 13433,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "2ce5672b-19d5-4249-803f-5ada66c3fb77",
+            "start_ms": 190910,
+            "end_ms": 191540,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 12,
+              "page": 107,
+              "x": 65149,
+              "y": 72593,
+              "width": 5149,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "aa5b177f-1bc6-451f-bedd-a9e98730121c",
+            "start_ms": 191620,
+            "end_ms": 192140,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 13,
+              "page": 107,
+              "x": 58955,
+              "y": 72593,
+              "width": 4627,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "b78e06fc-259c-43bb-a1d0-aab591f38702",
+            "start_ms": 192140,
+            "end_ms": 193960,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 14,
+              "page": 107,
+              "x": 36119,
+              "y": 72593,
+              "width": 16642,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "54318c7d-7617-46fd-8065-e206a28f1f6b",
+            "start_ms": 193960,
+            "end_ms": 194320,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 15,
+              "page": 107,
+              "x": 30970,
+              "y": 72593,
+              "width": 4179,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ec8f5632-20e0-4145-94e0-6baba7aca3bd",
+            "start_ms": 194320,
+            "end_ms": 195570,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 16,
+              "page": 107,
+              "x": 18134,
+              "y": 72593,
+              "width": 11791,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "6f06e828-8954-43e8-a908-3ea0c50a186e",
+            "start_ms": 195570,
+            "end_ms": 196990,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 17,
+              "page": 107,
+              "x": 3358,
+              "y": 72593,
+              "width": 13433,
+              "height": 6402,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "853f76a9-b9f7-4958-bc12-4f589bcf6526",
+            "start_ms": 196990,
+            "end_ms": 197340,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 18,
+              "page": 107,
+              "x": 91418,
+              "y": 78995,
+              "width": 4478,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "899108a0-d92b-4fdc-a44e-c72db34382ce",
+            "start_ms": 197400,
+            "end_ms": 198190,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 19,
+              "page": 107,
+              "x": 82015,
+              "y": 78995,
+              "width": 8358,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "7edbb237-837f-4243-9033-a0617baff179",
+            "start_ms": 198190,
+            "end_ms": 198790,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 20,
+              "page": 107,
+              "x": 73209,
+              "y": 78995,
+              "width": 7537,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ed08eabc-dc81-4bd0-97f2-6d9bfa95c251",
+            "start_ms": 198790,
+            "end_ms": 199720,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 21,
+              "page": 107,
+              "x": 58955,
+              "y": 78995,
+              "width": 12985,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "f495b0e6-0fb8-44cd-9356-9e84c8cb97cb",
+            "start_ms": 199720,
+            "end_ms": 200595,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 22,
+              "page": 107,
+              "x": 52985,
+              "y": 78995,
+              "width": 4925,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a99d3de7-9af0-421d-9bf9-b1a899557b28",
+            "start_ms": 200595,
+            "end_ms": 201480,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 23,
+              "page": 107,
+              "x": 41940,
+              "y": 78995,
+              "width": 9776,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8a0eb46d-4d08-487c-879f-b338a496f171",
+            "start_ms": 201480,
+            "end_ms": 202820,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 24,
+              "page": 107,
+              "x": 35970,
+              "y": 78995,
+              "width": 5224,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "ddb0d738-6297-487c-b848-d25078e4653b",
+            "start_ms": 207310,
+            "end_ms": 208640,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 24,
+              "page": 107,
+              "x": 35970,
+              "y": 78995,
+              "width": 5224,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8dc7a8ef-a9df-4df8-98e6-55c86f727087",
+            "start_ms": 202820,
+            "end_ms": 205230,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 25,
+              "page": 107,
+              "x": 18284,
+              "y": 78995,
+              "width": 17313,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "954ff812-100a-4d6d-895a-e15a316bf7ea",
+            "start_ms": 208640,
+            "end_ms": 210690,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 25,
+              "page": 107,
+              "x": 18284,
+              "y": 78995,
+              "width": 17313,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "90145519-e108-4e46-84f2-b867b3edda9f",
+            "start_ms": 205230,
+            "end_ms": 207310,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 26,
+              "page": 107,
+              "x": 3134,
+              "y": 78995,
+              "width": 13657,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "243f2f6e-c337-45f1-a22f-a31a6dc7da54",
+            "start_ms": 210690,
+            "end_ms": 212190,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 26,
+              "page": 107,
+              "x": 3134,
+              "y": 78995,
+              "width": 13657,
+              "height": 6772,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "1113633f-7781-4b3c-8e31-874aa324bf70",
+            "start_ms": 212190,
+            "end_ms": 213300,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 27,
+              "page": 107,
+              "x": 82910,
+              "y": 85767,
+              "width": 12985,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3ded65a2-dd06-46e6-bd52-4c61e40eb3af",
+            "start_ms": 213300,
+            "end_ms": 213830,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 28,
+              "page": 107,
+              "x": 75522,
+              "y": 85767,
+              "width": 6045,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "50cae7b6-7839-4470-be5a-17bdaaa778ec",
+            "start_ms": 213830,
+            "end_ms": 215140,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 29,
+              "page": 107,
+              "x": 59254,
+              "y": 85767,
+              "width": 15000,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a5bdbd72-2b72-40f3-b456-4add233bd54a",
+            "start_ms": 215140,
+            "end_ms": 215650,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 30,
+              "page": 107,
+              "x": 52313,
+              "y": 85767,
+              "width": 5597,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "db836863-0a09-4aa2-ad99-79910e3bde66",
+            "start_ms": 215650,
+            "end_ms": 216780,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 31,
+              "page": 107,
+              "x": 37612,
+              "y": 85767,
+              "width": 13657,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "5dc5db16-8972-46fe-912f-fb97fba265bf",
+            "start_ms": 217620,
+            "end_ms": 219390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 32,
+              "page": 107,
+              "x": 26642,
+              "y": 85767,
+              "width": 10373,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "7464bcf8-6cdf-4143-8166-23f76c9768dc",
+            "start_ms": 219390,
+            "end_ms": 219960,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 33,
+              "page": 107,
+              "x": 13507,
+              "y": 85767,
+              "width": 6791,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "dbcb73f2-f1a0-4926-9304-5226454a2d13",
+            "start_ms": 219960,
+            "end_ms": 220700,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 34,
+              "page": 107,
+              "x": 3358,
+              "y": 85767,
+              "width": 8806,
+              "height": 7302,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "44134c57-fd1b-4577-ab96-a4a0bf25824b",
+            "start_ms": 220700,
+            "end_ms": 221940,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 35,
+              "page": 107,
+              "x": 83582,
+              "y": 93069,
+              "width": 12313,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "36d04c9f-ac9e-4285-9e8c-cc8319dada39",
+            "start_ms": 221940,
+            "end_ms": 222720,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 36,
+              "page": 107,
+              "x": 75373,
+              "y": 93069,
+              "width": 6791,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "3b1404b0-58df-4ae1-9b9a-ce87760d0fb9",
+            "start_ms": 222720,
+            "end_ms": 223390,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 37,
+              "page": 107,
+              "x": 64851,
+              "y": 93069,
+              "width": 9104,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "9e4558b7-59b8-433f-b262-d097b9df2a16",
+            "start_ms": 223390,
+            "end_ms": 224810,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 38,
+              "page": 107,
+              "x": 53284,
+              "y": 93069,
+              "width": 10000,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "8e363546-6d52-4273-8a7a-65b380afa2a7",
+            "start_ms": 224810,
+            "end_ms": 225470,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 39,
+              "page": 107,
+              "x": 46269,
+              "y": 93069,
+              "width": 6493,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "526167e0-e977-490d-b35c-c25f4477a60c",
+            "start_ms": 225470,
+            "end_ms": 225750,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 40,
+              "page": 107,
+              "x": 41493,
+              "y": 93069,
+              "width": 3582,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "519e1888-9fb1-4892-ad20-6d4fe04b709b",
+            "start_ms": 225770,
+            "end_ms": 227080,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 41,
+              "page": 107,
+              "x": 28657,
+              "y": 93069,
+              "width": 11940,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "a7e2368c-abcd-48f6-bb79-d8fd5cb7332f",
+            "start_ms": 227080,
+            "end_ms": 227530,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 42,
+              "page": 107,
+              "x": 23433,
+              "y": 93069,
+              "width": 4328,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          },
+          {
+            "id": "14e64afd-701c-46ab-a93a-8a93b5a22f05",
+            "start_ms": 227570,
+            "end_ms": 231420,
+            "data": {
+              "type": "highlight",
+              "surah": 5,
+              "ayah": 5,
+              "word_position": 43,
+              "page": 107,
+              "x": 10597,
+              "y": 93069,
+              "width": 11866,
+              "height": 6825,
+              "text_uthmani": "",
+              "style": {
+                "highlight_type": "golden_glow",
+                "color": "#FFD700",
+                "opacity": 0.45,
+                "border_radius": 4,
+                "padding": 4
+              }
+            }
+          }
+        ],
+        "visible": true,
+        "locked": false
+      }
+    ]
+  },
+  "export_settings": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_codec": "libx264",
+    "audio_codec": "aac",
+    "crf": 18,
+    "output_format": "mp4",
+    "output_path": null
+  },
+  "created_at": "2026-03-20T06:02:23.047901Z",
+  "updated_at": "2026-03-20T06:02:23.047913Z"
+}

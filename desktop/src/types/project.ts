@@ -23,7 +23,9 @@ export type ProjectMode = "mushaf";
 
 export type TrackType = "audio" | "mushaf_page" | "highlight";
 
-export type HighlightType = "golden_glow" | "blue_box" | "underline";
+export type HighlightType = "golden_glow" | "blue_box" | "underline" | "rectangle";
+
+export type HighlightMode = "word" | "ayah" | "word_and_ayah";
 
 export interface HighlightStyle {
   highlight_type: HighlightType;
@@ -31,6 +33,7 @@ export interface HighlightStyle {
   opacity: number;
   border_radius: number;
   padding: number;
+  mode?: HighlightMode;
 }
 
 export interface AudioBlockData {

@@ -1,6 +1,7 @@
+import React from "react";
 import { useAppStore } from "@/stores/appStore";
-import { useTimelineStore } from "@/stores/timelineStore";
 import { useProjects } from "@/hooks/useTauri";
+import { preloadProjectPages } from "@/lib/preloadProject";
 import { Badge } from "@/components/ui/badge";
 import {
   ContextMenu,
@@ -39,16 +40,21 @@ export function ProjectCard({
   onDuplicate,
 }: ProjectCardProps) {
   const openProject = useAppStore((s) => s.openProject);
-  const setProject = useTimelineStore((s) => s.setProject);
   const { loadProject } = useProjects();
+  const [loading, setLoading] = React.useState(false);
 
   const handleOpen = async () => {
+    if (loading) return;
+    setLoading(true);
     try {
       const fullProject = await loadProject(project.id);
-      setProject(fullProject);
+      // Pre-load mushaf images before opening editor
+      await preloadProjectPages(fullProject);
       openProject(fullProject);
     } catch {
       // Handle error
+    } finally {
+      setLoading(false);
     }
   };
 
