@@ -136,7 +136,7 @@ pub fn prepare_page_image(
     };
 
     let page_img = image::open(&page_path)
-        .map_err(|e| CoreError::Image(e))?
+        .map_err(CoreError::Image)?
         .to_rgba8();
 
     let orig_w = page_img.width();

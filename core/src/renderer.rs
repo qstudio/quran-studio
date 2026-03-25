@@ -139,6 +139,7 @@ struct HighlightOverlay {
 }
 
 /// Export a single-page video using FFmpeg overlay filters.
+#[allow(clippy::too_many_arguments)]
 fn export_single_page(
     segment: &PageSegment,
     highlights: &[HighlightOverlay],
@@ -158,7 +159,7 @@ fn export_single_page(
     let base_path = temp_dir.join("base.png");
     page_img
         .save(&base_path)
-        .map_err(|e| CoreError::Image(e))?;
+        .map_err(CoreError::Image)?;
 
     // Generate highlight overlay images
     let page_highlights: Vec<&HighlightOverlay> = highlights
@@ -177,7 +178,7 @@ fn export_single_page(
         let overlay_path = temp_dir.join(format!("hl_{}.png", i));
         overlay
             .save(&overlay_path)
-            .map_err(|e| CoreError::Image(e))?;
+            .map_err(CoreError::Image)?;
 
         let start_s = h.start_ms as f64 / 1000.0;
         let end_s = h.end_ms as f64 / 1000.0;
@@ -278,6 +279,7 @@ fn export_single_page(
 }
 
 /// Export multi-page video: render per-page segments, concat.
+#[allow(clippy::too_many_arguments)]
 fn export_multi_page(
     segments: &[PageSegment],
     highlights: &[HighlightOverlay],
