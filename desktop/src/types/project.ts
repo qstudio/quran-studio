@@ -19,9 +19,9 @@ export interface Surah {
 
 // --- From project.rs ---
 
-export type ProjectMode = "mushaf";
+export type ProjectMode = "mushaf" | "caption" | "reel" | "long_form";
 
-export type TrackType = "audio" | "mushaf_page" | "highlight";
+export type TrackType = "audio" | "mushaf_page" | "highlight" | "video" | "text_arabic" | "text_translation" | "background" | "card";
 
 export type HighlightType = "golden_glow" | "blue_box" | "underline" | "rectangle";
 
@@ -73,7 +73,55 @@ export interface HighlightBlockData {
   style: HighlightStyle;
 }
 
-export type BlockData = AudioBlockData | MushafPageBlockData | HighlightBlockData;
+export type TextPosition = "top" | "center" | "bottom";
+
+export type CardType = "surah_title" | "bismillah" | "ayah_end";
+
+export interface TextBackground {
+  color: string;
+  opacity: number;
+  padding: number;
+}
+
+export interface VideoBlockData {
+  type: "video";
+  video_path: string;
+}
+
+export interface TextBlockData {
+  type: "text_arabic" | "text_translation";
+  text: string;
+  surah: number;
+  ayah: number;
+  language: string;
+  font_size: number;
+  color: string;
+  position: TextPosition;
+  background?: TextBackground;
+}
+
+export interface BackgroundBlockData {
+  type: "background";
+  image_path?: string;
+  color?: string;
+}
+
+export interface CardBlockData {
+  type: "card";
+  card_type: CardType;
+  text: string;
+  background_color: string;
+  text_color: string;
+}
+
+export type BlockData =
+  | AudioBlockData
+  | MushafPageBlockData
+  | HighlightBlockData
+  | VideoBlockData
+  | TextBlockData
+  | BackgroundBlockData
+  | CardBlockData;
 
 export interface Block {
   id: string;

@@ -126,6 +126,88 @@ function createMockProject(params: {
     }
   }
 
+  // Build text blocks (for Caption/Reel/LongForm)
+  const arabicTextBlocks = [];
+  for (let ayah = params.ayahStart; ayah <= params.ayahEnd; ayah++) {
+    const ayahIdx = ayah - params.ayahStart;
+    const ayahStartMs = Math.round((ayahIdx / totalAyahs) * totalDurationMs);
+    const ayahEndMs = Math.round(((ayahIdx + 1) / totalAyahs) * totalDurationMs);
+    arabicTextBlocks.push({
+      id: `block-text-${ayah}`,
+      start_ms: ayahStartMs,
+      end_ms: ayahEndMs,
+      data: {
+        type: "text_arabic" as const,
+        text: `Ayah ${ayah} text`,
+        surah: params.surah,
+        ayah,
+        language: "ar",
+        font_size: 48,
+        color: "#FFFFFF",
+        position: "center" as const,
+      },
+    });
+  }
+
+  const translationBlocks = arabicTextBlocks.map((ab) => ({
+    ...ab,
+    id: ab.id.replace("text-", "trans-"),
+    data: {
+      ...ab.data,
+      type: "text_translation" as const,
+      text: `Translation for ayah ${ab.data.ayah}`,
+      language: "en",
+      font_size: 24,
+      color: "#A0A0A0",
+      position: "bottom" as const,
+    },
+  }));
+
+  // Build mode-specific track layout
+  const mode = params.mode as "mushaf" | "caption" | "reel" | "long_form";
+
+  let tracks;
+  let exportWidth = 1080;
+  let exportHeight = 1920;
+
+  switch (mode) {
+    case "caption":
+      tracks = [
+        { id: "track-audio", name: reciterInfo?.name_en ?? "Audio", track_type: "audio" as const, blocks: [audioBlock], visible: true, locked: false },
+        { id: "track-arabic", name: "Arabic Text", track_type: "text_arabic" as const, blocks: arabicTextBlocks, visible: true, locked: false },
+        { id: "track-translation", name: "Translation", track_type: "text_translation" as const, blocks: translationBlocks, visible: true, locked: false },
+      ];
+      break;
+    case "reel":
+      tracks = [
+        { id: "track-bg", name: "Background", track_type: "background" as const, blocks: [{ id: "block-bg-1", start_ms: 0, end_ms: totalDurationMs, data: { type: "background" as const, color: "#0A0A0A" } }], visible: true, locked: false },
+        { id: "track-audio", name: reciterInfo?.name_en ?? "Audio", track_type: "audio" as const, blocks: [audioBlock], visible: true, locked: false },
+        { id: "track-arabic", name: "Arabic Text", track_type: "text_arabic" as const, blocks: arabicTextBlocks, visible: true, locked: false },
+        { id: "track-highlight", name: "Highlights", track_type: "highlight" as const, blocks: highlightBlocks, visible: true, locked: false },
+        { id: "track-translation", name: "Translation", track_type: "text_translation" as const, blocks: translationBlocks, visible: true, locked: false },
+      ];
+      break;
+    case "long_form":
+      tracks = [
+        { id: "track-bg", name: "Background", track_type: "background" as const, blocks: [{ id: "block-bg-1", start_ms: 0, end_ms: totalDurationMs, data: { type: "background" as const, color: "#0A0A0A" } }], visible: true, locked: false },
+        { id: "track-audio", name: reciterInfo?.name_en ?? "Audio", track_type: "audio" as const, blocks: [audioBlock], visible: true, locked: false },
+        { id: "track-arabic", name: "Arabic Text", track_type: "text_arabic" as const, blocks: arabicTextBlocks, visible: true, locked: false },
+        { id: "track-highlight", name: "Highlights", track_type: "highlight" as const, blocks: highlightBlocks, visible: true, locked: false },
+        { id: "track-translation", name: "Translation", track_type: "text_translation" as const, blocks: translationBlocks, visible: true, locked: false },
+        { id: "track-cards", name: "Cards", track_type: "card" as const, blocks: [{ id: "block-card-1", start_ms: 0, end_ms: 3000, data: { type: "card" as const, card_type: "surah_title" as const, text: surahInfo?.name_english ?? "Surah", background_color: "#000000", text_color: "#FFFFFF" } }], visible: true, locked: false },
+      ];
+      exportWidth = 1920;
+      exportHeight = 1080;
+      break;
+    default: // mushaf
+      tracks = [
+        { id: "track-audio", name: reciterInfo?.name_en ?? "Audio", track_type: "audio" as const, blocks: [audioBlock], visible: true, locked: false },
+        { id: "track-mushaf", name: "Mushaf Pages", track_type: "mushaf_page" as const, blocks: mushafBlocks, visible: true, locked: false },
+        { id: "track-highlight", name: "Highlights", track_type: "highlight" as const, blocks: highlightBlocks, visible: true, locked: false },
+      ];
+      break;
+  }
+
   const now = new Date().toISOString();
   const projectName = surahInfo
     ? `${surahInfo.name_english} ${params.ayahStart}-${params.ayahEnd}`
@@ -134,46 +216,21 @@ function createMockProject(params: {
   return {
     id: `proj-${Date.now()}`,
     name: projectName,
-    mode: "mushaf",
+    mode,
     surah: params.surah,
     ayah_start: params.ayahStart,
     ayah_end: params.ayahEnd,
     reciter_id: params.reciterId,
     timeline: {
       duration_ms: totalDurationMs,
-      tracks: [
-        {
-          id: "track-audio",
-          name: reciterInfo?.name_en ?? "Audio",
-          track_type: "audio",
-          blocks: [audioBlock],
-          visible: true,
-          locked: false,
-        },
-        {
-          id: "track-mushaf",
-          name: "Mushaf Pages",
-          track_type: "mushaf_page",
-          blocks: mushafBlocks,
-          visible: true,
-          locked: false,
-        },
-        {
-          id: "track-highlight",
-          name: "Highlights",
-          track_type: "highlight",
-          blocks: highlightBlocks,
-          visible: true,
-          locked: false,
-        },
-      ],
+      tracks,
       playhead_ms: 0,
       zoom: 50,
       scroll_x: 0,
     },
     export_settings: {
-      width: 1080,
-      height: 1920,
+      width: exportWidth,
+      height: exportHeight,
       fps: 30,
       video_codec: "h264",
       audio_codec: "aac",

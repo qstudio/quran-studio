@@ -40,12 +40,25 @@ pub async fn create_project(
         let mut project = match mode.as_str() {
             "mushaf" => {
                 quran_studio_core::project::build_mushaf_project(
-                    &conn,
-                    &reciter_id,
-                    surah,
-                    ayah_start,
-                    ayah_end,
-                    Some(&data_dir),
+                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                )
+                .map_err(|e| e.to_string())?
+            }
+            "caption" => {
+                quran_studio_core::project::build_caption_project(
+                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                )
+                .map_err(|e| e.to_string())?
+            }
+            "reel" => {
+                quran_studio_core::project::build_reel_project(
+                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                )
+                .map_err(|e| e.to_string())?
+            }
+            "long_form" => {
+                quran_studio_core::project::build_longform_project(
+                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
                 )
                 .map_err(|e| e.to_string())?
             }

@@ -3,7 +3,7 @@ import { useTimelineStore } from "@/stores/timelineStore";
 import { useAppStore } from "@/stores/appStore";
 import { getPageImage } from "@/lib/preloadProject";
 import { currentPlayheadMs } from "@/stores/playheadSync";
-import type { Block, HighlightBlockData, HighlightMode } from "@/types/project";
+import type { Block, Track, HighlightBlockData, HighlightMode, TextBlockData, CardBlockData } from "@/types/project";
 
 // ─── Highlight logic ───
 
@@ -157,6 +157,175 @@ function drawHighlightBoxes(
   ctx.restore();
 }
 
+// ─── Mode-specific rendering helpers ───
+
+function findActiveBlockByType(tracks: Track[], trackType: string, ms: number): Block | null {
+  for (const track of tracks) {
+    if (track.track_type !== trackType || !track.visible) continue;
+    for (const block of track.blocks) {
+      if (ms >= block.start_ms && ms < block.end_ms) return block;
+    }
+  }
+  return null;
+}
+
+function renderCaptionMode(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  tracks: Track[],
+  timestampMs: number
+): void {
+  // Dark background
+  ctx.fillStyle = "#0A0A0A";
+  ctx.fillRect(0, 0, w, h);
+
+  // Find active Arabic text block
+  const arabicBlock = findActiveBlockByType(tracks, "text_arabic", timestampMs);
+  if (arabicBlock && arabicBlock.data.type === "text_arabic") {
+    const data = arabicBlock.data as TextBlockData;
+    const fontSize = Math.round(w * 0.06);
+    ctx.save();
+    ctx.font = `${fontSize}px "Amiri Quran", "Amiri", serif`;
+    ctx.fillStyle = data.color || "#FFFFFF";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.direction = "rtl";
+    ctx.fillText(data.text, w / 2, h * 0.42, w * 0.85);
+    ctx.restore();
+  }
+
+  // Find active translation text block
+  const translationBlock = findActiveBlockByType(tracks, "text_translation", timestampMs);
+  if (translationBlock && translationBlock.data.type === "text_translation") {
+    const data = translationBlock.data as TextBlockData;
+    const fontSize = Math.round(w * 0.03);
+    ctx.save();
+    ctx.font = `${fontSize}px "Inter", sans-serif`;
+    ctx.fillStyle = data.color || "#A0A0A0";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(data.text, w / 2, h * 0.58, w * 0.85);
+    ctx.restore();
+  }
+}
+
+function renderReelMode(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  tracks: Track[],
+  timestampMs: number
+): void {
+  // Dark background
+  ctx.fillStyle = "#0A0A0A";
+  ctx.fillRect(0, 0, w, h);
+
+  // Check for background block
+  const bgBlock = findActiveBlockByType(tracks, "background", timestampMs);
+  if (bgBlock && bgBlock.data.type === "background") {
+    const bgData = bgBlock.data;
+    if (bgData.color) {
+      ctx.fillStyle = bgData.color;
+      ctx.fillRect(0, 0, w, h);
+    }
+  }
+
+  // Find active Arabic text block
+  const arabicBlock = findActiveBlockByType(tracks, "text_arabic", timestampMs);
+  if (arabicBlock && arabicBlock.data.type === "text_arabic") {
+    const data = arabicBlock.data as TextBlockData;
+    const arabicText = data.text;
+    const fontSize = Math.round(w * 0.06);
+
+    // Find active highlight block to determine which word to highlight
+    const hlBlock = findActiveBlockByType(tracks, "highlight", timestampMs);
+    const highlightWord = hlBlock && hlBlock.data.type === "highlight"
+      ? (hlBlock.data as HighlightBlockData).text_uthmani
+      : null;
+
+    ctx.save();
+    ctx.font = `${fontSize}px "Amiri Quran", "Amiri", serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.direction = "rtl";
+
+    if (highlightWord && arabicText.includes(highlightWord)) {
+      // Draw with highlighted word in gold
+      const parts = arabicText.split(highlightWord);
+      const fullWidth = ctx.measureText(arabicText).width;
+      const startX = w / 2 + fullWidth / 2; // RTL start
+
+      // Draw entire text in white first
+      ctx.fillStyle = data.color || "#FFFFFF";
+      ctx.fillText(arabicText, w / 2, h * 0.42, w * 0.85);
+
+      // Overdraw the highlight word in gold
+      // Measure positions to overlay just the highlighted word
+      const beforeText = parts[0];
+      const beforeWidth = ctx.measureText(beforeText).width;
+      const wordWidth = ctx.measureText(highlightWord).width;
+      const wordX = startX - beforeWidth - wordWidth / 2;
+
+      ctx.fillStyle = "#D4A944";
+      ctx.fillText(highlightWord, wordX, h * 0.42);
+    } else {
+      ctx.fillStyle = data.color || "#FFFFFF";
+      ctx.fillText(arabicText, w / 2, h * 0.42, w * 0.85);
+    }
+    ctx.restore();
+  }
+
+  // Find active translation text block
+  const translationBlock = findActiveBlockByType(tracks, "text_translation", timestampMs);
+  if (translationBlock && translationBlock.data.type === "text_translation") {
+    const data = translationBlock.data as TextBlockData;
+    const fontSize = Math.round(w * 0.03);
+    ctx.save();
+    ctx.font = `${fontSize}px "Inter", sans-serif`;
+    ctx.fillStyle = data.color || "#A0A0A0";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(data.text, w / 2, h * 0.58, w * 0.85);
+    ctx.restore();
+  }
+}
+
+function renderLongFormMode(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  tracks: Track[],
+  timestampMs: number
+): void {
+  // Same base as reel mode
+  renderReelMode(ctx, w, h, tracks, timestampMs);
+
+  // Additionally check for card blocks (surah title overlay)
+  const cardBlock = findActiveBlockByType(tracks, "card", timestampMs);
+  if (cardBlock && cardBlock.data.type === "card") {
+    const data = cardBlock.data as CardBlockData;
+    ctx.save();
+
+    // Card background overlay
+    const cardH = h * 0.15;
+    const cardY = h * 0.1;
+    ctx.fillStyle = data.background_color || "#000000";
+    ctx.globalAlpha = 0.85;
+    ctx.fillRect(0, cardY, w, cardH);
+    ctx.globalAlpha = 1;
+
+    // Card text
+    const fontSize = Math.round(w * 0.04);
+    ctx.font = `${fontSize}px "Amiri Quran", "Amiri", serif`;
+    ctx.fillStyle = data.text_color || "#FFFFFF";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(data.text, w / 2, cardY + cardH / 2, w * 0.8);
+    ctx.restore();
+  }
+}
+
 // ─── PreviewPanel Component ───
 
 export function PreviewPanel() {
@@ -229,6 +398,25 @@ export function PreviewPanel() {
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
 
+      // Mode-specific rendering for non-mushaf modes
+      const projectMode = currentProject.mode;
+      if (projectMode === "caption") {
+        renderCaptionMode(ctx, w, h, currentProject.timeline.tracks, timestampMs);
+        rafIdRef.current = requestAnimationFrame(renderLoop);
+        return;
+      }
+      if (projectMode === "reel") {
+        renderReelMode(ctx, w, h, currentProject.timeline.tracks, timestampMs);
+        rafIdRef.current = requestAnimationFrame(renderLoop);
+        return;
+      }
+      if (projectMode === "long_form") {
+        renderLongFormMode(ctx, w, h, currentProject.timeline.tracks, timestampMs);
+        rafIdRef.current = requestAnimationFrame(renderLoop);
+        return;
+      }
+
+      // Mushaf mode rendering
       // Find active page
       const mushafTrack = currentProject.timeline.tracks.find((t) => t.track_type === "mushaf_page");
       const highlightTrack = currentProject.timeline.tracks.find((t) => t.track_type === "highlight");

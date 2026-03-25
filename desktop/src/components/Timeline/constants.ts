@@ -35,3 +35,9 @@ export const COLOR_AYAH_MARKER = "#333333";
 export const COLOR_SELECTED_BORDER = "#FFFFFF";
 export const COLOR_WAVEFORM_PLAYED = "#A0A0A0";
 export const COLOR_WAVEFORM_UNPLAYED = "#5C5C5C";
+
+export const COLOR_TEXT_ARABIC_BG = "#1A365D";
+export const COLOR_TEXT_TRANSLATION_BG = "#1A3636";
+export const COLOR_BACKGROUND_BG = "#1A1A2E";
+export const COLOR_CARD_BG = "#2D1A1A";
+export const COLOR_VIDEO_BG = "#1A2D1A";

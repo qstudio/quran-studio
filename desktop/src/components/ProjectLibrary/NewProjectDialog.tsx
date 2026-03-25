@@ -103,13 +103,17 @@ export function NewProjectDialog({
 
       setProgressPercent(30);
 
-      // Step 2: Pre-load all mushaf page images
-      setProgressStatus("Loading mushaf pages...");
-      const style = useAppStore.getState().mushafStyle;
-      await preloadProjectPages(project, style, (loaded, total) => {
-        setProgressPercent(30 + Math.round((loaded / total) * 60));
-        setProgressStatus(`Loading mushaf pages... ${loaded}/${total}`);
-      });
+      // Step 2: Pre-load mushaf page images (only for mushaf mode)
+      if (mode === "mushaf") {
+        setProgressStatus("Loading mushaf pages...");
+        const style = useAppStore.getState().mushafStyle;
+        await preloadProjectPages(project, style, (loaded, total) => {
+          setProgressPercent(30 + Math.round((loaded / total) * 60));
+          setProgressStatus(`Loading mushaf pages... ${loaded}/${total}`);
+        });
+      } else {
+        setProgressPercent(90);
+      }
 
       // Step 3: Done — open the editor
       setProgressPercent(100);
@@ -167,21 +171,18 @@ export function NewProjectDialog({
                 >
                   <ToggleGroupItem
                     value="caption"
-                    disabled
                     className="flex-1 text-xs"
                   >
                     Caption
                   </ToggleGroupItem>
                   <ToggleGroupItem
                     value="reel"
-                    disabled
                     className="flex-1 text-xs"
                   >
                     Reel
                   </ToggleGroupItem>
                   <ToggleGroupItem
-                    value="longform"
-                    disabled
+                    value="long_form"
                     className="flex-1 text-xs"
                   >
                     Long-form

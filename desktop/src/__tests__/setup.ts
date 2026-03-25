@@ -69,5 +69,4 @@ export function createMockCanvasContext(): CanvasRenderingContext2D {
 // Patch HTMLCanvasElement.getContext to return mock
 HTMLCanvasElement.prototype.getContext = vi.fn(function () {
   return createMockCanvasContext();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}) as any;
+}) as unknown as typeof HTMLCanvasElement.prototype.getContext;

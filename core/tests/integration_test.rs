@@ -994,3 +994,174 @@ fn test_project_save_updates_timestamp() {
     // Cleanup
     let _ = std::fs::remove_dir_all(&tmp_dir);
 }
+
+// ---------------------------------------------------------------------------
+// New mode builder tests
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_project_modes_serialize() {
+    let modes = vec![
+        (project::ProjectMode::Mushaf, "\"mushaf\""),
+        (project::ProjectMode::Caption, "\"caption\""),
+        (project::ProjectMode::Reel, "\"reel\""),
+        (project::ProjectMode::LongForm, "\"long_form\""),
+    ];
+    for (mode, expected_json) in &modes {
+        let json = serde_json::to_string(mode)
+            .unwrap_or_else(|_| panic!("Failed to serialize {:?}", mode));
+        assert_eq!(
+            &json, expected_json,
+            "ProjectMode::{:?} should serialize to {}, got {}",
+            mode, expected_json, json
+        );
+    }
+}
+
+#[test]
+fn test_new_block_data_serialization() {
+    let text_block = project::BlockData::TextArabic(project::TextBlockData {
+        text: "بسم الله".to_string(),
+        surah: 1,
+        ayah: 1,
+        language: "ar".to_string(),
+        font_size: 48,
+        color: "#FFFFFF".to_string(),
+        position: project::TextPosition::Center,
+        background: None,
+    });
+    let json = serde_json::to_string(&text_block).expect("Failed to serialize TextArabic");
+    assert!(json.contains("\"type\":\"text_arabic\""),
+        "TextArabic block should have type discriminator, got: {}", json);
+
+    let bg_block = project::BlockData::Background(project::BackgroundBlockData {
+        image_path: None,
+        color: Some("#000000".to_string()),
+    });
+    let json = serde_json::to_string(&bg_block).expect("Failed to serialize Background");
+    assert!(json.contains("\"type\":\"background\""),
+        "Background block should have type discriminator, got: {}", json);
+
+    let card_block = project::BlockData::Card(project::CardBlockData {
+        card_type: project::CardType::SurahTitle,
+        text: "Al-Fatihah".to_string(),
+        background_color: "#000000".to_string(),
+        text_color: "#FFFFFF".to_string(),
+    });
+    let json = serde_json::to_string(&card_block).expect("Failed to serialize Card");
+    assert!(json.contains("\"type\":\"card\""),
+        "Card block should have type discriminator, got: {}", json);
+}
+
+#[test]
+fn test_build_caption_project() {
+    let conn = open_db();
+    let project = project::build_caption_project(&conn, "mishary", 1, 1, 7, None)
+        .expect("Failed to build caption project");
+
+    assert_eq!(project.mode, project::ProjectMode::Caption,
+        "Project mode should be Caption");
+    assert_eq!(project.timeline.tracks.len(), 3,
+        "Caption project should have 3 tracks, got {}", project.timeline.tracks.len());
+
+    assert_eq!(project.timeline.tracks[0].track_type, project::TrackType::Audio,
+        "Track 0 should be Audio");
+    assert_eq!(project.timeline.tracks[1].track_type, project::TrackType::TextArabic,
+        "Track 1 should be TextArabic");
+    assert_eq!(project.timeline.tracks[2].track_type, project::TrackType::TextTranslation,
+        "Track 2 should be TextTranslation");
+
+    let arabic_track = &project.timeline.tracks[1];
+    assert_eq!(arabic_track.blocks.len(), 7,
+        "Arabic text track should have 7 blocks (one per ayah), got {}", arabic_track.blocks.len());
+
+    // Most blocks should have non-empty text (some words may have empty text_uthmani)
+    let non_empty_count = arabic_track.blocks.iter().filter(|block| {
+        if let project::BlockData::TextArabic(ref data) = block.data {
+            !data.text.is_empty()
+        } else {
+            false
+        }
+    }).count();
+    assert!(non_empty_count >= 5,
+        "At least 5 of 7 Arabic text blocks should have text, got {}", non_empty_count);
+
+    assert!(project.timeline.duration_ms > 0, "Duration should be positive");
+
+    let json = serde_json::to_string_pretty(&project).expect("Failed to serialize");
+    let _parsed: project::Project = serde_json::from_str(&json).expect("Failed to deserialize");
+}
+
+#[test]
+fn test_build_reel_project() {
+    let conn = open_db();
+    let project = project::build_reel_project(&conn, "mishary", 1, 1, 7, None)
+        .expect("Failed to build reel project");
+
+    assert_eq!(project.mode, project::ProjectMode::Reel,
+        "Project mode should be Reel");
+    assert_eq!(project.timeline.tracks.len(), 5,
+        "Reel project should have 5 tracks, got {}", project.timeline.tracks.len());
+
+    assert_eq!(project.timeline.tracks[0].track_type, project::TrackType::Background);
+    assert_eq!(project.timeline.tracks[1].track_type, project::TrackType::Audio);
+    assert_eq!(project.timeline.tracks[2].track_type, project::TrackType::TextArabic);
+    assert_eq!(project.timeline.tracks[3].track_type, project::TrackType::Highlight);
+    assert_eq!(project.timeline.tracks[4].track_type, project::TrackType::TextTranslation);
+
+    assert!(project.timeline.tracks[3].blocks.len() >= 25,
+        "Highlight track should have ~29 word blocks, got {}",
+        project.timeline.tracks[3].blocks.len());
+
+    assert_eq!(project.export_settings.width, 1080);
+    assert_eq!(project.export_settings.height, 1920);
+
+    let json = serde_json::to_string_pretty(&project).expect("Failed to serialize");
+    let _parsed: project::Project = serde_json::from_str(&json).expect("Failed to deserialize");
+}
+
+#[test]
+fn test_build_longform_project() {
+    let conn = open_db();
+    let project = project::build_longform_project(&conn, "mishary", 1, 1, 7, None)
+        .expect("Failed to build longform project");
+
+    assert_eq!(project.mode, project::ProjectMode::LongForm,
+        "Project mode should be LongForm");
+    assert_eq!(project.timeline.tracks.len(), 6,
+        "LongForm project should have 6 tracks, got {}", project.timeline.tracks.len());
+
+    assert_eq!(project.timeline.tracks[5].track_type, project::TrackType::Card);
+
+    let card_track = &project.timeline.tracks[5];
+    assert!(card_track.blocks.len() >= 1,
+        "Card track should have at least a surah title card");
+
+    if let project::BlockData::Card(ref data) = card_track.blocks[0].data {
+        assert!(data.text.contains("Al-Fatihah"),
+            "Card text should contain surah name, got: {}", data.text);
+    } else {
+        panic!("Expected Card block data");
+    }
+
+    assert_eq!(project.export_settings.width, 1920);
+    assert_eq!(project.export_settings.height, 1080);
+
+    let json = serde_json::to_string_pretty(&project).expect("Failed to serialize");
+    let _parsed: project::Project = serde_json::from_str(&json).expect("Failed to deserialize");
+}
+
+#[test]
+fn test_longform_no_bismillah_for_tawbah() {
+    let conn = open_db();
+    let project = project::build_longform_project(&conn, "mishary", 9, 1, 5, None)
+        .expect("Failed to build longform project for At-Tawbah");
+
+    let card_track = &project.timeline.tracks[5];
+    for block in &card_track.blocks {
+        if let project::BlockData::Card(ref data) = block.data {
+            assert_ne!(data.card_type, project::CardType::Bismillah,
+                "At-Tawbah (surah 9) should NOT have a Bismillah card");
+        }
+    }
+}

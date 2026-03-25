@@ -12,7 +12,7 @@ import {
   handleWheel,
 } from "@/components/Timeline/TimelineInteraction";
 import { msToX, xToMs } from "@/components/Timeline/utils";
-import { TRACK_HEADER_WIDTH, TRACK_HEIGHT, TIME_RULER_HEIGHT } from "@/components/Timeline/constants";
+import { TRACK_HEIGHT, TIME_RULER_HEIGHT } from "@/components/Timeline/constants";
 
 function getState() {
   return useTimelineStore.getState();

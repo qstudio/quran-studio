@@ -1,12 +1,8 @@
-import { currentPlayheadMs, setCurrentPlayheadMs } from "@/stores/playheadSync";
-
-// The module uses a mutable `let` export, so we need to re-import to read the
-// live binding. Vitest's ESM handling preserves live bindings, but we import
-// the whole module namespace to be safe.
+import { setCurrentPlayheadMs } from "@/stores/playheadSync";
+// Use namespace import to read the live mutable binding
 import * as sync from "@/stores/playheadSync";
 
 beforeEach(() => {
-  // Reset to 0 before each test
   setCurrentPlayheadMs(0);
 });
 

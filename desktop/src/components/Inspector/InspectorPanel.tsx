@@ -129,86 +129,165 @@ export function InspectorPanel() {
 
         <Separator />
 
-        {/* Mushaf Display */}
-        <Section title="Mushaf">
-          <div>
-            <label className="text-xs text-[#5C5C5C] mb-1.5 block">Style</label>
-            <Select
-              value={mushafStyle}
-              onValueChange={(v) => handleMushafStyleChange(v as MushafStyle)}
-              disabled={loadingStyle}
-            >
-              <SelectTrigger className="h-7 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="madani">Madani (Standard)</SelectItem>
-                <SelectItem value="tajweed">Tajweed (Color-coded)</SelectItem>
-              </SelectContent>
-            </Select>
-            {loadingStyle && (
-              <p className="text-[10px] text-[#5C5C5C] mt-1">Loading pages...</p>
-            )}
-          </div>
-
-          <div>
-            <label className="text-xs text-[#5C5C5C] mb-1 block">Background</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="color"
-                value={backgroundColor}
-                onChange={(e) => useAppStore.getState().setBackgroundColor(e.target.value)}
-                className="h-6 w-6 rounded border border-[#2E2E2E] bg-transparent cursor-pointer p-0"
-              />
-              <span className="text-[10px] text-[#5C5C5C] font-mono uppercase">
-                {backgroundColor}
-              </span>
-              {/* Quick presets */}
-              <div className="flex gap-1 ml-auto">
-                {["#0A0A0A", "#000000", "#1A1A1A", "#F5EFE3"].map((c) => (
-                  <button
-                    key={c}
-                    className="w-4 h-4 rounded border border-[#2E2E2E]"
-                    style={{ backgroundColor: c }}
-                    onClick={() => {
-                      useAppStore.getState().setBackgroundColor(c);
-                    }}
-                  />
-                ))}
+        {/* Mushaf Display — only for mushaf mode */}
+        {project.mode === "mushaf" && (
+          <>
+            <Section title="Mushaf">
+              <div>
+                <label className="text-xs text-[#5C5C5C] mb-1.5 block">Style</label>
+                <Select
+                  value={mushafStyle}
+                  onValueChange={(v) => handleMushafStyleChange(v as MushafStyle)}
+                  disabled={loadingStyle}
+                >
+                  <SelectTrigger className="h-7 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="madani">Madani (Standard)</SelectItem>
+                    <SelectItem value="tajweed">Tajweed (Color-coded)</SelectItem>
+                  </SelectContent>
+                </Select>
+                {loadingStyle && (
+                  <p className="text-[10px] text-[#5C5C5C] mt-1">Loading pages...</p>
+                )}
               </div>
-            </div>
-          </div>
 
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-xs text-[#5C5C5C]">Page Margin</label>
-              <span className="text-[10px] text-[#5C5C5C] font-mono">{pageMargin}px</span>
-            </div>
-            <Slider
-              value={[pageMargin]}
-              onValueChange={([val]: number[]) => useAppStore.getState().setPageMargin(val)}
-              min={0}
-              max={60}
-              step={2}
-            />
-          </div>
+              <div>
+                <label className="text-xs text-[#5C5C5C] mb-1 block">Background</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={backgroundColor}
+                    onChange={(e) => useAppStore.getState().setBackgroundColor(e.target.value)}
+                    className="h-6 w-6 rounded border border-[#2E2E2E] bg-transparent cursor-pointer p-0"
+                  />
+                  <span className="text-[10px] text-[#5C5C5C] font-mono uppercase">
+                    {backgroundColor}
+                  </span>
+                  {/* Quick presets */}
+                  <div className="flex gap-1 ml-auto">
+                    {["#0A0A0A", "#000000", "#1A1A1A", "#F5EFE3"].map((c) => (
+                      <button
+                        key={c}
+                        className="w-4 h-4 rounded border border-[#2E2E2E]"
+                        style={{ backgroundColor: c }}
+                        onClick={() => {
+                          useAppStore.getState().setBackgroundColor(c);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-          <div className="flex items-center justify-between">
-            <label className="text-xs text-[#5C5C5C]">Show Info</label>
-            <Toggle
-              pressed={showInfo}
-              onPressedChange={(v) => useAppStore.getState().setShowInfo(v)}
-              size="sm"
-              className="h-6 w-6 p-0"
-            >
-              {showInfo ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
-            </Toggle>
-          </div>
-        </Section>
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs text-[#5C5C5C]">Page Margin</label>
+                  <span className="text-[10px] text-[#5C5C5C] font-mono">{pageMargin}px</span>
+                </div>
+                <Slider
+                  value={[pageMargin]}
+                  onValueChange={([val]: number[]) => useAppStore.getState().setPageMargin(val)}
+                  min={0}
+                  max={60}
+                  step={2}
+                />
+              </div>
 
-        <Separator />
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-[#5C5C5C]">Show Info</label>
+                <Toggle
+                  pressed={showInfo}
+                  onPressedChange={(v) => useAppStore.getState().setShowInfo(v)}
+                  size="sm"
+                  className="h-6 w-6 p-0"
+                >
+                  {showInfo ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+                </Toggle>
+              </div>
+            </Section>
 
-        {/* Highlight Settings */}
+            <Separator />
+          </>
+        )}
+
+        {/* Text Style — for caption, reel, and long_form modes */}
+        {(project.mode === "caption" || project.mode === "reel" || project.mode === "long_form") && (
+          <>
+            <Section title="Text Style">
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs text-[#5C5C5C]">Font Size</label>
+                  <span className="text-[10px] text-[#5C5C5C] font-mono">48px</span>
+                </div>
+                <Slider
+                  value={[48]}
+                  onValueChange={() => {}}
+                  min={16}
+                  max={96}
+                  step={2}
+                />
+              </div>
+
+              <div>
+                <label className="text-xs text-[#5C5C5C] mb-1.5 block">Position</label>
+                <ToggleGroup
+                  type="single"
+                  value="center"
+                  onValueChange={() => {}}
+                  size="sm"
+                  className="w-full"
+                >
+                  <ToggleGroupItem value="top" className="flex-1 text-[10px]">Top</ToggleGroupItem>
+                  <ToggleGroupItem value="center" className="flex-1 text-[10px]">Center</ToggleGroupItem>
+                  <ToggleGroupItem value="bottom" className="flex-1 text-[10px]">Bottom</ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+            </Section>
+
+            <Separator />
+          </>
+        )}
+
+        {/* Background — for reel and long_form modes */}
+        {(project.mode === "reel" || project.mode === "long_form") && (
+          <>
+            <Section title="Background">
+              <div>
+                <label className="text-xs text-[#5C5C5C] mb-1 block">Color</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={backgroundColor}
+                    onChange={(e) => useAppStore.getState().setBackgroundColor(e.target.value)}
+                    className="h-6 w-6 rounded border border-[#2E2E2E] bg-transparent cursor-pointer p-0"
+                  />
+                  <span className="text-[10px] text-[#5C5C5C] font-mono uppercase">
+                    {backgroundColor}
+                  </span>
+                  <div className="flex gap-1 ml-auto">
+                    {["#0A0A0A", "#000000", "#1A1A2E", "#0D1117"].map((c) => (
+                      <button
+                        key={c}
+                        className="w-4 h-4 rounded border border-[#2E2E2E]"
+                        style={{ backgroundColor: c }}
+                        onClick={() => {
+                          useAppStore.getState().setBackgroundColor(c);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Section>
+
+            <Separator />
+          </>
+        )}
+
+        {/* Highlight Settings — for mushaf, reel, and long_form (not caption) */}
+        {project.mode !== "caption" && (
         <Section title="Highlight">
           <div>
             <label className="text-xs text-[#5C5C5C] mb-1.5 block">Mode</label>
@@ -313,6 +392,7 @@ export function InspectorPanel() {
             />
           </div>
         </Section>
+        )}
 
         <Separator />
 

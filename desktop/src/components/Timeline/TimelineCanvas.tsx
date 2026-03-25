@@ -33,6 +33,11 @@ import {
   COLOR_HIGHLIGHT_ALPHA,
   COLOR_AYAH_MARKER,
   COLOR_SELECTED_BORDER,
+  COLOR_TEXT_ARABIC_BG,
+  COLOR_TEXT_TRANSLATION_BG,
+  COLOR_BACKGROUND_BG,
+  COLOR_CARD_BG,
+  COLOR_VIDEO_BG,
 } from "./constants";
 
 function roundRect(
@@ -291,6 +296,104 @@ function renderBlock(
         ctx.lineWidth = 1.5;
         ctx.strokeRect(visibleStartX, y, w, h);
       }
+      break;
+    }
+
+    case "text_arabic": {
+      roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+      ctx.fillStyle = COLOR_TEXT_ARABIC_BG;
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? COLOR_SELECTED_BORDER : COLOR_BLOCK_BORDER;
+      ctx.lineWidth = isSelected ? 1.5 : 1;
+      ctx.stroke();
+
+      if (w > 30 && block.data.type === "text_arabic") {
+        ctx.save();
+        roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+        ctx.clip();
+        ctx.font = FONT_BLOCK_LABEL;
+        ctx.fillStyle = COLOR_LABEL;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(
+          (block.data as import("@/types/project").TextBlockData).text.slice(0, 20),
+          visibleStartX + 6,
+          y + h / 2
+        );
+        ctx.restore();
+      }
+      break;
+    }
+
+    case "text_translation": {
+      roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+      ctx.fillStyle = COLOR_TEXT_TRANSLATION_BG;
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? COLOR_SELECTED_BORDER : COLOR_BLOCK_BORDER;
+      ctx.lineWidth = isSelected ? 1.5 : 1;
+      ctx.stroke();
+
+      if (w > 30 && block.data.type === "text_translation") {
+        ctx.save();
+        roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+        ctx.clip();
+        ctx.font = FONT_BLOCK_LABEL;
+        ctx.fillStyle = COLOR_LABEL;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(
+          (block.data as import("@/types/project").TextBlockData).text.slice(0, 20),
+          visibleStartX + 6,
+          y + h / 2
+        );
+        ctx.restore();
+      }
+      break;
+    }
+
+    case "background": {
+      roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+      ctx.fillStyle = COLOR_BACKGROUND_BG;
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? COLOR_SELECTED_BORDER : COLOR_BLOCK_BORDER;
+      ctx.lineWidth = isSelected ? 1.5 : 1;
+      ctx.stroke();
+      break;
+    }
+
+    case "card": {
+      roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+      ctx.fillStyle = COLOR_CARD_BG;
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? COLOR_SELECTED_BORDER : COLOR_BLOCK_BORDER;
+      ctx.lineWidth = isSelected ? 1.5 : 1;
+      ctx.stroke();
+
+      if (w > 30 && block.data.type === "card") {
+        ctx.save();
+        roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+        ctx.clip();
+        ctx.font = FONT_BLOCK_LABEL;
+        ctx.fillStyle = COLOR_LABEL;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(
+          (block.data as import("@/types/project").CardBlockData).text.slice(0, 20),
+          visibleStartX + 6,
+          y + h / 2
+        );
+        ctx.restore();
+      }
+      break;
+    }
+
+    case "video": {
+      roundRect(ctx, visibleStartX, y, w, h, BLOCK_BORDER_RADIUS);
+      ctx.fillStyle = COLOR_VIDEO_BG;
+      ctx.fill();
+      ctx.strokeStyle = isSelected ? COLOR_SELECTED_BORDER : COLOR_BLOCK_BORDER;
+      ctx.lineWidth = isSelected ? 1.5 : 1;
+      ctx.stroke();
       break;
     }
   }

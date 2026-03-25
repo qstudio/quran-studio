@@ -151,11 +151,11 @@ describe("Workflow: Open project with missing UI fields", () => {
   it("projects from Rust backend (no playhead_ms/zoom/scroll_x) get defaults", () => {
     // Simulate a project from the Rust backend that doesn't have UI fields
     const rustProject = createTestProject();
-    // @ts-expect-error -- simulating missing fields from Rust
+    // @ts-expect-error -- simulating missing fields from Rust backend
     delete rustProject.timeline.playhead_ms;
-    // @ts-expect-error
+    // @ts-expect-error -- simulating missing fields from Rust backend
     delete rustProject.timeline.zoom;
-    // @ts-expect-error
+    // @ts-expect-error -- simulating missing fields from Rust backend
     delete rustProject.timeline.scroll_x;
 
     act(() => getApp().openProject(rustProject));
