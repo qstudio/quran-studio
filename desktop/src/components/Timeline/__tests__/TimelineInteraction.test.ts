@@ -10,10 +10,10 @@ import { createTestProject } from "@/__tests__/fixtures";
 describe("createInitialDragState", () => {
   it("returns a drag state with mode 'none'", () => {
     const state = createInitialDragState();
-    expect(state.mode).toBe("none");
-    expect(state.blockId).toBeNull();
-    expect(state.startX).toBe(0);
-    expect(state.startY).toBe(0);
+    expect(state.mode, "Initial drag state mode should be 'none'").toBe("none");
+    expect(state.blockId, "Initial drag state should have no blockId (null)").toBeNull();
+    expect(state.startX, "Initial drag state startX should be 0").toBe(0);
+    expect(state.startY, "Initial drag state startY should be 0").toBe(0);
   });
 });
 
@@ -30,14 +30,14 @@ describe("getBlockAtPosition", () => {
 
   it("returns type 'ruler' when y < TIME_RULER_HEIGHT (24)", () => {
     const result = getBlockAtPosition(200, 10, project, zoom, scrollX);
-    expect(result.type).toBe("ruler");
-    expect(result.blockId).toBeNull();
+    expect(result.type, "Clicking at y=10 (below TIME_RULER_HEIGHT=24) should hit the ruler area").toBe("ruler");
+    expect(result.blockId, "Ruler hit should not have a blockId").toBeNull();
   });
 
   it("returns type 'header' when x < TRACK_HEADER_WIDTH (120)", () => {
     const result = getBlockAtPosition(50, 30, project, zoom, scrollX);
-    expect(result.type).toBe("header");
-    expect(result.blockId).toBeNull();
+    expect(result.type, "Clicking at x=50 (inside TRACK_HEADER_WIDTH=120) should hit the header area").toBe("header");
+    expect(result.blockId, "Header hit should not have a blockId").toBeNull();
   });
 
   it("returns type 'block' with correct blockId when over a block body", () => {
@@ -47,8 +47,8 @@ describe("getBlockAtPosition", () => {
     // hl-1 spans 0..1000ms. Center X = msToX(500)
     const blockCenterX = msToX(500);
     const result = getBlockAtPosition(blockCenterX, trackY, project, zoom, scrollX);
-    expect(result.type).toBe("block");
-    expect(result.blockId).toBe("hl-1");
+    expect(result.type, "Clicking center of hl-1 block should return hit type 'block'").toBe("block");
+    expect(result.blockId, "Hit on hl-1 block center should return blockId 'hl-1'").toBe("hl-1");
   });
 
   it("returns type 'block-edge-left' near the left edge of a block (within 6px)", () => {
@@ -57,8 +57,8 @@ describe("getBlockAtPosition", () => {
     const leftEdgeX = msToX(1000);
     // Hit within RESIZE_HIT_AREA (6px) of the left edge
     const result = getBlockAtPosition(leftEdgeX + 3, trackY, project, zoom, scrollX);
-    expect(result.type).toBe("block-edge-left");
-    expect(result.blockId).toBe("hl-2");
+    expect(result.type, "Clicking 3px right of hl-2's left edge should detect block-edge-left for resizing").toBe("block-edge-left");
+    expect(result.blockId, "Left edge hit should identify block hl-2").toBe("hl-2");
   });
 
   it("returns type 'block-edge-right' near the right edge of a block (within 6px)", () => {
@@ -67,8 +67,8 @@ describe("getBlockAtPosition", () => {
     const rightEdgeX = msToX(2000);
     // Hit within RESIZE_HIT_AREA (6px) of the right edge
     const result = getBlockAtPosition(rightEdgeX - 3, trackY, project, zoom, scrollX);
-    expect(result.type).toBe("block-edge-right");
-    expect(result.blockId).toBe("hl-2");
+    expect(result.type, "Clicking 3px left of hl-2's right edge should detect block-edge-right for resizing").toBe("block-edge-right");
+    expect(result.blockId, "Right edge hit should identify block hl-2").toBe("hl-2");
   });
 
   it("returns type 'empty' when clicking empty space in a valid track", () => {
@@ -76,15 +76,15 @@ describe("getBlockAtPosition", () => {
     // After all highlight blocks (last ends at 3000ms), pick a position well past them
     const emptyX = msToX(8000);
     const result = getBlockAtPosition(emptyX, trackY, project, zoom, scrollX);
-    expect(result.type).toBe("empty");
-    expect(result.blockId).toBeNull();
+    expect(result.type, "Clicking at 8000ms (past all blocks) in highlight track should return 'empty'").toBe("empty");
+    expect(result.blockId, "Empty space hit should not have a blockId").toBeNull();
   });
 
   it("returns type 'empty' when trackIndex is out of range", () => {
     // 3 tracks, so y for track index 3 would be: 24 + 3*32 + 16 = 136
     const outOfRangeY = 24 + 3 * 32 + 16;
     const result = getBlockAtPosition(200, outOfRangeY, project, zoom, scrollX);
-    expect(result.type).toBe("empty");
-    expect(result.blockId).toBeNull();
+    expect(result.type, "Clicking below all tracks (track index 3, only 3 tracks exist) should return 'empty'").toBe("empty");
+    expect(result.blockId, "Out-of-range track hit should not have a blockId").toBeNull();
   });
 });

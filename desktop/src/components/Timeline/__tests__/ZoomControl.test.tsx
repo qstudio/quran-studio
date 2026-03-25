@@ -18,7 +18,7 @@ beforeEach(() => {
 describe("ZoomControl", () => {
   it("returns null when no project is loaded", () => {
     const { container } = render(<ZoomControl />);
-    expect(container.innerHTML).toBe("");
+    expect(container.innerHTML, "ZoomControl should render nothing when no project is loaded").toBe("");
   });
 
   it("renders without crashing when project exists", () => {
@@ -29,14 +29,14 @@ describe("ZoomControl", () => {
     const { container } = render(<ZoomControl />);
 
     // Should render zoom in and zoom out buttons
-    expect(screen.getByTitle("Zoom In (+)")).toBeDefined();
-    expect(screen.getByTitle("Zoom Out (-)")).toBeDefined();
+    expect(screen.getByTitle("Zoom In (+)"), "Zoom In button should be rendered when project is loaded").toBeDefined();
+    expect(screen.getByTitle("Zoom Out (-)"), "Zoom Out button should be rendered when project is loaded").toBeDefined();
 
     // Should render a range input (slider)
     const slider = container.querySelector('input[type="range"]');
-    expect(slider).not.toBeNull();
+    expect(slider, "ZoomControl should contain a range slider input").not.toBeNull();
 
     // Should display zoom value
-    expect(screen.getByText("50.0x")).toBeDefined();
+    expect(screen.getByText("50.0x"), "Zoom value label should display '50.0x' for default zoom of 50").toBeDefined();
   });
 });

@@ -34,11 +34,12 @@ describe("Workflow: Click ruler to scrub, then click block to select", () => {
     const rulerX = msToX(targetMs, zoom, scroll_x);
 
     const rulerHit = getBlockAtPosition(rulerX, 10, project, zoom, scroll_x);
-    expect(rulerHit.type).toBe("ruler");
+    expect(rulerHit.type, "Clicking at y=10 should hit the ruler area").toBe("ruler");
 
     // Simulate setting playhead like handleMouseDown would
     act(() => getState().setPlayhead(xToMs(rulerX, zoom, scroll_x)));
-    expect(getState().project!.timeline.playhead_ms).toBeCloseTo(targetMs, -1);
+    expect(getState().project!.timeline.playhead_ms,
+      "After ruler click, playhead should be near 2000ms").toBeCloseTo(targetMs, -1);
 
     // Now click on hl-1 block body (track 2, which is at y offset 2 * TRACK_HEIGHT + TIME_RULER_HEIGHT)
     const hl1 = project.timeline.tracks[2].blocks[0]; // 0-1000ms
@@ -46,20 +47,21 @@ describe("Workflow: Click ruler to scrub, then click block to select", () => {
     const blockY = TIME_RULER_HEIGHT + 2 * TRACK_HEIGHT + TRACK_HEIGHT / 2;
 
     const blockHit = getBlockAtPosition(blockCenterX, blockY, project, zoom, scroll_x);
-    expect(blockHit.type).toBe("block");
-    expect(blockHit.blockId).toBe("hl-1");
+    expect(blockHit.type, "Clicking center of hl-1 should hit a block").toBe("block");
+    expect(blockHit.blockId, "Hit block should be identified as hl-1").toBe("hl-1");
 
     // Select the block
     act(() => getState().selectBlock(blockHit.blockId!));
-    expect(getState().selectedBlockIds).toEqual(["hl-1"]);
+    expect(getState().selectedBlockIds, "After clicking block, hl-1 should be selected").toEqual(["hl-1"]);
 
     // Playhead should NOT have moved from the ruler scrub
-    expect(getState().project!.timeline.playhead_ms).toBeCloseTo(targetMs, -1);
+    expect(getState().project!.timeline.playhead_ms,
+      "Selecting a block should not move the playhead from its ruler-scrubbed position").toBeCloseTo(targetMs, -1);
   });
 });
 
 describe("Workflow: Detect resize handles at block edges", () => {
-  it("near left edge → resize-left, center → block, near right edge → resize-right", () => {
+  it("near left edge -> resize-left, center -> block, near right edge -> resize-right", () => {
     const project = getState().project!;
     const { zoom, scroll_x } = project.timeline;
     const blockY = TIME_RULER_HEIGHT + 2 * TRACK_HEIGHT + TRACK_HEIGHT / 2;
@@ -71,15 +73,15 @@ describe("Workflow: Detect resize handles at block edges", () => {
 
     // Near left edge (within 6px)
     const leftHit = getBlockAtPosition(leftEdgeX + 2, blockY, project, zoom, scroll_x);
-    expect(leftHit.type).toBe("block-edge-left");
+    expect(leftHit.type, "Clicking 2px from left edge of hl-1 should detect left resize handle").toBe("block-edge-left");
 
     // Center
     const centerHit = getBlockAtPosition(centerX, blockY, project, zoom, scroll_x);
-    expect(centerHit.type).toBe("block");
+    expect(centerHit.type, "Clicking center of hl-1 should detect block body (not edge)").toBe("block");
 
     // Near right edge (within 6px)
     const rightHit = getBlockAtPosition(rightEdgeX - 2, blockY, project, zoom, scroll_x);
-    expect(rightHit.type).toBe("block-edge-right");
+    expect(rightHit.type, "Clicking 2px from right edge of hl-1 should detect right resize handle").toBe("block-edge-right");
   });
 });
 
@@ -100,19 +102,20 @@ describe("Workflow: Scroll wheel zooms and pans", () => {
       setScrollX: (x: number) => act(() => getState().setScrollX(x)),
     };
 
-    // Shift+wheel → horizontal pan
+    // Shift+wheel -> horizontal pan
     const shiftWheel = new WheelEvent("wheel", {
       deltaY: 100,
       shiftKey: true,
     });
     Object.defineProperty(shiftWheel, "preventDefault", { value: vi.fn() });
     handleWheel(shiftWheel, canvas, getState().project!, mockStore);
-    expect(getState().project!.timeline.scroll_x).toBe(initialScrollX + 100);
+    expect(getState().project!.timeline.scroll_x,
+      "Shift+wheel with deltaY=100 should pan scroll_x by 100 pixels").toBe(initialScrollX + 100);
 
     // Reset
     act(() => getState().setScrollX(0));
 
-    // Ctrl+wheel → zoom
+    // Ctrl+wheel -> zoom
     const ctrlWheel = new WheelEvent("wheel", {
       deltaY: -50,
       ctrlKey: true,
@@ -120,16 +123,18 @@ describe("Workflow: Scroll wheel zooms and pans", () => {
     Object.defineProperty(ctrlWheel, "preventDefault", { value: vi.fn() });
     handleWheel(ctrlWheel, canvas, getState().project!, mockStore);
     // deltaY=-50, factor = 1 - (-50)*0.01 = 1.5, zoom = 50 * 1.5 = 75
-    expect(getState().project!.timeline.zoom).toBeCloseTo(75, 0);
+    expect(getState().project!.timeline.zoom,
+      "Ctrl+wheel with deltaY=-50 should zoom from 50 to 75 (factor 1.5)").toBeCloseTo(75, 0);
 
     // Reset
     act(() => getState().setZoom(initialZoom));
 
-    // Plain wheel → vertical scroll acts as horizontal pan
+    // Plain wheel -> vertical scroll acts as horizontal pan
     const plainWheel = new WheelEvent("wheel", { deltaY: 50 });
     Object.defineProperty(plainWheel, "preventDefault", { value: vi.fn() });
     handleWheel(plainWheel, canvas, getState().project!, mockStore);
-    expect(getState().project!.timeline.scroll_x).toBe(50);
+    expect(getState().project!.timeline.scroll_x,
+      "Plain wheel with deltaY=50 should pan scroll_x by 50 pixels").toBe(50);
   });
 });
 
@@ -140,17 +145,17 @@ describe("Workflow: Click empty space clears selection", () => {
 
     // Select a block first
     act(() => getState().selectBlock("hl-1"));
-    expect(getState().selectedBlockIds).toEqual(["hl-1"]);
+    expect(getState().selectedBlockIds, "hl-1 should be selected before clicking empty space").toEqual(["hl-1"]);
 
     // Click empty space (far right where no blocks exist)
     const emptyX = msToX(9000, zoom, scroll_x); // way past all highlight blocks
     const emptyY = TIME_RULER_HEIGHT + 2 * TRACK_HEIGHT + TRACK_HEIGHT / 2;
     const hit = getBlockAtPosition(emptyX, emptyY, project, zoom, scroll_x);
-    expect(hit.type).toBe("empty");
+    expect(hit.type, "Clicking at 9000ms (past all blocks) should hit empty space").toBe("empty");
 
     // handleMouseDown would call clearSelection for empty/header hits
     act(() => getState().clearSelection());
-    expect(getState().selectedBlockIds).toEqual([]);
+    expect(getState().selectedBlockIds, "Selection should be empty after clicking empty space").toEqual([]);
   });
 });
 
@@ -161,17 +166,17 @@ describe("Workflow: msToX/xToMs consistency through zoom changes", () => {
     // At default zoom (50)
     const x1 = msToX(hl2StartMs, 50, 0);
     const ms1 = xToMs(x1, 50, 0);
-    expect(ms1).toBeCloseTo(hl2StartMs);
+    expect(ms1, "msToX/xToMs should round-trip correctly at zoom=50").toBeCloseTo(hl2StartMs);
 
     // At zoomed in (200)
     const x2 = msToX(hl2StartMs, 200, 0);
-    expect(x2).toBeGreaterThan(x1); // more pixels at higher zoom
+    expect(x2, "Higher zoom (200) should produce more pixels than lower zoom (50) for same ms").toBeGreaterThan(x1); // more pixels at higher zoom
     const ms2 = xToMs(x2, 200, 0);
-    expect(ms2).toBeCloseTo(hl2StartMs);
+    expect(ms2, "msToX/xToMs should round-trip correctly at zoom=200").toBeCloseTo(hl2StartMs);
 
     // At zoomed in with scroll
     const x3 = msToX(hl2StartMs, 200, 100);
     const ms3 = xToMs(x3, 200, 100);
-    expect(ms3).toBeCloseTo(hl2StartMs);
+    expect(ms3, "msToX/xToMs should round-trip correctly at zoom=200 with scroll_x=100").toBeCloseTo(hl2StartMs);
   });
 });

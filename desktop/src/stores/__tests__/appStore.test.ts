@@ -21,23 +21,23 @@ beforeEach(() => {
 describe("initial state", () => {
   it("has correct defaults", () => {
     const state = useAppStore.getState();
-    expect(state.view).toBe("library");
-    expect(state.inspectorVisible).toBe(true);
-    expect(state.aspectRatio).toBe("9:16");
+    expect(state.view, "Default view should be 'library'").toBe("library");
+    expect(state.inspectorVisible, "Inspector should be visible by default").toBe(true);
+    expect(state.aspectRatio, "Default aspect ratio should be '9:16' (portrait/reel)").toBe("9:16");
   });
 });
 
 describe("toggleInspector", () => {
   it("flips inspector visibility", () => {
-    expect(useAppStore.getState().inspectorVisible).toBe(true);
+    expect(useAppStore.getState().inspectorVisible, "Inspector should start visible").toBe(true);
     act(() => {
       useAppStore.getState().toggleInspector();
     });
-    expect(useAppStore.getState().inspectorVisible).toBe(false);
+    expect(useAppStore.getState().inspectorVisible, "Inspector should be hidden after first toggle").toBe(false);
     act(() => {
       useAppStore.getState().toggleInspector();
     });
-    expect(useAppStore.getState().inspectorVisible).toBe(true);
+    expect(useAppStore.getState().inspectorVisible, "Inspector should be visible again after second toggle").toBe(true);
   });
 });
 
@@ -46,7 +46,7 @@ describe("setAspectRatio", () => {
     act(() => {
       useAppStore.getState().setAspectRatio("16:9");
     });
-    expect(useAppStore.getState().aspectRatio).toBe("16:9");
+    expect(useAppStore.getState().aspectRatio, "Aspect ratio should update to '16:9' after setAspectRatio").toBe("16:9");
   });
 });
 
@@ -55,7 +55,7 @@ describe("setMushafStyle", () => {
     act(() => {
       useAppStore.getState().setMushafStyle("tajweed");
     });
-    expect(useAppStore.getState().mushafStyle).toBe("tajweed");
+    expect(useAppStore.getState().mushafStyle, "Mushaf style should update to 'tajweed' after setMushafStyle").toBe("tajweed");
   });
 });
 
@@ -64,7 +64,7 @@ describe("setBackgroundColor", () => {
     act(() => {
       useAppStore.getState().setBackgroundColor("#FFFFFF");
     });
-    expect(useAppStore.getState().backgroundColor).toBe("#FFFFFF");
+    expect(useAppStore.getState().backgroundColor, "Background color should update to '#FFFFFF' after setBackgroundColor").toBe("#FFFFFF");
   });
 });
 
@@ -73,7 +73,7 @@ describe("setPageMargin", () => {
     act(() => {
       useAppStore.getState().setPageMargin(40);
     });
-    expect(useAppStore.getState().pageMargin).toBe(40);
+    expect(useAppStore.getState().pageMargin, "Page margin should update to 40 after setPageMargin").toBe(40);
   });
 });
 
@@ -82,7 +82,7 @@ describe("setShowInfo", () => {
     act(() => {
       useAppStore.getState().setShowInfo(false);
     });
-    expect(useAppStore.getState().showInfo).toBe(false);
+    expect(useAppStore.getState().showInfo, "showInfo should be false after setShowInfo(false)").toBe(false);
   });
 });
 
@@ -91,7 +91,7 @@ describe("openProject", () => {
     act(() => {
       useAppStore.getState().openProject(createTestProject());
     });
-    expect(useAppStore.getState().view).toBe("editor");
+    expect(useAppStore.getState().view, "View should switch to 'editor' after openProject").toBe("editor");
   });
 });
 
@@ -100,7 +100,7 @@ describe("closeProject", () => {
     act(() => {
       useAppStore.getState().openProject(createTestProject());
     });
-    expect(useAppStore.getState().view).toBe("editor");
+    expect(useAppStore.getState().view, "View should be 'editor' after opening a project").toBe("editor");
 
     // closeProject internally calls setProject(null as unknown as Project),
     // which may throw when cloning null. We spy to prevent the crash.
@@ -110,9 +110,9 @@ describe("closeProject", () => {
     act(() => {
       useAppStore.getState().closeProject();
     });
-    expect(useAppStore.getState().view).toBe("library");
-    expect(useAppStore.getState().inspectorVisible).toBe(true);
-    expect(spy).toHaveBeenCalled();
+    expect(useAppStore.getState().view, "View should return to 'library' after closeProject").toBe("library");
+    expect(useAppStore.getState().inspectorVisible, "Inspector should be reset to visible after closeProject").toBe(true);
+    expect(spy, "closeProject should call setProject to clear the timeline state").toHaveBeenCalled();
 
     spy.mockRestore();
   });

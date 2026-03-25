@@ -35,7 +35,7 @@ beforeEach(() => {
 describe("TimelineEditor", () => {
   it("renders without crashing", () => {
     const { container } = render(<TimelineEditor />);
-    expect(container).toBeDefined();
+    expect(container, "TimelineEditor should render a valid DOM container").toBeDefined();
   });
 
   it("renders toolbar, canvas, and zoom control children", () => {
@@ -45,9 +45,9 @@ describe("TimelineEditor", () => {
 
     const { getByTestId } = render(<TimelineEditor />);
 
-    expect(getByTestId("timeline-toolbar")).toBeDefined();
-    expect(getByTestId("timeline-canvas")).toBeDefined();
-    expect(getByTestId("zoom-control")).toBeDefined();
+    expect(getByTestId("timeline-toolbar"), "TimelineEditor should render the TimelineToolbar child component").toBeDefined();
+    expect(getByTestId("timeline-canvas"), "TimelineEditor should render the TimelineCanvas child component").toBeDefined();
+    expect(getByTestId("zoom-control"), "TimelineEditor should render the ZoomControl child component").toBeDefined();
   });
 
   it("with project: renders canvas element", () => {
@@ -57,6 +57,6 @@ describe("TimelineEditor", () => {
 
     const { container } = render(<TimelineEditor />);
     const canvas = container.querySelector("canvas");
-    expect(canvas).not.toBeNull();
+    expect(canvas, "TimelineEditor should contain a <canvas> element when a project is loaded").not.toBeNull();
   });
 });

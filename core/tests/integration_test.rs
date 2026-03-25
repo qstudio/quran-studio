@@ -586,3 +586,411 @@ fn test_compute_waveform_zero_peaks() {
     assert!(result.is_ok());
     assert!(result.unwrap().is_empty());
 }
+
+// ---------------------------------------------------------------------------
+// Preview module tests (additional)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_prepare_page_image_with_real_image() {
+    let data_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("data");
+    let mushaf_dir = data_dir.join("mushaf_images");
+    // Try common naming patterns
+    let page_exists = ["page001.png", "page1.png", "001.png", "1.png"]
+        .iter()
+        .any(|name| mushaf_dir.join(name).exists());
+    if !page_exists {
+        eprintln!(
+            "Skipping test_prepare_page_image_with_real_image: no mushaf images found at {:?}",
+            mushaf_dir
+        );
+        return;
+    }
+    let (frame, placement) =
+        preview::prepare_page_image(Some(1), &mushaf_dir).expect("Failed to prepare page image");
+    assert_eq!(
+        frame.width(),
+        preview::VIDEO_WIDTH,
+        "Frame width should be {} but got {}",
+        preview::VIDEO_WIDTH,
+        frame.width()
+    );
+    assert_eq!(
+        frame.height(),
+        preview::VIDEO_HEIGHT,
+        "Frame height should be {} but got {}",
+        preview::VIDEO_HEIGHT,
+        frame.height()
+    );
+    assert!(
+        placement.scaled_w > 0,
+        "Scaled width should be positive, got {}",
+        placement.scaled_w
+    );
+    assert!(
+        placement.scaled_h > 0,
+        "Scaled height should be positive, got {}",
+        placement.scaled_h
+    );
+}
+
+#[test]
+fn test_merge_bboxes_many_words_same_line() {
+    // Five words all on the same line (same y center within 20px grid)
+    let bboxes = vec![
+        WordBBox { x: 100, y: 200, width: 40, height: 30 },
+        WordBBox { x: 150, y: 202, width: 35, height: 30 },
+        WordBBox { x: 195, y: 198, width: 50, height: 30 },
+        WordBBox { x: 255, y: 201, width: 30, height: 30 },
+        WordBBox { x: 295, y: 199, width: 45, height: 30 },
+    ];
+    let merged = merge_bboxes(&bboxes);
+    assert_eq!(
+        merged.len(),
+        1,
+        "Five words on the same line should merge to 1 bbox, got {}",
+        merged.len()
+    );
+    assert_eq!(
+        merged[0].x, 100,
+        "Merged bbox x should be the leftmost x (100), got {}",
+        merged[0].x
+    );
+    // Rightmost extent: 295 + 45 = 340, so width = 340 - 100 = 240
+    assert_eq!(
+        merged[0].width, 240,
+        "Merged bbox width should be 240 (340 - 100), got {}",
+        merged[0].width
+    );
+}
+
+#[test]
+fn test_merge_bboxes_three_lines() {
+    // Words on 3 different lines (y centers far apart)
+    let bboxes = vec![
+        WordBBox { x: 100, y: 100, width: 50, height: 30 },
+        WordBBox { x: 160, y: 102, width: 40, height: 30 },
+        WordBBox { x: 100, y: 400, width: 50, height: 30 },
+        WordBBox { x: 160, y: 401, width: 40, height: 30 },
+        WordBBox { x: 100, y: 700, width: 50, height: 30 },
+    ];
+    let merged = merge_bboxes(&bboxes);
+    assert_eq!(
+        merged.len(),
+        3,
+        "Words on 3 different lines should produce 3 merged bboxes, got {}",
+        merged.len()
+    );
+}
+
+#[test]
+fn test_fractional_to_pixel_full_range() {
+    let placement = PagePlacement {
+        offset_x: 50,
+        offset_y: 100,
+        scaled_w: 1000,
+        scaled_h: 1800,
+    };
+
+    let bbox = fractional_to_pixel(1.0, 1.0, 0.0, 0.0, &placement);
+    assert_eq!(
+        bbox.x,
+        50 + 1000,
+        "At frac_x=1.0, pixel x should be offset_x + scaled_w = {}, got {}",
+        50 + 1000,
+        bbox.x
+    );
+    assert_eq!(
+        bbox.y,
+        100 + 1800,
+        "At frac_y=1.0, pixel y should be offset_y + scaled_h = {}, got {}",
+        100 + 1800,
+        bbox.y
+    );
+    assert_eq!(
+        bbox.width, 0,
+        "At frac_w=0.0, width should be 0, got {}",
+        bbox.width
+    );
+    assert_eq!(
+        bbox.height, 0,
+        "At frac_h=0.0, height should be 0, got {}",
+        bbox.height
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Audio module tests (additional)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_reciter_qdc_id_all_reciters() {
+    use quran_studio_core::audio::reciter_qdc_id;
+
+    let reciters = [
+        ("mishary", 7),
+        ("sudais", 3),
+        ("shuraim", 10),
+        ("shatri", 4),
+        ("husary", 6),
+        ("abdulbaset", 2),
+        ("abdulbaset_mujawwad", 1),
+        ("hani", 5),
+        ("minshawi", 9),
+        ("dossari", 97),
+    ];
+
+    for (name, expected_id) in &reciters {
+        let result = reciter_qdc_id(name);
+        assert!(
+            result.is_some(),
+            "Reciter '{}' should have a QDC ID mapping but got None",
+            name
+        );
+        assert_eq!(
+            result.unwrap(),
+            *expected_id,
+            "Reciter '{}' should map to QDC ID {}, got {:?}",
+            name,
+            expected_id,
+            result
+        );
+    }
+}
+
+#[test]
+fn test_compute_waveform_with_real_audio() {
+    use quran_studio_core::audio::compute_waveform;
+
+    let data_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("data");
+    let audio_path = data_dir.join("audio/mishary/001.mp3");
+    if !audio_path.exists() {
+        eprintln!(
+            "Skipping test_compute_waveform_with_real_audio: audio file not found at {:?}",
+            audio_path
+        );
+        return;
+    }
+
+    let peaks = compute_waveform(&audio_path, 100).expect("Failed to compute waveform");
+    assert_eq!(
+        peaks.len(),
+        100,
+        "Should return exactly 100 peaks, got {}",
+        peaks.len()
+    );
+
+    for (i, &val) in peaks.iter().enumerate() {
+        assert!(
+            val >= 0.0 && val <= 1.0,
+            "Peak {} should be between 0.0 and 1.0, got {}",
+            i,
+            val
+        );
+    }
+
+    let non_zero_count = peaks.iter().filter(|&&v| v > 0.0).count();
+    assert!(
+        non_zero_count > 0,
+        "Waveform should have at least some non-zero peaks, but all {} peaks were zero",
+        peaks.len()
+    );
+}
+
+#[test]
+fn test_get_audio_duration_with_real_audio() {
+    use quran_studio_core::audio::get_audio_duration_ms;
+
+    let data_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("data");
+    let audio_path = data_dir.join("audio/mishary/001.mp3");
+    if !audio_path.exists() {
+        eprintln!(
+            "Skipping test_get_audio_duration_with_real_audio: audio file not found at {:?}",
+            audio_path
+        );
+        return;
+    }
+
+    let duration = get_audio_duration_ms(&audio_path).expect("Failed to get audio duration");
+    assert!(
+        duration > 0,
+        "Audio duration should be positive, got {} ms",
+        duration
+    );
+    // Al-Fatiha recitation is typically 30-120 seconds
+    assert!(
+        duration > 10_000 && duration < 300_000,
+        "Al-Fatiha audio duration should be between 10s and 300s, got {} ms",
+        duration
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Error module tests
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_error_serialization() {
+    use quran_studio_core::CoreError;
+
+    let not_found = CoreError::NotFound("test item missing".to_string());
+    let json = serde_json::to_string(&not_found).expect("Failed to serialize NotFound error");
+    assert!(
+        json.contains("Not found"),
+        "Serialized NotFound error should contain 'Not found', got: {}",
+        json
+    );
+    assert!(
+        json.contains("test item missing"),
+        "Serialized NotFound error should contain the message, got: {}",
+        json
+    );
+
+    let invalid = CoreError::InvalidInput("bad value".to_string());
+    let json = serde_json::to_string(&invalid).expect("Failed to serialize InvalidInput error");
+    assert!(
+        json.contains("Invalid input"),
+        "Serialized InvalidInput error should contain 'Invalid input', got: {}",
+        json
+    );
+    assert!(
+        json.contains("bad value"),
+        "Serialized InvalidInput error should contain the message, got: {}",
+        json
+    );
+
+    let cancelled = CoreError::ExportCancelled;
+    let json =
+        serde_json::to_string(&cancelled).expect("Failed to serialize ExportCancelled error");
+    assert!(
+        json.contains("Export cancelled"),
+        "Serialized ExportCancelled error should contain 'Export cancelled', got: {}",
+        json
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Project module tests (additional)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_build_mushaf_project_different_surahs() {
+    let conn = open_db();
+
+    // Surah 112 (Al-Ikhlas) - 4 ayahs
+    let project_112 = project::build_mushaf_project(&conn, "mishary", 112, 1, 4, None)
+        .expect("Failed to build project for surah 112");
+    assert_eq!(
+        project_112.surah, 112,
+        "Project surah should be 112, got {}",
+        project_112.surah
+    );
+    assert_eq!(
+        project_112.timeline.tracks.len(),
+        3,
+        "Surah 112 project should have 3 tracks, got {}",
+        project_112.timeline.tracks.len()
+    );
+    let highlight_track_112 = &project_112.timeline.tracks[2];
+    assert!(
+        !highlight_track_112.blocks.is_empty(),
+        "Surah 112 should have highlight blocks"
+    );
+
+    // Surah 114 (An-Nas) - 6 ayahs
+    let project_114 = project::build_mushaf_project(&conn, "mishary", 114, 1, 6, None)
+        .expect("Failed to build project for surah 114");
+    assert_eq!(
+        project_114.surah, 114,
+        "Project surah should be 114, got {}",
+        project_114.surah
+    );
+    assert_eq!(
+        project_114.timeline.tracks.len(),
+        3,
+        "Surah 114 project should have 3 tracks, got {}",
+        project_114.timeline.tracks.len()
+    );
+    let highlight_track_114 = &project_114.timeline.tracks[2];
+    assert!(
+        !highlight_track_114.blocks.is_empty(),
+        "Surah 114 should have highlight blocks"
+    );
+
+    // Surah 114 has more ayahs so should have more or equal highlight blocks
+    assert!(
+        highlight_track_114.blocks.len() >= highlight_track_112.blocks.len(),
+        "Surah 114 (6 ayahs) should have >= highlight blocks than surah 112 (4 ayahs): {} vs {}",
+        highlight_track_114.blocks.len(),
+        highlight_track_112.blocks.len()
+    );
+}
+
+#[test]
+fn test_project_default_export_settings() {
+    let conn = open_db();
+    let project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7, None)
+        .expect("Failed to build project");
+
+    assert_eq!(
+        project.export_settings.width, 1080,
+        "Default export width should be 1080, got {}",
+        project.export_settings.width
+    );
+    assert_eq!(
+        project.export_settings.height, 1920,
+        "Default export height should be 1920, got {}",
+        project.export_settings.height
+    );
+    assert_eq!(
+        project.export_settings.fps, 30,
+        "Default export fps should be 30, got {}",
+        project.export_settings.fps
+    );
+    assert_eq!(
+        project.export_settings.video_codec, "libx264",
+        "Default video codec should be 'libx264', got '{}'",
+        project.export_settings.video_codec
+    );
+}
+
+#[test]
+fn test_project_save_updates_timestamp() {
+    let conn = open_db();
+    let mut project = project::build_mushaf_project(&conn, "mishary", 1, 1, 7, None)
+        .expect("Failed to build project");
+
+    let tmp_dir = std::env::temp_dir().join("quran_studio_test_timestamp");
+    std::fs::create_dir_all(&tmp_dir).unwrap();
+    let project_path = project::project_path(&tmp_dir, &project.id);
+
+    // First save
+    project::save_project(&project_path, &mut project).expect("Failed to save project (first)");
+    let first_updated_at = project.updated_at;
+
+    // Brief pause to ensure timestamp differs
+    std::thread::sleep(std::time::Duration::from_millis(50));
+
+    // Second save
+    project::save_project(&project_path, &mut project).expect("Failed to save project (second)");
+    let second_updated_at = project.updated_at;
+
+    assert!(
+        second_updated_at > first_updated_at,
+        "Second save updated_at ({:?}) should be after first save updated_at ({:?})",
+        second_updated_at,
+        first_updated_at
+    );
+
+    // Cleanup
+    let _ = std::fs::remove_dir_all(&tmp_dir);
+}
