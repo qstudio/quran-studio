@@ -11,6 +11,34 @@ function isTauri(): boolean {
   return typeof window !== "undefined" && !!(window as any).__TAURI_INTERNALS__;
 }
 
+// API base URL for HTTP mode (empty string = same origin)
+const API_BASE = import.meta.env.VITE_API_URL || "";
+
+// HTTP adapter for web mode — calls the Axum REST API
+async function httpFetch<T>(
+  endpoint: string,
+  options?: { method?: string; body?: unknown },
+): Promise<T> {
+  const resp = await fetch(`${API_BASE}${endpoint}`, {
+    method: options?.method || "GET",
+    headers: options?.body ? { "Content-Type": "application/json" } : undefined,
+    body: options?.body ? JSON.stringify(options.body) : undefined,
+  });
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => "");
+    throw new Error(`HTTP ${resp.status}: ${text}`);
+  }
+  return resp.json() as Promise<T>;
+}
+
+// Fetch binary data as a byte array (for audio, images)
+async function httpFetchBytes(endpoint: string): Promise<number[]> {
+  const resp = await fetch(`${API_BASE}${endpoint}`);
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const buf = await resp.arrayBuffer();
+  return Array.from(new Uint8Array(buf));
+}
+
 // Dynamic import for Tauri's invoke — only works inside the Tauri shell
 async function tauriInvoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   if (!isTauri()) {
@@ -250,7 +278,11 @@ async function listProjects(): Promise<ProjectSummary[]> {
   try {
     return await tauriInvoke<ProjectSummary[]>("list_projects");
   } catch {
-    return [];
+    try {
+      return await httpFetch<ProjectSummary[]>("/api/projects");
+    } catch {
+      return [];
+    }
   }
 }
 
@@ -265,32 +297,43 @@ async function createProject(params: {
   try {
     return await tauriInvoke<Project>("create_project", params);
   } catch {
-    // Fallback to mock data when not in Tauri
-    return createMockProject(params);
+    try {
+      return await httpFetch<Project>("/api/projects", { method: "POST", body: params });
+    } catch {
+      return createMockProject(params);
+    }
   }
 }
 
 async function loadProject(id: string): Promise<Project> {
-  return tauriInvoke<Project>("load_project", { id });
+  if (isTauri()) return tauriInvoke<Project>("load_project", { id });
+  return httpFetch<Project>(`/api/projects/${id}`);
 }
 
 async function saveProject(project: Project): Promise<void> {
-  return tauriInvoke<void>("save_project", { project });
+  if (isTauri()) return tauriInvoke<void>("save_project", { project });
+  await httpFetch<void>(`/api/projects/${project.id}`, { method: "PUT", body: project });
 }
 
 async function deleteProject(id: string): Promise<void> {
-  return tauriInvoke<void>("delete_project", { id });
+  if (isTauri()) return tauriInvoke<void>("delete_project", { id });
+  await httpFetch<void>(`/api/projects/${id}`, { method: "DELETE" });
 }
 
 async function duplicateProject(id: string): Promise<Project> {
-  return tauriInvoke<Project>("duplicate_project", { id });
+  if (isTauri()) return tauriInvoke<Project>("duplicate_project", { id });
+  return httpFetch<Project>(`/api/projects/${id}/duplicate`, { method: "POST" });
 }
 
 async function listReciters(): Promise<Reciter[]> {
   try {
     return await tauriInvoke<Reciter[]>("list_reciters");
   } catch {
-    return MOCK_RECITERS;
+    try {
+      return await httpFetch<Reciter[]>("/api/reciters");
+    } catch {
+      return MOCK_RECITERS;
+    }
   }
 }
 
@@ -298,7 +341,11 @@ async function listSurahs(): Promise<Surah[]> {
   try {
     return await tauriInvoke<Surah[]>("list_surahs");
   } catch {
-    return MOCK_SURAHS;
+    try {
+      return await httpFetch<Surah[]>("/api/surahs");
+    } catch {
+      return MOCK_SURAHS;
+    }
   }
 }
 
@@ -306,44 +353,59 @@ async function getSurahPages(surah: number): Promise<number[]> {
   try {
     return await tauriInvoke<number[]>("get_surah_pages", { surah });
   } catch {
-    return [1, 2, 3];
+    try {
+      return await httpFetch<number[]>(`/api/surahs/${surah}/pages`);
+    } catch {
+      return [1, 2, 3];
+    }
   }
 }
 
 async function getPreviewFrame(projectId: string, timestampMs: number): Promise<number[]> {
-  return tauriInvoke<number[]>("get_preview_frame", { projectId, timestampMs });
+  if (isTauri()) return tauriInvoke<number[]>("get_preview_frame", { projectId, timestampMs });
+  return httpFetchBytes(`/api/projects/${projectId}/preview?at=${timestampMs}`);
 }
 
 async function exportVideo(projectId: string, settings: ExportSettings): Promise<string> {
-  return tauriInvoke<string>("export_video", { projectId, settings });
+  if (isTauri()) return tauriInvoke<string>("export_video", { projectId, settings });
+  return httpFetch<string>(`/api/projects/${projectId}/export`, { method: "POST", body: { settings } });
 }
 
 async function getExportProgress(): Promise<number> {
-  return tauriInvoke<number>("get_export_progress");
+  if (isTauri()) return tauriInvoke<number>("get_export_progress");
+  return httpFetch<number>("/api/export/progress");
 }
 
 async function cancelExport(): Promise<void> {
-  return tauriInvoke<void>("cancel_export");
+  if (isTauri()) return tauriInvoke<void>("cancel_export");
+  await httpFetch<void>("/api/export/cancel", { method: "POST" });
 }
 
 async function getAudioWaveform(reciterId: string, surah: number): Promise<number[]> {
-  return tauriInvoke<number[]>("get_audio_waveform", { reciterId, surah });
+  if (isTauri()) return tauriInvoke<number[]>("get_audio_waveform", { reciterId, surah });
+  return httpFetch<number[]>(`/api/audio/${reciterId}/${surah}/waveform`);
 }
 
 async function getMushafPage(page: number, style?: string): Promise<number[]> {
-  return tauriInvoke<number[]>("get_mushaf_page", { page, style });
+  if (isTauri()) return tauriInvoke<number[]>("get_mushaf_page", { page, style });
+  const query = style ? `?style=${style}` : "";
+  return httpFetchBytes(`/api/mushaf/${page}${query}`);
 }
 
 async function getMushafPagePath(page: number, style?: string): Promise<string> {
-  return tauriInvoke<string>("get_mushaf_page_path", { page, style });
+  if (isTauri()) return tauriInvoke<string>("get_mushaf_page_path", { page, style });
+  const query = style ? `?style=${style}` : "";
+  return `${API_BASE}/api/mushaf/${page}${query}`;
 }
 
 async function getAudioFile(reciterId: string, surah: number): Promise<number[]> {
-  return tauriInvoke<number[]>("get_audio_file", { reciterId, surah });
+  if (isTauri()) return tauriInvoke<number[]>("get_audio_file", { reciterId, surah });
+  return httpFetchBytes(`/api/audio/${reciterId}/${surah}`);
 }
 
 async function getAudioFilePath(reciterId: string, surah: number): Promise<string> {
-  return tauriInvoke<string>("get_audio_file_path", { reciterId, surah });
+  if (isTauri()) return tauriInvoke<string>("get_audio_file_path", { reciterId, surah });
+  return `${API_BASE}/api/audio/${reciterId}/${surah}`;
 }
 
 async function readFileBytes(path: string): Promise<number[]> {
@@ -351,21 +413,28 @@ async function readFileBytes(path: string): Promise<number[]> {
 }
 
 async function convertToAssetUrl(filePath: string): Promise<string> {
-  const { convertFileSrc } = await import("@tauri-apps/api/core");
-  return convertFileSrc(filePath);
+  if (isTauri()) {
+    const { convertFileSrc } = await import("@tauri-apps/api/core");
+    return convertFileSrc(filePath);
+  }
+  // In web mode, the path is already a URL or we serve it via API
+  return filePath;
 }
 
 async function getAlignmentProgress(): Promise<number> {
-  return tauriInvoke<number>("get_alignment_progress");
+  if (isTauri()) return tauriInvoke<number>("get_alignment_progress");
+  return httpFetch<number>("/api/alignment/progress");
 }
 
 async function cancelAlignment(): Promise<void> {
-  return tauriInvoke<void>("cancel_alignment");
+  if (isTauri()) return tauriInvoke<void>("cancel_alignment");
+  await httpFetch<void>("/api/alignment/cancel", { method: "POST" });
 }
 
 async function checkWhisperModel(): Promise<boolean> {
   try {
-    return await tauriInvoke<boolean>("check_whisper_model");
+    if (isTauri()) return await tauriInvoke<boolean>("check_whisper_model");
+    return await httpFetch<boolean>("/api/alignment/model");
   } catch {
     return false;
   }

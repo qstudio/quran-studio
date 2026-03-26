@@ -1,0 +1,18 @@
+[package]
+name = "quran-studio-web"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "quran-studio-web"
+path = "src/main.rs"
+
+[dependencies]
+quran-studio-core = { path = "../core" }
+axum = { workspace = true }
+tower-http = { workspace = true }
+tokio = { version = "1", features = ["full"] }
+rusqlite = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

@@ -1,5 +1,5 @@
 [workspace]
-members = ["core", "desktop/src-tauri"]
+members = ["core", "desktop/src-tauri", "web"]
 resolver = "2"
 
 [workspace.package]
@@ -18,4 +18,6 @@ image = "0.25"
 symphonia = { version = "0.5", features = ["all"] }
 imageproc = "0.25"
 ureq = { version = "2", features = ["json"] }
+axum = "0.7"
+tower-http = { version = "0.6", features = ["cors", "fs"] }
 whisper-rs = "0.16"
