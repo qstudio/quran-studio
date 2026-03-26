@@ -18,6 +18,10 @@ pub struct AppState {
     pub export_progress: Arc<AtomicU32>,
     /// Export cancellation flag.
     pub export_cancel: Arc<AtomicBool>,
+    /// Alignment progress (0-100).
+    pub alignment_progress: Arc<AtomicU32>,
+    /// Alignment cancellation flag.
+    pub alignment_cancel: Arc<AtomicBool>,
 }
 
 impl AppState {
@@ -36,6 +40,8 @@ impl AppState {
             data_dir,
             export_progress: Arc::new(AtomicU32::new(0)),
             export_cancel: Arc::new(AtomicBool::new(false)),
+            alignment_progress: Arc::new(AtomicU32::new(0)),
+            alignment_cancel: Arc::new(AtomicBool::new(false)),
         }
     }
 }

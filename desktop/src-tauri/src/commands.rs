@@ -3,7 +3,7 @@ use std::sync::atomic::Ordering;
 use tauri::State;
 
 use quran_studio_core::project::{
-    ExportSettings, Project, ProjectSummary,
+    ExportSettings, Project, ProjectMode, ProjectSummary,
 };
 use quran_studio_core::quran_data::{Reciter, Surah};
 
@@ -22,13 +22,18 @@ pub async fn create_project(
     surah: u16,
     ayah_start: u16,
     ayah_end: u16,
+    audio_path: Option<String>,
 ) -> Result<Project, String> {
     // Clone what we need so we can move into the blocking task
     let data_dir = state.data_dir.clone();
     let projects_dir = state.projects_dir.clone();
+    let alignment_progress = state.alignment_progress.clone();
+    let alignment_cancel = state.alignment_cancel.clone();
 
-    // Lock DB briefly to get what we need, but the heavy work (download/trim)
-    // happens inside build_mushaf_project which we run on a blocking thread.
+    // Reset alignment state
+    alignment_progress.store(0, Ordering::Relaxed);
+    alignment_cancel.store(false, Ordering::Relaxed);
+
     let db_path = data_dir.join("db/quran.sqlite");
 
     let result = tokio::task::spawn_blocking(move || {
@@ -37,32 +42,73 @@ pub async fn create_project(
         let conn = rusqlite::Connection::open(&db_path)
             .map_err(|e| format!("Failed to open database: {}", e))?;
 
-        let mut project = match mode.as_str() {
-            "mushaf" => {
-                quran_studio_core::project::build_mushaf_project(
-                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
-                )
-                .map_err(|e| e.to_string())?
-            }
-            "caption" => {
-                quran_studio_core::project::build_caption_project(
-                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
-                )
-                .map_err(|e| e.to_string())?
-            }
-            "reel" => {
-                quran_studio_core::project::build_reel_project(
-                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
-                )
-                .map_err(|e| e.to_string())?
-            }
-            "long_form" => {
-                quran_studio_core::project::build_longform_project(
-                    &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
-                )
-                .map_err(|e| e.to_string())?
-            }
+        let mode_enum = match mode.as_str() {
+            "mushaf" => ProjectMode::Mushaf,
+            "caption" => ProjectMode::Caption,
+            "reel" => ProjectMode::Reel,
+            "long_form" => ProjectMode::LongForm,
             _ => return Err(format!("Unknown project mode: {}", mode)),
+        };
+
+        let mut project = if let Some(ref path) = audio_path {
+            // Custom audio path: use Whisper alignment
+            let progress = alignment_progress.clone();
+            let model_path = quran_studio_core::whisper::ensure_model(&data_dir, |downloaded, total| {
+                if total > 0 {
+                    let pct = ((downloaded as f64 / total as f64) * 10.0) as u32;
+                    progress.store(pct, Ordering::Relaxed);
+                }
+            })
+            .map_err(|e| format!("Failed to ensure Whisper model: {}", e))?;
+
+            let progress = alignment_progress.clone();
+            let timestamps = quran_studio_core::whisper::align_custom_audio(
+                &conn,
+                &model_path,
+                std::path::Path::new(path),
+                surah,
+                ayah_start,
+                ayah_end,
+                |pct| {
+                    // Scale whisper progress to 10-100 range (model download is 0-10)
+                    let scaled = 10 + (pct * 90 / 100);
+                    progress.store(scaled, Ordering::Relaxed);
+                },
+            )
+            .map_err(|e| format!("Whisper alignment failed: {}", e))?;
+
+            quran_studio_core::project::build_project_custom_audio(
+                &conn, mode_enum, path, timestamps, surah, ayah_start, ayah_end,
+            )
+            .map_err(|e| e.to_string())?
+        } else {
+            // Standard path: use pre-computed alignments from DB
+            match mode_enum {
+                ProjectMode::Mushaf => {
+                    quran_studio_core::project::build_mushaf_project(
+                        &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                    )
+                    .map_err(|e| e.to_string())?
+                }
+                ProjectMode::Caption => {
+                    quran_studio_core::project::build_caption_project(
+                        &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                    )
+                    .map_err(|e| e.to_string())?
+                }
+                ProjectMode::Reel => {
+                    quran_studio_core::project::build_reel_project(
+                        &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                    )
+                    .map_err(|e| e.to_string())?
+                }
+                ProjectMode::LongForm => {
+                    quran_studio_core::project::build_longform_project(
+                        &conn, &reciter_id, surah, ayah_start, ayah_end, Some(&data_dir),
+                    )
+                    .map_err(|e| e.to_string())?
+                }
+            }
         };
 
         let path = quran_studio_core::project::project_path(&projects_dir, &project.id);
@@ -315,4 +361,20 @@ pub fn get_export_progress(state: State<'_, AppState>) -> f32 {
 pub fn cancel_export(state: State<'_, AppState>) -> Result<(), String> {
     state.export_cancel.store(true, Ordering::Relaxed);
     Ok(())
+}
+
+#[tauri::command]
+pub fn get_alignment_progress(state: State<'_, AppState>) -> u32 {
+    state.alignment_progress.load(Ordering::Relaxed)
+}
+
+#[tauri::command]
+pub fn cancel_alignment(state: State<'_, AppState>) -> Result<(), String> {
+    state.alignment_cancel.store(true, Ordering::Relaxed);
+    Ok(())
+}
+
+#[tauri::command]
+pub fn check_whisper_model(state: State<'_, AppState>) -> bool {
+    quran_studio_core::whisper::model_exists(&state.data_dir)
 }

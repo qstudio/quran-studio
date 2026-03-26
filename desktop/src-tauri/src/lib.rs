@@ -79,6 +79,7 @@ pub fn run() {
 
             Ok(())
         })
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
             commands::list_projects,
             commands::create_project,
@@ -99,6 +100,9 @@ pub fn run() {
             commands::export_video,
             commands::get_export_progress,
             commands::cancel_export,
+            commands::get_alignment_progress,
+            commands::cancel_alignment,
+            commands::check_whisper_model,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

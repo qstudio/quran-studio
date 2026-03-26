@@ -998,6 +998,309 @@ pub fn build_longform_project(
 }
 
 // ---------------------------------------------------------------------------
+// Custom audio project builder
+// ---------------------------------------------------------------------------
+
+/// Build a project from custom audio with pre-computed timestamps.
+/// Used when timestamps come from Whisper instead of the DB.
+/// Unlike the standard builders, this does NOT call `load_alignment` or
+/// `resolve_audio_path` — the caller provides both directly.
+pub fn build_project_custom_audio(
+    conn: &Connection,
+    mode: ProjectMode,
+    audio_path: &str,
+    mut timestamps: Vec<crate::alignment::WordTimestamp>,
+    surah: u16,
+    ayah_start: u16,
+    ayah_end: u16,
+) -> Result<Project, CoreError> {
+    if timestamps.is_empty() {
+        return Err(CoreError::NotFound(format!(
+            "No timestamps provided for surah {}, ayahs {}-{}",
+            surah, ayah_start, ayah_end
+        )));
+    }
+
+    // Apply the same offset logic as load_and_offset_timestamps
+    let surah_info_list = quran_data::list_surahs();
+    let total_ayahs = surah_info_list
+        .get((surah as usize).wrapping_sub(1))
+        .map(|s| s.total_ayahs)
+        .unwrap_or(0);
+    let is_partial = ayah_start > 1 || ayah_end < total_ayahs;
+    let offset_ms = if is_partial { timestamps[0].start_ms } else { 0 };
+
+    if offset_ms > 0 {
+        for t in &mut timestamps {
+            t.start_ms = t.start_ms.saturating_sub(offset_ms);
+            t.end_ms = t.end_ms.saturating_sub(offset_ms);
+        }
+    }
+
+    let total_duration_ms = timestamps.iter().map(|t| t.end_ms).max().unwrap_or(0);
+
+    // Build common tracks
+    let audio_track = build_audio_track("custom", surah, Some(audio_path.to_string()), total_duration_ms);
+    let name = build_project_name(surah, ayah_start, ayah_end);
+    let now = Utc::now();
+
+    let (tracks, project_mode, export_settings) = match mode {
+        ProjectMode::Mushaf => {
+            // Mushaf: [Audio, MushafPages, Highlights]
+            let pages: Vec<u16> = {
+                let mut set = BTreeSet::new();
+                for t in &timestamps {
+                    set.insert(t.page);
+                }
+                set.into_iter().collect()
+            };
+
+            let mut page_blocks = Vec::new();
+            for &page in &pages {
+                let page_timestamps: Vec<_> = timestamps.iter().filter(|t| t.page == page).collect();
+                if page_timestamps.is_empty() {
+                    continue;
+                }
+                let page_start = page_timestamps.iter().map(|t| t.start_ms).min().unwrap();
+                let page_end = page_timestamps.iter().map(|t| t.end_ms).max().unwrap();
+                page_blocks.push(Block {
+                    id: Uuid::new_v4().to_string(),
+                    start_ms: page_start,
+                    end_ms: page_end,
+                    data: BlockData::MushafPage(MushafPageBlockData {
+                        page,
+                        image_path: format!("mushaf/page_{:03}.png", page),
+                    }),
+                });
+            }
+
+            let page_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Mushaf Pages".to_string(),
+                track_type: TrackType::MushafPage,
+                blocks: page_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            let highlight_blocks = build_highlight_blocks(&timestamps);
+            let highlight_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Highlights".to_string(),
+                track_type: TrackType::Highlight,
+                blocks: highlight_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            (
+                vec![audio_track, page_track, highlight_track],
+                ProjectMode::Mushaf,
+                ExportSettings::default(),
+            )
+        }
+        ProjectMode::Caption => {
+            // Caption: [Audio, TextArabic, TextTranslation]
+            let arabic_blocks = build_ayah_text_blocks(&timestamps, surah, "ar", TextPosition::Bottom);
+            let arabic_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Arabic Text".to_string(),
+                track_type: TrackType::TextArabic,
+                blocks: arabic_blocks.clone(),
+                visible: true,
+                locked: false,
+            };
+
+            let translation_blocks = build_translation_blocks(&arabic_blocks, conn, surah, ayah_start, ayah_end);
+            let translation_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Translation".to_string(),
+                track_type: TrackType::TextTranslation,
+                blocks: translation_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            (
+                vec![audio_track, arabic_track, translation_track],
+                ProjectMode::Caption,
+                ExportSettings::default(),
+            )
+        }
+        ProjectMode::Reel => {
+            // Reel: [Background, Audio, TextArabic, Highlights, TextTranslation]
+            let background_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Background".to_string(),
+                track_type: TrackType::Background,
+                blocks: vec![Block {
+                    id: Uuid::new_v4().to_string(),
+                    start_ms: 0,
+                    end_ms: total_duration_ms,
+                    data: BlockData::Background(BackgroundBlockData {
+                        image_path: None,
+                        color: Some("#0A0A0A".to_string()),
+                    }),
+                }],
+                visible: true,
+                locked: false,
+            };
+
+            let arabic_blocks = build_ayah_text_blocks(&timestamps, surah, "ar", TextPosition::Center);
+            let arabic_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Arabic Text".to_string(),
+                track_type: TrackType::TextArabic,
+                blocks: arabic_blocks.clone(),
+                visible: true,
+                locked: false,
+            };
+
+            let highlight_blocks = build_highlight_blocks(&timestamps);
+            let highlight_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Highlights".to_string(),
+                track_type: TrackType::Highlight,
+                blocks: highlight_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            let translation_blocks = build_translation_blocks(&arabic_blocks, conn, surah, ayah_start, ayah_end);
+            let translation_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Translation".to_string(),
+                track_type: TrackType::TextTranslation,
+                blocks: translation_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            (
+                vec![background_track, audio_track, arabic_track, highlight_track, translation_track],
+                ProjectMode::Reel,
+                ExportSettings { width: 1080, height: 1920, ..ExportSettings::default() },
+            )
+        }
+        ProjectMode::LongForm => {
+            // LongForm: [Background, Audio, TextArabic, Highlights, TextTranslation, Cards]
+            let background_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Background".to_string(),
+                track_type: TrackType::Background,
+                blocks: vec![Block {
+                    id: Uuid::new_v4().to_string(),
+                    start_ms: 0,
+                    end_ms: total_duration_ms,
+                    data: BlockData::Background(BackgroundBlockData {
+                        image_path: None,
+                        color: Some("#0A0A0A".to_string()),
+                    }),
+                }],
+                visible: true,
+                locked: false,
+            };
+
+            let arabic_blocks = build_ayah_text_blocks(&timestamps, surah, "ar", TextPosition::Center);
+            let arabic_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Arabic Text".to_string(),
+                track_type: TrackType::TextArabic,
+                blocks: arabic_blocks.clone(),
+                visible: true,
+                locked: false,
+            };
+
+            let highlight_blocks = build_highlight_blocks(&timestamps);
+            let highlight_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Highlights".to_string(),
+                track_type: TrackType::Highlight,
+                blocks: highlight_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            let translation_blocks = build_translation_blocks(&arabic_blocks, conn, surah, ayah_start, ayah_end);
+            let translation_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Translation".to_string(),
+                track_type: TrackType::TextTranslation,
+                blocks: translation_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            // Card track
+            let surahs = quran_data::list_surahs();
+            let surah_name = surahs
+                .get((surah as usize).wrapping_sub(1))
+                .map(|s| format!("{} - {}", s.name_english, s.name_arabic))
+                .unwrap_or_else(|| format!("Surah {}", surah));
+
+            let card_duration = 3000u64;
+            let mut card_blocks = vec![Block {
+                id: Uuid::new_v4().to_string(),
+                start_ms: 0,
+                end_ms: card_duration.min(total_duration_ms),
+                data: BlockData::Card(CardBlockData {
+                    card_type: CardType::SurahTitle,
+                    text: surah_name,
+                    background_color: "#000000".to_string(),
+                    text_color: "#FFFFFF".to_string(),
+                }),
+            }];
+
+            if surah != 9 {
+                card_blocks.push(Block {
+                    id: Uuid::new_v4().to_string(),
+                    start_ms: 0,
+                    end_ms: card_duration.min(total_duration_ms),
+                    data: BlockData::Card(CardBlockData {
+                        card_type: CardType::Bismillah,
+                        text: "\u{0628}\u{0650}\u{0633}\u{0652}\u{0645}\u{0650} \u{0671}\u{0644}\u{0644}\u{0651}\u{064e}\u{0647}\u{0650} \u{0671}\u{0644}\u{0631}\u{0651}\u{064e}\u{062d}\u{0652}\u{0645}\u{064e}\u{0640}\u{0670}\u{0646}\u{0650} \u{0671}\u{0644}\u{0631}\u{0651}\u{064e}\u{062d}\u{0650}\u{064a}\u{0645}\u{0650}".to_string(),
+                        background_color: "#000000".to_string(),
+                        text_color: "#D4A944".to_string(),
+                    }),
+                });
+            }
+
+            let card_track = Track {
+                id: Uuid::new_v4().to_string(),
+                name: "Cards".to_string(),
+                track_type: TrackType::Card,
+                blocks: card_blocks,
+                visible: true,
+                locked: false,
+            };
+
+            (
+                vec![background_track, audio_track, arabic_track, highlight_track, translation_track, card_track],
+                ProjectMode::LongForm,
+                ExportSettings { width: 1920, height: 1080, ..ExportSettings::default() },
+            )
+        }
+    };
+
+    Ok(Project {
+        id: Uuid::new_v4().to_string(),
+        name,
+        mode: project_mode,
+        surah,
+        ayah_start,
+        ayah_end,
+        reciter_id: "custom".to_string(),
+        timeline: Timeline {
+            duration_ms: total_duration_ms,
+            tracks,
+        },
+        export_settings,
+        created_at: now,
+        updated_at: now,
+    })
+}
+
+// ---------------------------------------------------------------------------
 // Project I/O
 // ---------------------------------------------------------------------------
 

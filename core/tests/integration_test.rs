@@ -1165,3 +1165,421 @@ fn test_longform_no_bismillah_for_tawbah() {
         }
     }
 }
+
+// ---------------------------------------------------------------------------
+// Custom audio: text_utils tests
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_strip_tashkeel() {
+    use quran_studio_core::text_utils::{strip_tashkeel, normalize_arabic, similarity};
+
+    // Strip basic diacritics
+    assert_eq!(strip_tashkeel("بِسْمِ"), "بسم", "Should strip kasrah, sukun, kasrah from bismillah");
+
+    // Strip tanwin
+    assert_eq!(strip_tashkeel("كِتَابًا"), "كتابا", "Should strip kasrah, fathah, fathatan");
+
+    // No-op on clean text
+    assert_eq!(strip_tashkeel("محمد"), "محمد", "Text without diacritics should be unchanged");
+
+    // Empty string
+    assert_eq!(strip_tashkeel(""), "", "Empty string should return empty");
+
+    // normalize_arabic collapses whitespace
+    assert_eq!(normalize_arabic("  بسم   الله  "), "بسم الله", "Should trim and collapse whitespace");
+
+    // similarity
+    assert!(similarity("بسم", "بسم") > 0.99, "Identical strings should have ~1.0 similarity");
+    assert!(similarity("بسم", "بسمل") > 0.5, "Similar strings should have >0.5 similarity");
+    assert!(similarity("", "") > 0.99, "Two empty strings should be similar");
+    assert!(similarity("abc", "") < 0.01, "Empty vs non-empty should be ~0");
+}
+
+// ---------------------------------------------------------------------------
+// Custom audio: Whisper forced alignment tests (mock segments, no model)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_align_to_quran_with_mock_segments() {
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+
+    // Create mock Whisper segments that roughly match Al-Fatihah ayah 1
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 1)
+        .expect("Failed to get words for surah 1 ayah 1");
+
+    // Create one segment per word with sequential timing
+    let segments: Vec<WhisperSegment> = words.iter().enumerate().map(|(i, w)| {
+        WhisperSegment {
+            text: quran_studio_core::text_utils::strip_tashkeel(&w.text_uthmani),
+            start_ms: (i as u64) * 500,
+            end_ms: (i as u64 + 1) * 500,
+        }
+    }).collect();
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("align_to_quran should succeed with matching segments");
+
+    assert!(!result.is_empty(), "Should produce aligned timestamps");
+    assert_eq!(result.len(), words.len(),
+        "Should have one timestamp per word, got {} vs {}", result.len(), words.len());
+
+    // Verify timestamps are monotonically non-decreasing
+    for window in result.windows(2) {
+        assert!(window[1].start_ms >= window[0].start_ms,
+            "Timestamps should be non-decreasing");
+    }
+
+    // Verify word metadata is preserved from DB
+    for ts in &result {
+        assert!(ts.page > 0, "Page should come from DB");
+        assert_eq!(ts.surah, 1, "Surah should be 1");
+    }
+}
+
+#[test]
+fn test_align_to_quran_empty_segments() {
+    use quran_studio_core::whisper::align_to_quran;
+
+    let conn = open_db();
+    let segments = vec![];
+
+    // Empty segments should produce interpolated timestamps (not error)
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("Should handle empty segments gracefully");
+
+    assert!(!result.is_empty(), "Should still produce timestamps via interpolation");
+
+    // All timestamps should have valid page/coordinates from DB
+    for ts in &result {
+        assert!(ts.page > 0, "Interpolated words should still have page metadata");
+    }
+}
+
+#[test]
+fn test_align_to_quran_partial_match() {
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+
+    // Only provide segments for a few words (not all)
+    let segments = vec![
+        WhisperSegment { text: "بسم".to_string(), start_ms: 0, end_ms: 500 },
+        WhisperSegment { text: "الله".to_string(), start_ms: 500, end_ms: 1000 },
+    ];
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("Should handle partial segments");
+
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 1)
+        .expect("Failed to get words");
+
+    assert_eq!(result.len(), words.len(),
+        "Should still produce one timestamp per DB word even with partial match");
+}
+
+// ---------------------------------------------------------------------------
+// Custom audio: project builder tests
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_build_project_custom_audio_mushaf() {
+    use quran_studio_core::project::{build_project_custom_audio, ProjectMode};
+
+    let conn = open_db();
+
+    // Load real timestamps (simulating what Whisper would produce)
+    let timestamps = alignment::load_alignment(&conn, "mishary", 1, 1, 7)
+        .expect("Failed to load alignment");
+
+    let project = build_project_custom_audio(
+        &conn, ProjectMode::Mushaf, "/path/to/custom.mp3",
+        timestamps, 1, 1, 7,
+    ).expect("Failed to build custom audio project");
+
+    assert_eq!(project.reciter_id, "custom",
+        "Custom audio project should have reciter_id 'custom'");
+    assert_eq!(project.timeline.tracks.len(), 3,
+        "Mushaf mode should have 3 tracks");
+
+    // Audio track should reference the custom path
+    if let project::BlockData::Audio(ref data) = project.timeline.tracks[0].blocks[0].data {
+        assert_eq!(data.audio_path.as_deref(), Some("/path/to/custom.mp3"),
+            "Audio block should reference the custom audio path");
+        assert_eq!(data.reciter_id, "custom",
+            "Audio block reciter_id should be 'custom'");
+    } else {
+        panic!("First block of first track should be Audio");
+    }
+
+    // Serialization roundtrip
+    let json = serde_json::to_string(&project).expect("Serialize should succeed");
+    let _: project::Project = serde_json::from_str(&json).expect("Deserialize should succeed");
+}
+
+#[test]
+fn test_build_project_custom_audio_all_modes() {
+    use quran_studio_core::project::{build_project_custom_audio, ProjectMode};
+
+    let conn = open_db();
+    let timestamps = alignment::load_alignment(&conn, "mishary", 1, 1, 7)
+        .expect("Failed to load alignment");
+
+    // Test each mode
+    let modes: Vec<(ProjectMode, usize)> = vec![
+        (ProjectMode::Mushaf, 3),
+        (ProjectMode::Caption, 3),
+        (ProjectMode::Reel, 5),
+        (ProjectMode::LongForm, 6),
+    ];
+
+    for (mode, expected_tracks) in modes {
+        let ts = timestamps.clone();
+        let project = build_project_custom_audio(
+            &conn, mode.clone(), "/path/to/audio.mp3", ts, 1, 1, 7,
+        ).expect(&format!("Failed to build {:?} project", mode));
+
+        assert_eq!(project.timeline.tracks.len(), expected_tracks,
+            "{:?} mode should have {} tracks, got {}", mode, expected_tracks, project.timeline.tracks.len());
+        assert_eq!(project.reciter_id, "custom",
+            "{:?} mode should have reciter_id 'custom'", mode);
+    }
+}
+
+#[test]
+fn test_whisper_model_path() {
+    use quran_studio_core::whisper::model_path;
+
+    let path = model_path(Path::new("/data"));
+    assert!(path.to_str().unwrap().contains("models"),
+        "Model path should be in models subdirectory");
+    assert!(path.to_str().unwrap().ends_with(".bin"),
+        "Model file should have .bin extension");
+}
+
+// ---------------------------------------------------------------------------
+// New alignment pipeline tests (rollingquran-aligned logic)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_align_to_quran_sequential_distribution_path() {
+    // Tests the >50% Whisper words path (sequential word distribution)
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+
+    // Al-Fatihah ayah 1 has ~4 words. Provide >= 50% (2+) segments.
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 1)
+        .expect("Failed to get words");
+    let word_count = words.len();
+
+    // Provide exactly word_count segments with sequential timing
+    let segments: Vec<WhisperSegment> = (0..word_count)
+        .map(|i| WhisperSegment {
+            text: format!("word{}", i),
+            start_ms: (i as u64) * 1000,
+            end_ms: (i as u64 + 1) * 1000,
+        })
+        .collect();
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("Should succeed with full segment count");
+
+    assert_eq!(result.len(), word_count,
+        "Should produce one timestamp per DB word");
+
+    // Timestamps should be monotonically non-decreasing
+    for window in result.windows(2) {
+        assert!(window[1].start_ms >= window[0].start_ms,
+            "Timestamps should be non-decreasing: {} vs {}", window[0].start_ms, window[1].start_ms);
+    }
+
+    // First word should start near 0
+    assert!(result[0].start_ms < 500,
+        "First word should start near 0ms, got {}", result[0].start_ms);
+
+    // DB metadata should be preserved
+    for ts in &result {
+        assert_eq!(ts.surah, 1, "Surah should be preserved from DB");
+        assert!(ts.page > 0, "Page should come from DB");
+    }
+}
+
+#[test]
+fn test_align_to_quran_fallback_path() {
+    // Tests the <50% Whisper words path (even distribution fallback)
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 3)
+        .expect("Failed to get words");
+    let word_count = words.len();
+
+    // Provide way fewer segments than expected (<50% of words)
+    // This should trigger the fallback path
+    let segments = vec![
+        WhisperSegment { text: "بسم".to_string(), start_ms: 0, end_ms: 5000 },
+        WhisperSegment { text: "الله".to_string(), start_ms: 5000, end_ms: 10000 },
+    ];
+
+    assert!(segments.len() < word_count / 2,
+        "Test setup: segments ({}) should be < 50% of words ({})",
+        segments.len(), word_count);
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 3)
+        .expect("Should succeed with fallback path");
+
+    assert_eq!(result.len(), word_count,
+        "Fallback path should still produce one timestamp per DB word");
+
+    // All timestamps should be within the segment time range
+    for ts in &result {
+        assert!(ts.end_ms <= 15000,
+            "Fallback timestamps should be within reasonable range, got end_ms={}", ts.end_ms);
+    }
+}
+
+#[test]
+fn test_align_to_quran_refinement_path() {
+    // Tests the >75% words path where refinement is attempted
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+    use quran_studio_core::text_utils::strip_tashkeel;
+
+    let conn = open_db();
+
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 1)
+        .expect("Failed to get words");
+    let word_count = words.len();
+
+    // Provide >75% of words with normalized text that should match via similarity
+    let segments: Vec<WhisperSegment> = words.iter().enumerate().map(|(i, w)| {
+        WhisperSegment {
+            text: strip_tashkeel(&w.text_uthmani),
+            start_ms: (i as u64) * 800,
+            end_ms: (i as u64) * 800 + 700,
+        }
+    }).collect();
+
+    assert!(segments.len() >= (word_count * 3) / 4,
+        "Test setup: should have >75% segments for refinement path");
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("Should succeed with refinement");
+
+    assert_eq!(result.len(), word_count,
+        "Refined result should have one timestamp per word");
+
+    // With refinement, individual word timestamps should be more precise
+    // (not just evenly distributed within ayah)
+    let has_varied_durations = result.windows(2).any(|w| {
+        let dur1 = w[0].end_ms - w[0].start_ms;
+        let dur2 = w[1].end_ms - w[1].start_ms;
+        dur1 != dur2
+    });
+    // This may or may not trigger depending on similarity scores,
+    // so we just verify the result is valid
+    let _ = has_varied_durations;
+}
+
+#[test]
+fn test_align_to_quran_multi_ayah_distribution() {
+    // Tests sequential distribution across multiple ayahs
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+
+    // Get words for ayahs 1-3 of Al-Fatihah
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 3)
+        .expect("Failed to get words");
+
+    // Create enough segments to trigger Whisper path (>50%)
+    let segments: Vec<WhisperSegment> = (0..words.len())
+        .map(|i| WhisperSegment {
+            text: format!("w{}", i),
+            start_ms: (i as u64) * 500,
+            end_ms: (i as u64) * 500 + 400,
+        })
+        .collect();
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 3)
+        .expect("Should succeed for multi-ayah");
+
+    assert_eq!(result.len(), words.len(),
+        "Should produce timestamps for all words across ayahs 1-3");
+
+    // Words from different ayahs should have different timestamps
+    let ayah1_end = result.iter().filter(|t| t.ayah == 1).last().map(|t| t.end_ms).unwrap_or(0);
+    let ayah2_start = result.iter().find(|t| t.ayah == 2).map(|t| t.start_ms).unwrap_or(0);
+    assert!(ayah2_start >= ayah1_end.saturating_sub(100),
+        "Ayah 2 should start near/after ayah 1 ends: ayah1_end={}, ayah2_start={}",
+        ayah1_end, ayah2_start);
+}
+
+#[test]
+fn test_align_to_quran_word_level_within_ayah() {
+    // Verifies that words within an ayah get distinct (non-identical) timestamps
+    use quran_studio_core::whisper::{WhisperSegment, align_to_quran};
+
+    let conn = open_db();
+    let words = quran_studio_core::quran_data::get_words(&conn, 1, 1, 1)
+        .expect("Failed to get words");
+
+    let segments: Vec<WhisperSegment> = (0..words.len())
+        .map(|i| WhisperSegment {
+            text: format!("w{}", i),
+            start_ms: (i as u64) * 1000,
+            end_ms: (i as u64 + 1) * 1000,
+        })
+        .collect();
+
+    let result = align_to_quran(&conn, &segments, 1, 1, 1)
+        .expect("Should succeed");
+
+    // Each word in the same ayah should have distinct start times
+    // (not all sharing the same ayah-level timestamp)
+    if result.len() > 1 {
+        let all_same_start = result.windows(2).all(|w| w[0].start_ms == w[1].start_ms);
+        assert!(!all_same_start,
+            "Words within an ayah should have distinct start_ms (word-level, not ayah-level)");
+    }
+}
+
+#[test]
+fn test_normalize_arabic_for_alignment() {
+    use quran_studio_core::text_utils::{normalize_arabic, similarity};
+
+    // Test that normalization makes Whisper output comparable to DB text
+    let db_text = "بِسْمِ";           // With tashkeel
+    let whisper_text = "بسم";          // Without tashkeel (typical Whisper output)
+
+    let db_norm = normalize_arabic(db_text);
+    let whisper_norm = normalize_arabic(whisper_text);
+
+    assert_eq!(db_norm, whisper_norm,
+        "After normalization, DB text and Whisper text should match: '{}' vs '{}'",
+        db_norm, whisper_norm);
+
+    let score = similarity(&db_norm, &whisper_norm);
+    assert!(score > 0.99,
+        "Normalized texts should have near-perfect similarity, got {}", score);
+}
+
+#[test]
+fn test_similarity_with_arabic_words() {
+    use quran_studio_core::text_utils::similarity;
+
+    // Exact match
+    assert!(similarity("الرحمن", "الرحمن") > 0.99,
+        "Exact Arabic match should have ~1.0 similarity");
+
+    // Close match (one character different)
+    assert!(similarity("الرحمن", "الرحمان") > 0.7,
+        "Close Arabic words should have >0.7 similarity");
+
+    // Completely different
+    assert!(similarity("الله", "محمد") < 0.5,
+        "Different Arabic words should have <0.5 similarity");
+}

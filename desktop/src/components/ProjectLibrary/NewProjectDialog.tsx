@@ -42,6 +42,8 @@ export function NewProjectDialog({
   const [ayahStart, setAyahStart] = React.useState("1");
   const [ayahEnd, setAyahEnd] = React.useState("");
   const [surahs, setSurahs] = React.useState<Surah[]>([]);
+  const [audioSource, setAudioSource] = React.useState<"reciter" | "custom">("reciter");
+  const [customAudioPath, setCustomAudioPath] = React.useState("");
   const [creating, setCreating] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [progressStatus, setProgressStatus] = React.useState("");
@@ -67,6 +69,7 @@ export function NewProjectDialog({
       setProgressStatus("");
       setProgressPercent(0);
       setCreating(false);
+      setCustomAudioPath("");
     }
   }, [open]);
 
@@ -83,22 +86,23 @@ export function NewProjectDialog({
   // (preloading uses shared module: preloadProjectPages)
 
   const handleCreate = async () => {
-    if (!reciterId || !surahNumber) return;
+    if (!isValid) return;
 
     setCreating(true);
     setError(null);
 
     try {
       // Step 1: Create project (backend downloads audio + builds timeline)
-      setProgressStatus("Preparing audio and alignment data...");
+      setProgressStatus(audioSource === "custom" ? "Analyzing audio with AI..." : "Preparing audio and alignment data...");
       setProgressPercent(10);
 
       const project = await createProject({
         mode,
-        reciterId,
+        reciterId: audioSource === "custom" ? "custom" : reciterId,
         surah: Number(surahNumber),
         ayahStart: Number(ayahStart),
         ayahEnd: Number(ayahEnd),
+        ...(audioSource === "custom" && { audioPath: customAudioPath }),
       });
 
       setProgressPercent(30);
@@ -132,7 +136,9 @@ export function NewProjectDialog({
     }
   };
 
-  const isValid = reciterId && surahNumber && ayahStart && ayahEnd;
+  const isValid = audioSource === "custom"
+    ? customAudioPath && surahNumber && ayahStart && ayahEnd
+    : reciterId && surahNumber && ayahStart && ayahEnd;
 
   return (
     <Dialog open={open} onOpenChange={creating ? undefined : onOpenChange}>
@@ -196,14 +202,61 @@ export function NewProjectDialog({
               <Separator />
 
               <div>
-                <label className="text-xs text-[#A0A0A0] mb-1.5 block">
-                  Reciter
-                </label>
-                <ReciterBrowser
-                  selectedId={reciterId}
-                  onSelect={setReciterId}
-                />
+                <label className="text-xs text-[#A0A0A0] mb-1.5 block">Audio Source</label>
+                <ToggleGroup
+                  type="single"
+                  value={audioSource}
+                  onValueChange={(v: string) => v && setAudioSource(v as "reciter" | "custom")}
+                  size="sm"
+                  className="w-full"
+                >
+                  <ToggleGroupItem value="reciter" className="flex-1 text-xs">Reciter Library</ToggleGroupItem>
+                  <ToggleGroupItem value="custom" className="flex-1 text-xs">Custom Audio</ToggleGroupItem>
+                </ToggleGroup>
               </div>
+
+              {audioSource === "reciter" ? (
+                <div>
+                  <label className="text-xs text-[#A0A0A0] mb-1.5 block">
+                    Reciter
+                  </label>
+                  <ReciterBrowser
+                    selectedId={reciterId}
+                    onSelect={setReciterId}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label className="text-xs text-[#A0A0A0] mb-1.5 block">Audio File</label>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="text-xs"
+                      onClick={async () => {
+                        try {
+                          const { open } = await import("@tauri-apps/plugin-dialog");
+                          const file = await open({
+                            filters: [{ name: "Audio", extensions: ["mp3", "wav", "m4a", "ogg", "flac"] }],
+                            multiple: false,
+                          });
+                          if (file) setCustomAudioPath(file);
+                        } catch {
+                          // Not in Tauri or dialog cancelled — use a mock path for dev
+                          setCustomAudioPath("/mock/custom_audio.mp3");
+                        }
+                      }}
+                    >
+                      Choose File
+                    </Button>
+                    {customAudioPath && (
+                      <span className="text-xs text-[#A0A0A0] truncate max-w-[200px]">
+                        {customAudioPath.split("/").pop() || customAudioPath}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <label className="text-xs text-[#A0A0A0] mb-1.5 block">

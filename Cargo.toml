@@ -18,3 +18,4 @@ image = "0.25"
 symphonia = { version = "0.5", features = ["all"] }
 imageproc = "0.25"
 ureq = { version = "2", features = ["json"] }
+whisper-rs = "0.16"

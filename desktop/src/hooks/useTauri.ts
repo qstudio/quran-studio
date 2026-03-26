@@ -49,6 +49,7 @@ function createMockProject(params: {
   surah: number;
   ayahStart: number;
   ayahEnd: number;
+  audioPath?: string;
 }): Project {
   const surahInfo = MOCK_SURAHS.find((s) => s.number === params.surah);
   const reciterInfo = MOCK_RECITERS.find((r) => r.id === params.reciterId);
@@ -64,9 +65,9 @@ function createMockProject(params: {
     end_ms: totalDurationMs,
     data: {
       type: "audio" as const,
-      reciter_id: params.reciterId,
+      reciter_id: params.audioPath ? "custom" : params.reciterId,
       surah: params.surah,
-      audio_path: null,
+      audio_path: params.audioPath ?? null,
     },
   };
 
@@ -220,7 +221,7 @@ function createMockProject(params: {
     surah: params.surah,
     ayah_start: params.ayahStart,
     ayah_end: params.ayahEnd,
-    reciter_id: params.reciterId,
+    reciter_id: params.audioPath ? "custom" : params.reciterId,
     timeline: {
       duration_ms: totalDurationMs,
       tracks,
@@ -259,6 +260,7 @@ async function createProject(params: {
   surah: number;
   ayahStart: number;
   ayahEnd: number;
+  audioPath?: string;
 }): Promise<Project> {
   try {
     return await tauriInvoke<Project>("create_project", params);
@@ -353,6 +355,22 @@ async function convertToAssetUrl(filePath: string): Promise<string> {
   return convertFileSrc(filePath);
 }
 
+async function getAlignmentProgress(): Promise<number> {
+  return tauriInvoke<number>("get_alignment_progress");
+}
+
+async function cancelAlignment(): Promise<void> {
+  return tauriInvoke<void>("cancel_alignment");
+}
+
+async function checkWhisperModel(): Promise<boolean> {
+  try {
+    return await tauriInvoke<boolean>("check_whisper_model");
+  } catch {
+    return false;
+  }
+}
+
 // ─── Hooks (return stable references) ──────────────────────────────
 
 const projectsApi = {
@@ -432,4 +450,14 @@ export { isTauri };
 
 export function useAudioWaveform() {
   return waveformApi;
+}
+
+const alignmentApi = {
+  getAlignmentProgress,
+  cancelAlignment,
+  checkWhisperModel,
+};
+
+export function useAlignment() {
+  return alignmentApi;
 }
